@@ -224,5 +224,81 @@
       "height": "100%"
     },
     "usage": "Place a screen fill layer below this transparent 1000x1000 right-perspective frame. Scale by changing the outer component size; keep internal coordinates in percentages."
+  },
+  "macbook-pro-black-front": {
+    "type": "screen-over-shell",
+    "file": "macbook-pro-black-front-shell.png",
+    "source": {
+      "type": "user-export",
+      "name": "Property 1=01-黑3",
+      "notes": "Derived from provided Figma CSS and user-exported transparent PNG."
+    },
+    "device": "MacBook Pro",
+    "color": "Black",
+    "orientation": "front",
+    "naturalWidth": 2000,
+    "naturalHeight": 2000,
+    "screenShape": {
+      "left": "13.25%",
+      "top": "24.6%",
+      "width": "73.75%",
+      "height": "47.7%",
+      "borderRadius": {
+        "value": 14,
+        "unit": "px",
+        "scaleBasis": 2000
+      },
+      "transform": "none",
+      "transformOrigin": "center center",
+      "fit": "contain",
+      "aspectRatio": "source",
+      "background": "#050505"
+    },
+    "shell": {
+      "left": "0",
+      "top": "0",
+      "width": "100%",
+      "height": "100%",
+      "layer": "below-screen"
+    },
+    "usage": "Place this MacBook shell below the screen layer. Desktop UI sits above the shell, clipped to the original screen area; use contain to preserve common 16:9 screenshots and fill any remaining screen area with black."
+  },
+  "macbook-pro-silver-front": {
+    "type": "screen-over-shell",
+    "file": "macbook-pro-silver-front-shell.png",
+    "source": {
+      "type": "user-export",
+      "name": "Property 1=01-银3",
+      "notes": "Derived from provided Figma CSS and user-exported transparent PNG."
+    },
+    "device": "MacBook Pro",
+    "color": "Silver",
+    "orientation": "front",
+    "naturalWidth": 2000,
+    "naturalHeight": 2000,
+    "screenShape": {
+      "left": "13.25%",
+      "top": "24.6%",
+      "width": "73.75%",
+      "height": "47.7%",
+      "borderRadius": {
+        "value": 14,
+        "unit": "px",
+        "scaleBasis": 2000
+      },
+      "transform": "none",
+      "transformOrigin": "center center",
+      "fit": "contain",
+      "aspectRatio": "source",
+      "background": "#050505"
+    },
+    "shell": {
+      "left": "0",
+      "top": "0",
+      "width": "100%",
+      "height": "100%",
+      "layer": "below-screen"
+    },
+    "usage": "Place this MacBook shell below the screen layer. Desktop UI sits above the shell, clipped to the original screen area; use contain to preserve common 16:9 screenshots and fill any remaining screen area with black."
   }
 }
