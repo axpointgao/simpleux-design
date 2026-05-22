@@ -86,7 +86,7 @@ Deck 系统：
 
 ### 设备样机壳
 
-Deck 中展示移动端 App 截图时，优先使用 `assets/device-mockups/` 的真实设备样机壳，不要默认手画黑色圆角框。样机壳作为透明 PNG overlay 使用：屏幕截图在下，设备壳在上；具体坐标和模板见 `references/device-mockups.md`。
+Deck 中展示移动端 App/UI 截图时，必须读取 `references/device-mockups.md`，优先使用 `assets/device-mockups/` 的真实设备样机壳，不要默认手画黑色圆角框。样机壳作为透明 PNG overlay 使用：屏幕截图在下，设备壳在上；具体使用时机、长图裁切、透视外壳限制和组合方式见 `references/device-mockups.md`。
 
 ### 出品方署名
 
