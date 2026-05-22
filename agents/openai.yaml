@@ -1,0 +1,7 @@
+interface:
+  display_name: "SimpleUX Design"
+  short_description: "高保真原型、幻灯片、变体与设计评审"
+  default_prompt: "使用 $simpleux-design 创建一个高保真设计原型，并给出可调变体和交付前验证。"
+
+policy:
+  allow_implicit_invocation: true
