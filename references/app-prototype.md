@@ -2,6 +2,8 @@
 
 这是给 iOS / Android / 移动 App 原型的专门规则。
 
+移动端原型和展示图需要设备外壳时，优先使用 `assets/device-mockups/` 中的真实样机壳 overlay；只有缺少匹配设备或需要极简 wireframe 表达时，才使用 CSS 手绘设备框。具体模板见 `references/device-mockups.md`。
+
 ## 0. 默认架构
 
 - 默认用单文件 inline React。

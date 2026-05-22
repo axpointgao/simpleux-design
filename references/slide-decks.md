@@ -84,6 +84,10 @@ Deck 系统：
 - Hero 字 180-240px。
 - 每页 1 个核心记忆点，超过就拆页。
 
+### 设备样机壳
+
+Deck 中展示移动端 App 截图时，优先使用 `assets/device-mockups/` 的真实设备样机壳，不要默认手画黑色圆角框。样机壳作为透明 PNG overlay 使用：屏幕截图在下，设备壳在上；具体坐标和模板见 `references/device-mockups.md`。
+
 ### 出品方署名
 
 `assets/publisher/` 内置我司 SimpleUX 纯 logo：
