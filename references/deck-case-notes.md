@@ -338,8 +338,8 @@ deck/shared/publisher/
 ```css
 .publisher-confidential {
   position: absolute;
-  left: 64px;
-  bottom: 42px;
+  left: 74px;
+  bottom: 48px;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -347,8 +347,9 @@ deck/shared/publisher/
   pointer-events: none;
   z-index: 5;
   font-family: Inter, Arial, "PingFang SC", sans-serif;
-  font-size: 17px;
+  font-size: 11px;
   line-height: 1;
+  letter-spacing: 0.08em;
   white-space: nowrap;
 }
 
@@ -359,7 +360,7 @@ deck/shared/publisher/
 }
 
 .publisher-confidential--light-bg {
-  color: rgba(18, 18, 18, 0.72);
+  color: rgba(18, 24, 38, 0.62);
 }
 
 .publisher-confidential--dark-bg {
@@ -377,9 +378,10 @@ deck/shared/publisher/
 .publisher-confidential .label {
   font-weight: 600;
   opacity: 0.72;
-  letter-spacing: -0.02em;
 }
 ```
+
+页脚署名的小字号只适用于 `CONFIDENTIAL&PROPRIETARY` 这类辅助角标文字；logo 要保持可识别尺寸，不要随文字一起缩小。这是出品方署名的特殊处理，不影响 deck 正文、标题、数据页和内容页的字号规范。
 
 浅底页面：
 
@@ -402,6 +404,297 @@ deck/shared/publisher/
   <span class="label">CONFIDENTIAL&PROPRIETARY</span>
 </div>
 ```
+
+### 固定 SimpleUX 封底页
+
+所有 deck 默认额外追加一张封底页，用于正式收尾、设计方署名和留资。封底页是独立最后一页，不是内页页脚；不参与用户内容页数压缩，也不应挤占前面内容页。
+
+实际 deck 中，把出品方资产复制到：
+
+```text
+deck/shared/publisher/
+├── FullSpeed&SimpleUX.png
+├── SimpleUX.mp4
+├── simpleux-dark.png
+└── simpleux-light.png
+```
+
+多文件架构建议命名为 `slides/99-back-cover.html`，并在 `DECK_MANIFEST` 末尾追加：
+
+```js
+{ file: "slides/99-back-cover.html", label: "封底" }
+```
+
+封底页固定内容：
+
+```text
+Thanks
+简立方，一家专注于数字策略与数字产品的体验设计公司
+
+专线：
+180 5716 5136
+
+固定电话：
+0571-8882 6850（杭州）
+028-8416 6771（成都）
+
+公司官网
+www.simpleux.cn
+
+公司地址：
+成都（总部）
+成都市高新区
+新裕路501博雅城市广场C座1111
+
+杭州
+杭州市拱墅区
+祥园路108号中国智慧信息产业园A座7楼
+
+北京
+北京市朝阳区
+阜通东大街方恒国际C座805
+
+上海
+上海市长宁区
+淮海西路666号中山万博国际中心25层
+
+深圳
+深圳市福田区
+星河世纪大厦A栋3503室
+
+全速集团旗下用户体验设计品牌
+```
+
+封底页 HTML/CSS 骨架：
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    margin: 0;
+    background: #050505;
+    color: #fff;
+    font-family: var(--font-sans, Inter, Arial, "PingFang SC", sans-serif);
+  }
+
+  .back-cover {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 86px 98px 0;
+  }
+
+  .thanks {
+    margin: 0 0 0 -36px;
+    font-size: 194px;
+    line-height: 0.9;
+    font-weight: 850;
+    letter-spacing: 0;
+    color: #62e181;
+  }
+
+  .tagline {
+    margin: 30px 0 0;
+    padding-left: 4px;
+    width: 1160px;
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: 560;
+    color: rgba(255, 255, 255, 0.82);
+    white-space: nowrap;
+  }
+
+  .closing-info {
+    position: absolute;
+    left: 98px;
+    right: 98px;
+    bottom: 184px;
+    display: grid;
+    grid-template-columns: 560px 1fr;
+    column-gap: 120px;
+    align-items: start;
+  }
+
+  .contact {
+    display: grid;
+    gap: 30px;
+    padding-left: 4px;
+  }
+
+  .contact-block {
+    min-width: 0;
+  }
+
+  .contact-label,
+  .address-label {
+    margin: 0 0 16px;
+    font-size: 16px;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 650;
+  }
+
+  .contact-value {
+    margin: 0;
+    font-size: 27px;
+    line-height: 1.32;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .phone-line {
+    white-space: nowrap;
+  }
+
+  .phone-area {
+    display: inline-block;
+    width: 76px;
+  }
+
+  .phone-number {
+    display: inline-block;
+  }
+
+  .contact-note {
+    font-size: 16px;
+    font-weight: 700;
+    margin-left: 10px;
+  }
+
+  .website {
+    display: inline-block;
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 2px solid currentColor;
+    padding-bottom: 1px;
+  }
+
+  .address-area {
+    min-width: 0;
+  }
+
+  .addresses {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 86px;
+    row-gap: 68px;
+    width: 100%;
+  }
+
+  .city h2 {
+    margin: 0 0 22px;
+    color: #62e181;
+    font-size: 28px;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .city p {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.58;
+    font-weight: 560;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .city p span {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .brand-motion {
+    position: absolute;
+    right: 0;
+    top: 28px;
+    width: 760px;
+    height: 500px;
+    object-fit: contain;
+  }
+
+  .brand-strip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 78px;
+    background: #62e181;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 66px;
+  }
+
+  .brand-strip img {
+    width: 282px;
+    max-height: 36px;
+    height: auto;
+    display: block;
+  }
+
+  .brand-strip p {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 650;
+    letter-spacing: 0.02em;
+    color: #050505;
+  }
+</style>
+</head>
+<body>
+  <main class="back-cover">
+    <h1 class="thanks">Thanks</h1>
+    <p class="tagline">简立方，一家专注于数字策略与数字产品的体验设计公司</p>
+
+    <video class="brand-motion" src="../shared/publisher/SimpleUX.mp4" autoplay muted loop playsinline></video>
+
+    <section class="closing-info">
+      <div class="contact" aria-label="SimpleUX contact information">
+        <div class="contact-block">
+          <p class="contact-label">专线:</p>
+          <p class="contact-value">180 5716 5136</p>
+        </div>
+        <div class="contact-block">
+          <p class="contact-label">固定电话:</p>
+          <p class="contact-value phone-line"><span class="phone-area">0571-</span><span class="phone-number">8882 6850</span><span class="contact-note">（杭州）</span></p>
+          <p class="contact-value phone-line"><span class="phone-area">028-</span><span class="phone-number">8416 6771</span><span class="contact-note">（成都）</span></p>
+        </div>
+        <div class="contact-block">
+          <p class="contact-label">公司官网</p>
+          <a class="contact-value website" href="https://www.simpleux.cn">www.simpleux.cn</a>
+        </div>
+      </div>
+
+      <div class="address-area" aria-label="SimpleUX company addresses">
+        <p class="address-label">公司地址:</p>
+        <section class="addresses">
+          <div class="city"><h2>成都（总部）</h2><p><span>成都市高新区</span><span>新裕路501博雅城市广场C座1111</span></p></div>
+          <div class="city"><h2>杭州</h2><p><span>杭州市拱墅区</span><span>祥园路108号中国智慧信息产业园A座7楼</span></p></div>
+          <div class="city"><h2>北京</h2><p><span>北京市朝阳区</span><span>阜通东大街方恒国际C座805</span></p></div>
+          <div class="city"><h2>上海</h2><p><span>上海市长宁区</span><span>淮海西路666号中山万博国际中心25层</span></p></div>
+          <div class="city"><h2>深圳</h2><p><span>深圳市福田区</span><span>星河世纪大厦A栋3503室</span></p></div>
+        </section>
+      </div>
+    </section>
+
+    <footer class="brand-strip">
+      <img src="../shared/publisher/FullSpeed&SimpleUX.png" alt="全速集团 / 简立方" />
+      <p>全速集团旗下用户体验设计品牌</p>
+    </footer>
+  </main>
+</body>
+</html>
+```
+
+`SimpleUX.mp4` 必须使用 `autoplay muted loop playsinline`，确保浏览器打开 deck 时自动静音循环播放。如果导出 PDF/PPTX 的环境不支持视频，把 `SimpleUX.mp4` 换成首帧静态图或导出的 PNG。封底页字体可以跟随当前 deck 的 `--font-sans`，但字号、层级和空间比例要接近参考封底。
 
 ---
 

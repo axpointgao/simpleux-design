@@ -12,7 +12,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 使用本技能处理这些任务：
 
 - **交互原型**：App/Web 高保真原型、iOS/Android/浏览器/桌面窗口 mockup、可点击流程、设计 review demo。
-- **幻灯片**：HTML-first deck、浏览器演示、PDF 导出、可编辑 PPTX 导出。
+- **幻灯片**：HTML-first deck、浏览器演示、PDF 导出、可编辑 PPTX 导出；客户交付 deck 按需处理 SimpleUX 出品方署名，并默认追加固定 SimpleUX 封底页。
 - **设计变体**：3 个差异化视觉方向、showcase 对比、Tweaks 实时调参。
 - **品牌资产**：logo、产品图、UI 截图、色值、字体、品牌规范收集与 `brand-spec.md` 固化。
 - **专家评审**：从哲学一致性、视觉层级、细节执行、功能性、创新性五维评分，并输出 Keep/Fix/Quick Wins。
