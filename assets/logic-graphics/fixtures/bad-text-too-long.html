@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Bad · Text Too Long</title>
+<style>
+html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: -apple-system, "PingFang SC", sans-serif; }
+.lg-node-title { font-size: 30px; }
+.lg-node-body { font-size: 22px; }
+</style>
+</head>
+<body>
+<main data-logic-graphic="true" data-lg-component="GraphicFrame" data-lg-token-version="logic-graphics-v1" style="position:relative;width:1920px;height:1080px;">
+  <header data-lg-zone="header" style="position:absolute;left:120px;top:64px;width:1680px;height:126px;"></header>
+  <section data-lg-zone="main" style="position:absolute;left:140px;top:226px;width:1640px;height:734px;">
+    <div class="lg-node" data-lg-component="GraphicNode" data-lg-node-id="long" data-lg-emphasis="false" style="position:absolute;left:600px;top:250px;width:360px;height:150px;border:2px solid #d7dee8;">
+      <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">这是一个明显超过容量上限而且仍然继续加长的节点标题</div>
+      <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">这是一段明显超过容量上限的节点说明文字，用来确认质检可以捕获文本过长的问题并阻止继续交付，而且不能通过缩小字号硬塞进节点。</div>
+    </div>
+  </section>
+  <footer data-lg-zone="footer" style="position:absolute;left:120px;top:1000px;width:1680px;height:34px;"></footer>
+</main>
+</body>
+</html>

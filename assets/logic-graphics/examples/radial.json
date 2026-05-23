@@ -1,0 +1,23 @@
+{
+  "canvas": {
+    "title": "中心扩散图突出一个核心概念",
+    "subtitle": "适合表达一个核心能力与周边要素之间的支撑关系。",
+    "footer": "SimpleUX Logic Graphics · radial"
+  },
+  "layout": { "type": "radial" },
+  "nodes": [
+    { "id": "core", "kind": "circle", "title": "稳定生成", "body": "组件、布局和质检共同约束", "emphasis": true, "badge": "核心" },
+    { "id": "tokens", "kind": "pill", "title": "统一 token", "body": "字号颜色线宽一致" },
+    { "id": "layout", "kind": "pill", "title": "布局算法", "body": "避免手写坐标" },
+    { "id": "text", "kind": "pill", "title": "文本容量", "body": "超量拆页或拆节点" },
+    { "id": "safe", "kind": "pill", "title": "安全区", "body": "不压标题和页脚" },
+    { "id": "qa", "kind": "pill", "title": "质检门禁", "body": "失败后必须返工" }
+  ],
+  "connectors": [
+    { "from": "core", "to": "tokens", "kind": "line" },
+    { "from": "core", "to": "layout", "kind": "line" },
+    { "from": "core", "to": "text", "kind": "line" },
+    { "from": "core", "to": "safe", "kind": "line" },
+    { "from": "core", "to": "qa", "kind": "line" }
+  ]
+}

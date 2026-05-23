@@ -1,0 +1,30 @@
+{
+  "canvas": {
+    "title": "从目标到执行形成三层递进",
+    "subtitle": "分层图用于表达上层原则、中层机制和下层动作的稳定关系。",
+    "footer": "SimpleUX Logic Graphics · stack"
+  },
+  "layout": { "type": "stack" },
+  "groups": [
+    { "id": "目标层", "title": "目标层" },
+    { "id": "机制层", "title": "机制层" },
+    { "id": "执行层", "title": "执行层" }
+  ],
+  "nodes": [
+    { "id": "goal", "group": "目标层", "kind": "pill", "title": "清晰目标", "body": "定义共同方向", "emphasis": true, "badge": "核心" },
+    { "id": "metric", "group": "目标层", "kind": "rect", "title": "衡量指标", "body": "确认判断口径" },
+    { "id": "team", "group": "机制层", "kind": "rect", "title": "协作机制", "body": "同步角色边界" },
+    { "id": "review", "group": "机制层", "kind": "rect", "title": "复盘节奏", "body": "稳定反馈循环" },
+    { "id": "action", "group": "执行层", "kind": "index", "title": "关键动作", "body": "把策略转为任务" },
+    { "id": "risk", "group": "执行层", "kind": "index", "title": "风险处理", "body": "提前设置预案" }
+  ],
+  "connectors": [
+    { "from": "goal", "to": "team", "kind": "arrow", "label": "牵引" },
+    { "from": "team", "to": "action", "kind": "arrow", "label": "落地" },
+    { "from": "metric", "to": "review", "kind": "arrow", "label": "校准" },
+    { "from": "review", "to": "risk", "kind": "arrow", "label": "修正" }
+  ],
+  "callouts": [
+    { "target": "goal", "title": "使用建议", "body": "每层最多放三到四个节点，避免层级失焦。" }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "canvas": {
+    "title": "闭环图表达持续反馈而不是线性终点",
+    "subtitle": "适合增长飞轮、运营循环、学习闭环和质量改进流程。",
+    "footer": "SimpleUX Logic Graphics · loop"
+  },
+  "layout": { "type": "loop" },
+  "nodes": [
+    { "id": "plan", "kind": "circle", "title": "计划", "body": "明确目标" },
+    { "id": "build", "kind": "circle", "title": "执行", "body": "形成产物", "emphasis": true },
+    { "id": "measure", "kind": "circle", "title": "衡量", "body": "获取数据" },
+    { "id": "learn", "kind": "circle", "title": "学习", "body": "修正判断" }
+  ],
+  "connectors": [
+    { "from": "plan", "to": "build", "kind": "curve", "label": "启动" },
+    { "from": "build", "to": "measure", "kind": "curve", "label": "观察" },
+    { "from": "measure", "to": "learn", "kind": "curve", "label": "洞察" },
+    { "from": "learn", "to": "plan", "kind": "curve", "label": "迭代" }
+  ],
+  "callouts": [
+    { "target": "build", "title": "闭环重点", "body": "强调当前环节，其他节点维持同级关系。" }
+  ]
+}

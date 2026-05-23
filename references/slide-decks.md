@@ -88,6 +88,21 @@ Deck 系统：
 
 Deck 中展示 App/Web/PC/移动端 UI 截图时，必须读取 `references/device-mockups.md`，优先使用 `assets/device-mockups/` 的真实设备样机壳，不要默认手画黑色圆角框。手机外壳和 PC 外壳层级不同；具体使用时机、长图裁切、透视外壳限制、PC 屏幕填充和组合方式见 `references/device-mockups.md`。
 
+### 逻辑图形页
+
+Deck 中出现模型图、关系图、路径图、系统图、流程图、矩阵图时，必须先读取 `references/logic-graphics.md`，并优先使用 `assets/logic-graphics/` 的组件库。
+
+执行规则：
+
+- 先把页面内容整理为 JSON：`canvas`、`layout`、`nodes`、`connectors`、`callouts`。
+- 使用 `scripts/render_logic_graphic.mjs` 生成完整 HTML 页面或可嵌入片段。
+- 组件根节点必须带 `data-logic-graphic`，固定 1920×1080 画布。
+- 文字优先使用 HTML 文本块，避免中文长句直接写入 SVG 单行文本。
+- 同一层级组件必须共享字号、线宽、圆角、颜色和间距 token。
+- 生成后运行 `scripts/verify_logic_graphics.mjs`，或在 `scripts/verify.py` 中加 `--logic-graphics`。
+
+图形库示例页只说明组件组合方式，不是固定模板。不要把参考图库或历史 PPTX 翻译成逐像素坐标；真实项目应根据当前页要表达的关系选择布局和组件。
+
 ### 出品方署名
 
 `assets/publisher/` 内置我司 SimpleUX 纯 logo：
@@ -208,4 +223,5 @@ PPTX 约束详见 `references/editable-pptx.md`。
 3. 随机打开 3 个 `slides/*.html` 单页检查。
 4. Playwright 批量截图，人工肉眼过一遍。
 5. 搜 `TODO` / `placeholder`，确认没有未替换内容。
-6. 如导出 PDF/PPTX，打开最终文件逐页检查。
+6. 如果页面包含 `data-logic-graphic`，运行逻辑图形质检并处理所有失败项。
+7. 如导出 PDF/PPTX，打开最终文件逐页检查。

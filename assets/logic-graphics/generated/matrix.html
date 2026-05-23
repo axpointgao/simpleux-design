@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, initial-scale=1">
+<title>矩阵图用于比较两个维度下的选择</title>
+<style>
+:root {
+  --lg-bg: #f7f8fb;
+  --lg-surface: #ffffff;
+  --lg-surface-soft: #f1f5f9;
+  --lg-ink: #111827;
+  --lg-muted: #64748b;
+  --lg-hairline: #d7dee8;
+  --lg-line: #8da0b6;
+  --lg-primary: #14532d;
+  --lg-primary-ink: #f8fafc;
+  --lg-accent: #2563eb;
+  --lg-accent-soft: #dbeafe;
+  --lg-warm: #f59e0b;
+  --lg-warm-soft: #fef3c7;
+  --lg-danger: #dc2626;
+  --lg-danger-soft: #fee2e2;
+  --lg-radius-sm: 14px;
+  --lg-radius-md: 22px;
+  --lg-radius-lg: 32px;
+  --lg-radius-pill: 999px;
+  --lg-shadow: 0 22px 50px rgba(15, 23, 42, 0.10);
+  --lg-shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.08);
+  --lg-title-size: 56px;
+  --lg-subtitle-size: 26px;
+  --lg-node-title-size: 30px;
+  --lg-node-body-size: 22px;
+  --lg-label-size: 20px;
+  --lg-badge-size: 18px;
+  --lg-callout-title-size: 24px;
+  --lg-callout-body-size: 19px;
+  --lg-line-width: 4px;
+  --lg-gap: 32px;
+  --lg-token-version: "logic-graphics-v1";
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 1920px;
+  min-width: 1920px;
+  height: 1080px;
+  min-height: 1080px;
+  overflow: hidden;
+  background: #0f172a;
+}
+
+.lg-page {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.98)),
+    var(--lg-bg);
+  color: var(--lg-ink);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  letter-spacing: 0;
+}
+
+.lg-page[data-lg-theme="simpleux-dark"] {
+  --lg-bg: #0f172a;
+  --lg-surface: #172033;
+  --lg-surface-soft: #111827;
+  --lg-ink: #f8fafc;
+  --lg-muted: #a6b4c8;
+  --lg-hairline: #334155;
+  --lg-line: #8aa2c6;
+  --lg-primary: #86efac;
+  --lg-primary-ink: #06230f;
+  --lg-accent: #60a5fa;
+  --lg-accent-soft: rgba(96, 165, 250, 0.18);
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 1)),
+    var(--lg-bg);
+}
+
+.lg-header {
+  position: absolute;
+  left: 120px;
+  top: 64px;
+  width: 1680px;
+  height: 126px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.lg-title {
+  max-width: 1220px;
+  font-size: var(--lg-title-size);
+  line-height: 1.08;
+  font-weight: 760;
+  letter-spacing: 0;
+  color: var(--lg-ink);
+  white-space: normal;
+}
+
+.lg-subtitle {
+  max-width: 1320px;
+  font-size: var(--lg-subtitle-size);
+  line-height: 1.42;
+  font-weight: 430;
+  color: var(--lg-muted);
+  white-space: normal;
+}
+
+.lg-main {
+  position: absolute;
+  left: 140px;
+  top: 226px;
+  width: 1640px;
+  height: 734px;
+}
+
+.lg-footer {
+  position: absolute;
+  left: 120px;
+  top: 1000px;
+  width: 1680px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--lg-muted);
+  font-size: 17px;
+  line-height: 1;
+}
+
+.lg-footer::before {
+  content: "";
+  width: 88px;
+  height: 4px;
+  border-radius: var(--lg-radius-pill);
+  background: var(--lg-primary);
+}
+
+.lg-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.lg-connector-layer {
+  z-index: 2;
+  overflow: visible;
+}
+
+.lg-group-layer {
+  z-index: 1;
+}
+
+.lg-node-layer,
+.lg-callout-layer,
+.lg-label-layer,
+.lg-badge-layer {
+  z-index: 3;
+}
+
+.lg-group {
+  position: absolute;
+  border: 1.5px solid rgba(141, 160, 182, 0.36);
+  border-radius: var(--lg-radius-lg);
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+}
+
+.lg-page[data-lg-theme="simpleux-dark"] .lg-group {
+  background: rgba(255, 255, 255, 0.045);
+  border-color: rgba(148, 163, 184, 0.34);
+}
+
+.lg-group-title {
+  position: absolute;
+  left: 28px;
+  top: 20px;
+  color: var(--lg-muted);
+  font-size: var(--lg-label-size);
+  font-weight: 650;
+  line-height: 1;
+}
+
+.lg-node {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  padding: 28px 30px;
+  border: 2px solid var(--lg-hairline);
+  background: var(--lg-surface);
+  color: var(--lg-ink);
+  box-shadow: var(--lg-shadow-soft);
+  text-align: center;
+  overflow: hidden;
+}
+
+.lg-node[data-lg-emphasis="true"] {
+  border-color: color-mix(in srgb, var(--lg-primary) 72%, var(--lg-hairline));
+  background: var(--lg-primary);
+  color: var(--lg-primary-ink);
+  box-shadow: var(--lg-shadow);
+}
+
+.lg-node--rect {
+  border-radius: var(--lg-radius-md);
+}
+
+.lg-node--pill {
+  border-radius: var(--lg-radius-pill);
+}
+
+.lg-node--circle {
+  border-radius: 50%;
+  padding: 34px;
+}
+
+.lg-node--diamond {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 34px 42px;
+}
+
+.lg-node--diamond::before {
+  content: "";
+  position: absolute;
+  inset: 10px 22px;
+  z-index: -1;
+  border: 2px solid var(--lg-hairline);
+  border-radius: var(--lg-radius-sm);
+  background: var(--lg-surface);
+  transform: rotate(45deg);
+  box-shadow: var(--lg-shadow-soft);
+}
+
+.lg-node--diamond[data-lg-emphasis="true"]::before {
+  border-color: var(--lg-primary);
+  background: var(--lg-primary);
+}
+
+.lg-node--index {
+  align-items: flex-start;
+  text-align: left;
+  border-radius: var(--lg-radius-md);
+  padding-left: 78px;
+}
+
+.lg-node-index {
+  position: absolute;
+  left: 26px;
+  top: 28px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--lg-accent-soft);
+  color: var(--lg-accent);
+  font-size: 18px;
+  font-weight: 760;
+}
+
+.lg-node-title {
+  font-size: var(--lg-node-title-size);
+  line-height: 1.14;
+  font-weight: 760;
+  overflow-wrap: anywhere;
+}
+
+.lg-node-body {
+  font-size: var(--lg-node-body-size);
+  line-height: 1.38;
+  font-weight: 420;
+  color: color-mix(in srgb, currentColor 78%, transparent);
+  overflow-wrap: anywhere;
+}
+
+.lg-badge {
+  position: absolute;
+  z-index: 4;
+  min-width: 72px;
+  max-width: 150px;
+  min-height: 34px;
+  padding: 8px 15px;
+  border-radius: var(--lg-radius-pill);
+  background: var(--lg-accent-soft);
+  color: var(--lg-accent);
+  border: 1px solid color-mix(in srgb, var(--lg-accent) 30%, transparent);
+  font-size: var(--lg-badge-size);
+  line-height: 1;
+  font-weight: 720;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lg-badge[data-lg-tone="warm"] {
+  background: var(--lg-warm-soft);
+  color: #92400e;
+  border-color: color-mix(in srgb, var(--lg-warm) 35%, transparent);
+}
+
+.lg-badge[data-lg-tone="danger"] {
+  background: var(--lg-danger-soft);
+  color: var(--lg-danger);
+  border-color: color-mix(in srgb, var(--lg-danger) 30%, transparent);
+}
+
+.lg-callout {
+  position: absolute;
+  z-index: 4;
+  padding: 22px 24px;
+  border-radius: var(--lg-radius-md);
+  border: 1.5px solid rgba(141, 160, 182, 0.42);
+  background: color-mix(in srgb, var(--lg-surface) 92%, transparent);
+  box-shadow: var(--lg-shadow-soft);
+}
+
+.lg-callout-title {
+  margin-bottom: 9px;
+  color: var(--lg-ink);
+  font-size: var(--lg-callout-title-size);
+  line-height: 1.18;
+  font-weight: 760;
+  overflow-wrap: anywhere;
+}
+
+.lg-callout-body {
+  color: var(--lg-muted);
+  font-size: var(--lg-callout-body-size);
+  line-height: 1.42;
+  font-weight: 430;
+  overflow-wrap: anywhere;
+}
+
+.lg-label,
+.lg-connector-label {
+  position: absolute;
+  z-index: 4;
+  min-height: 34px;
+  padding: 8px 14px;
+  border-radius: var(--lg-radius-pill);
+  background: color-mix(in srgb, var(--lg-surface) 86%, transparent);
+  color: var(--lg-muted);
+  border: 1px solid rgba(141, 160, 182, 0.32);
+  font-size: var(--lg-label-size);
+  line-height: 1;
+  font-weight: 650;
+  white-space: nowrap;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+.lg-connector-path {
+  fill: none;
+  stroke: var(--lg-line);
+  stroke-width: var(--lg-line-width);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.lg-connector-path[data-lg-dashed="true"] {
+  stroke-dasharray: 12 12;
+}
+
+.lg-connector-hitbox {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 18px;
+}
+
+</style>
+</head>
+<body>
+<main class="lg-page" data-logic-graphic="true" data-lg-component="GraphicFrame" data-lg-token-version="logic-graphics-v1" data-lg-theme="simpleux-light" style="width:1920px;height:1080px;">
+<header class="lg-header" data-lg-zone="header">
+<div class="lg-title" data-lg-text-role="canvas-title" data-lg-max-chars="30">矩阵图用于比较两个维度下的选择</div>
+<div class="lg-subtitle" data-lg-text-role="canvas-subtitle" data-lg-max-chars="40">节点保持同层级样式一致，通过强调态突出当前优先项。</div>
+</header>
+<section class="lg-main" data-lg-zone="main" data-lg-layout="matrix">
+<div class="lg-layer lg-group-layer"></div>
+<svg class="lg-layer lg-connector-layer" data-lg-component="GraphicConnectorLayer" viewBox="0 0 1640 734" width="1640" height="734" aria-hidden="true">
+<defs><marker id="lg-arrow" viewBox="0 0 16 16" refX="13" refY="8" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M 2 2 L 14 8 L 2 14 z" fill="var(--lg-line)"></path></marker></defs>
+
+</svg>
+<div class="lg-layer lg-node-layer"><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="a1" data-lg-kind="rect" data-lg-level="primary" data-lg-emphasis="true" data-lg-title-length="6" data-lg-body-length="4" style="left:91px;top:50px;width:390px;height:158px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">低风险高收益</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">优先推进</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="a2" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="6" data-lg-body-length="4" style="left:650px;top:61px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">中风险高收益</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">先做验证</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="a3" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="6" data-lg-body-length="4" style="left:1184px;top:61px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">高风险高收益</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">设定护栏</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="b1" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="6" data-lg-body-length="4" style="left:116px;top:299px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">低风险中收益</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">排入常规</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="b2" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="6" data-lg-body-length="4" style="left:650px;top:299px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">中风险中收益</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">小步试点</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="b3" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="6" data-lg-body-length="4" style="left:1184px;top:299px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">高风险中收益</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">暂缓投入</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="c1" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="6" data-lg-body-length="4" style="left:116px;top:537px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">低风险低收益</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">自动处理</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="c2" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="6" data-lg-body-length="4" style="left:650px;top:537px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">中风险低收益</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">减少关注</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="c3" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="6" data-lg-body-length="4" style="left:1184px;top:537px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">高风险低收益</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">主动放弃</div> </div></div>
+<div class="lg-layer lg-label-layer"></div>
+<div class="lg-layer lg-badge-layer"><div class="lg-badge" data-lg-component="GraphicBadge" data-lg-tone="default" data-lg-text-role="badge" data-lg-max-chars="8" style="left:429px;top:32px;width:72px;height:34px;">优先</div></div>
+<div class="lg-layer lg-callout-layer"><aside class="lg-callout" data-lg-component="GraphicCallout" data-lg-target="a1" style="left:525px;top:68px;width:330px;height:122px;"><div class="lg-callout-title" data-lg-text-role="callout-title" data-lg-max-chars="14">矩阵焦点</div><div class="lg-callout-body" data-lg-text-role="callout-body" data-lg-max-chars="56">只强调一个象限，其他节点保持降级。</div></aside></div>
+</section>
+<footer class="lg-footer" data-lg-zone="footer"><span>SimpleUX Logic Graphics · matrix</span></footer>
+</main>
+</body>
+</html>

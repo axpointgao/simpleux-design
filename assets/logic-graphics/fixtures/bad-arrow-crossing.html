@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Bad · Arrow Crossing</title>
+<style>
+html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: -apple-system, "PingFang SC", sans-serif; }
+.lg-node-title { font-size: 30px; }
+.lg-node-body { font-size: 22px; }
+.lg-node { position: absolute; width: 240px; height: 120px; border: 2px solid #d7dee8; }
+.lg-connector-path { stroke: #8da0b6; stroke-width: 4px; fill: none; }
+</style>
+</head>
+<body>
+<main data-logic-graphic="true" data-lg-component="GraphicFrame" data-lg-token-version="logic-graphics-v1" style="position:relative;width:1920px;height:1080px;">
+  <header data-lg-zone="header" style="position:absolute;left:120px;top:64px;width:1680px;height:126px;"></header>
+  <section data-lg-zone="main" style="position:absolute;left:140px;top:226px;width:1640px;height:734px;">
+    <svg data-lg-component="GraphicConnectorLayer" width="1640" height="734" viewBox="0 0 1640 734" style="position:absolute;left:0;top:0;">
+      <path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-from="a" data-lg-to="b" data-lg-points='[{"x":360,"y":320},{"x":1260,"y":320}]' d="M 360 320 L 1260 320"></path>
+    </svg>
+    <div class="lg-node" data-lg-component="GraphicNode" data-lg-node-id="a" data-lg-emphasis="false" style="left:120px;top:260px;">
+      <div class="lg-node-title" data-lg-max-chars="18">起点</div>
+      <div class="lg-node-body" data-lg-max-chars="48">连接线开始</div>
+    </div>
+    <div class="lg-node" data-lg-component="GraphicNode" data-lg-node-id="middle" data-lg-emphasis="false" style="left:700px;top:260px;">
+      <div class="lg-node-title" data-lg-max-chars="18">被压节点</div>
+      <div class="lg-node-body" data-lg-max-chars="48">线穿过文字区</div>
+    </div>
+    <div class="lg-node" data-lg-component="GraphicNode" data-lg-node-id="b" data-lg-emphasis="false" style="left:1260px;top:260px;">
+      <div class="lg-node-title" data-lg-max-chars="18">终点</div>
+      <div class="lg-node-body" data-lg-max-chars="48">连接线结束</div>
+    </div>
+  </section>
+  <footer data-lg-zone="footer" style="position:absolute;left:120px;top:1000px;width:1680px;height:34px;"></footer>
+</main>
+</body>
+</html>

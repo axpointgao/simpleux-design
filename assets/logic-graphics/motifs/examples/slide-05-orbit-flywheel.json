@@ -1,0 +1,15 @@
+{
+  "type": "orbit-flywheel",
+  "canvas": { "title": "P5 · 轨道飞轮指标" },
+  "center": { "title": "潜在累计销售增长", "metric": "50%" },
+  "satellites": [
+    { "title": "体验", "subtitle": "促进重复购买", "metric": "+7%" },
+    { "title": "曝光", "subtitle": "促进未来购买", "metric": "+30%" },
+    { "title": "转化", "subtitle": "促进即可购买", "metric": "+13%" }
+  ],
+  "notes": [
+    "现有客户留存最大化",
+    "打造积极的预期",
+    "确保消费者能买到品牌商品"
+  ]
+}

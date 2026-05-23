@@ -1,0 +1,22 @@
+{
+  "canvas": {
+    "title": "矩阵图用于比较两个维度下的选择",
+    "subtitle": "节点保持同层级样式一致，通过强调态突出当前优先项。",
+    "footer": "SimpleUX Logic Graphics · matrix"
+  },
+  "layout": { "type": "matrix", "columns": 3 },
+  "nodes": [
+    { "id": "a1", "kind": "rect", "title": "低风险高收益", "body": "优先推进", "emphasis": true, "badge": "优先" },
+    { "id": "a2", "kind": "rect", "title": "中风险高收益", "body": "先做验证" },
+    { "id": "a3", "kind": "rect", "title": "高风险高收益", "body": "设定护栏" },
+    { "id": "b1", "kind": "rect", "title": "低风险中收益", "body": "排入常规" },
+    { "id": "b2", "kind": "rect", "title": "中风险中收益", "body": "小步试点" },
+    { "id": "b3", "kind": "rect", "title": "高风险中收益", "body": "暂缓投入" },
+    { "id": "c1", "kind": "rect", "title": "低风险低收益", "body": "自动处理" },
+    { "id": "c2", "kind": "rect", "title": "中风险低收益", "body": "减少关注" },
+    { "id": "c3", "kind": "rect", "title": "高风险低收益", "body": "主动放弃" }
+  ],
+  "callouts": [
+    { "target": "a1", "title": "矩阵焦点", "body": "只强调一个象限，其他节点保持降级。" }
+  ]
+}

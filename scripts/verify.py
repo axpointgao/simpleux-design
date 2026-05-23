@@ -19,6 +19,7 @@ import sys
 import os
 import time
 from pathlib import Path
+import subprocess
 
 
 def parse_viewport(s):
@@ -26,7 +27,24 @@ def parse_viewport(s):
     return {'width': int(w), 'height': int(h)}
 
 
-def verify_html(html_path, viewports=None, slides=0, output_dir=None, show=False, wait=2000):
+def verify_logic_graphics(html_path):
+    script_path = Path(__file__).resolve().parent / "verify_logic_graphics.mjs"
+    if not script_path.exists():
+        print(f"ERROR: 逻辑图形质检脚本不存在: {script_path}")
+        return 1
+
+    print("\n→ 运行逻辑图形质检")
+    result = subprocess.run(
+        ["node", str(script_path), str(Path(html_path).resolve())],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+    print(result.stdout)
+    return result.returncode
+
+
+def verify_html(html_path, viewports=None, slides=0, output_dir=None, show=False, wait=2000, logic_graphics=False):
     try:
         from playwright.sync_api import sync_playwright
     except ImportError:
@@ -116,7 +134,11 @@ def verify_html(html_path, viewports=None, slides=0, output_dir=None, show=False
 
     print(f"\n📸 截图保存至: {output_dir}")
 
-    return 0 if not page_errors else 1
+    exit_code = 0 if not page_errors else 1
+    if logic_graphics:
+        exit_code = max(exit_code, verify_logic_graphics(html_path))
+
+    return exit_code
 
 
 def main():
@@ -135,6 +157,8 @@ def main():
                         help="非headless，打开真实浏览器窗口")
     parser.add_argument("--wait", type=int, default=2000,
                         help="打开页面后等待的毫秒数（默认2000）")
+    parser.add_argument("--logic-graphics", action="store_true",
+                        help="额外检查 data-logic-graphic 区域的出界、重叠、压字和容量问题")
 
     args = parser.parse_args()
 
@@ -147,6 +171,7 @@ def main():
         output_dir=args.output,
         show=args.show,
         wait=args.wait,
+        logic_graphics=args.logic_graphics,
     )
 
 

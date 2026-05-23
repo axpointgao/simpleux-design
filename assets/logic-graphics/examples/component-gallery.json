@@ -1,0 +1,29 @@
+{
+  "canvas": {
+    "title": "逻辑图形底层组件一览",
+    "subtitle": "此页用于确认节点、分组、连接线、徽标和旁注都能被稳定渲染。",
+    "footer": "SimpleUX Logic Graphics · components"
+  },
+  "layout": { "type": "modules", "columns": 3 },
+  "groups": [
+    { "id": "节点", "title": "GraphicNode" },
+    { "id": "关系", "title": "GraphicConnector" },
+    { "id": "辅助", "title": "Label · Badge · Callout" }
+  ],
+  "nodes": [
+    { "id": "circle", "group": "节点", "kind": "circle", "title": "圆形节点", "body": "中心或要素" },
+    { "id": "diamond", "group": "节点", "kind": "diamond", "title": "判断节点", "body": "分叉或条件" },
+    { "id": "pill", "group": "关系", "kind": "pill", "title": "胶囊节点", "body": "阶段标签", "emphasis": true, "badge": "示例" },
+    { "id": "index", "group": "关系", "kind": "index", "title": "编号节点", "body": "步骤排序" },
+    { "id": "calloutNode", "group": "辅助", "kind": "rect", "title": "旁注目标", "body": "用于解释重点" },
+    { "id": "badgeNode", "group": "辅助", "kind": "rect", "title": "状态徽标", "body": "短词高亮", "badge": "状态" }
+  ],
+  "connectors": [
+    { "from": "circle", "to": "pill", "kind": "arrow", "label": "箭头" },
+    { "from": "diamond", "to": "index", "kind": "elbow", "label": "折线" },
+    { "from": "pill", "to": "badgeNode", "kind": "curve", "label": "曲线" }
+  ],
+  "callouts": [
+    { "target": "calloutNode", "title": "旁注组件", "body": "只承载短解释，不替代正文段落。" }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "type": "dual-focus-cone",
+  "canvas": { "title": "", "theme": "takram" },
+  "left": {
+    "title": "视觉",
+    "subtitle": "Vision",
+    "points": [
+      "满足用户视觉偏好",
+      "满足产品体验统一性",
+      "实现商业上的成功"
+    ]
+  },
+  "right": {
+    "title": "交互",
+    "subtitle": "Interaction",
+    "points": [
+      "交互反馈一致性",
+      "保持简洁的流畅性",
+      "玩法简单无需思考"
+    ]
+  },
+  "axis": {
+    "top": "业务侧",
+    "middle": "客户侧",
+    "bottom": "用户侧"
+  }
+}

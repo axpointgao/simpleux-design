@@ -13,6 +13,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 
 - **交互原型**：App/Web 高保真原型、iOS/Android/浏览器/桌面窗口 mockup、可点击流程、设计 review demo；设备界面展示优先使用真实设备样机壳。
 - **幻灯片**：HTML-first deck、浏览器演示、PDF 导出、可编辑 PPTX 导出；客户交付 deck 按需处理 SimpleUX 出品方署名，并默认追加固定 SimpleUX 封底页；App/Web/PC 截图页优先使用真实设备样机壳。
+- **逻辑图形**：在 deck 或设计稿中生成模型图、关系图、路径图、系统图、流程图、矩阵图；优先使用底层图形组件库、数据驱动渲染和硬门禁质检。
 - **设计变体**：3 个差异化视觉方向、showcase 对比、Tweaks 实时调参。
 - **品牌资产**：logo、产品图、UI 截图、色值、字体、品牌规范收集与 `brand-spec.md` 固化。
 - **专家评审**：从哲学一致性、视觉层级、细节执行、功能性、创新性五维评分，并输出 Keep/Fix/Quick Wins。
@@ -21,7 +22,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 
 - 动画/视频导出、BGM/SFX、MP4/GIF 工作流。
 - voiceover 解说驱动动画。
-- 通用信息图或长图设计，除非它是幻灯片中的单页内容。
+- 通用长图设计，除非它是幻灯片中的单页内容。
 - 生产级 Web App、SEO 网站或需要后端的动态系统。
 
 ## 工作原则
@@ -34,9 +35,10 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 6. 反 AI slop、内容准则、字体/色彩/尺度规范见 `references/content-guidelines.md`。
 7. 原型任务读 `references/app-prototype.md`，并使用 `assets/ios_frame.jsx`、`assets/android_frame.jsx`、`assets/browser_window.jsx` 或 `assets/macos_window.jsx`；需要展示 App/Web/PC 设备界面时必须读 `references/device-mockups.md`。
 8. 幻灯片任务先读 `references/slide-decks.md`；需要可编辑 PPTX 时再读 `references/editable-pptx.md`；遇到导出、单文件 deck 或历史坑点时读 `references/deck-case-notes.md`。
-9. 设计变体和实时调参读 `references/tweaks-system.md`，风格方向先读 `references/design-styles.md`；需要完整 20 风格库时再读 `references/design-styles-full.md`；showcase 读 `assets/showcases/INDEX.md`。
-10. 交付前按 `references/verification.md` 做浏览器和 Playwright 验证。
-11. 需要设计评审时，按 `references/critique-guide.md` 输出评分和修复清单。
+9. 遇到模型图、关系图、路径图、系统图、流程图、矩阵图或逻辑图形页，先读 `references/logic-graphics.md`，再使用 `assets/logic-graphics/` 和 `scripts/render_logic_graphic.mjs`；不要临场手写无组件约束的自由 SVG。
+10. 设计变体和实时调参读 `references/tweaks-system.md`，风格方向先读 `references/design-styles.md`；需要完整 20 风格库时再读 `references/design-styles-full.md`；showcase 读 `assets/showcases/INDEX.md`。
+11. 交付前按 `references/verification.md` 做浏览器和 Playwright 验证；包含 `data-logic-graphic` 时加跑逻辑图形质检。
+12. 需要设计评审时，按 `references/critique-guide.md` 输出评分和修复清单。
 
 ## 默认工作流
 
@@ -56,6 +58,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 
 - 原型：选择 overview 平铺或 flow demo；App/Web/PC 设备界面展示必须优先用真实设备样机壳；关键流程必须可点。
 - 幻灯片：HTML 是源产物；PDF/PPTX 是派生物；需要可编辑 PPTX 时从第一行 HTML 遵守结构约束。
+- 逻辑图形：把内容转成 JSON 的组件、节点和关系，使用逻辑图形组件库生成 HTML/SVG；生成后必须跑硬门禁质检。
 - 变体：至少 3 个差异化方向，来自不同流派或不同设计维度；可用 Tweaks 面板让用户切换。
 - 品牌：真实资产优先，找不到 logo 或关键资产时停下问用户。
 - 评审：先给问题，按严重程度排序，再给可执行修复建议。
@@ -80,6 +83,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 - `references/device-mockups.md`：真实设备样机壳 overlay 资产和使用模板。
 - `references/react-setup.md`：单文件 HTML + React + Babel 原型规范。
 - `references/slide-decks.md`：HTML-first 幻灯片规范。
+- `references/logic-graphics.md`：逻辑图形组件库、布局原则、容量规则和质检门禁。
 - `references/deck-case-notes.md`：幻灯片完整案例、踩坑记录和导出细节，按需加载。
 - `references/editable-pptx.md`：可编辑 PPTX 硬约束。
 - `references/tweaks-system.md`：实时变体调参。
@@ -87,7 +91,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 - `references/design-styles-full.md`：完整 20 风格库，按需加载。
 - `references/verification.md`：浏览器/Playwright 验证。
 - `references/critique-guide.md`：五维专家评审。
-- `assets/`：设备框、设计画布、deck 拼接器和 showcase。
-- `scripts/`：验证、HTML deck 导 PDF/PPTX 的工具脚本。
+- `assets/`：设备框、设计画布、deck 拼接器、逻辑图形组件库和 showcase。
+- `scripts/`：验证、逻辑图形渲染/质检、HTML deck 导 PDF/PPTX 的工具脚本。
 - `package.json`：PDF/PPTX 导出脚本的 Node 依赖；使用脚本前在技能目录或项目目录安装依赖，并安装 Chromium。
 - `requirements.txt`：Python 验证脚本依赖。

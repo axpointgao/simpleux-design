@@ -1,0 +1,35 @@
+{
+  "type": "triangle-cycle",
+  "canvas": { "title": "", "theme": "takram" },
+  "topLabel": "设计功能",
+  "topBullets": [
+    "建立共同目标与评价标准",
+    "把行动、反馈、优化合成闭环"
+  ],
+  "sideLabels": {
+    "left": "设计功能",
+    "right": "设计功能"
+  },
+  "levels": [
+    { "title": "洞察层" },
+    { "title": "转化层" },
+    { "title": "协同层" }
+  ],
+  "callouts": [
+    {
+      "slot": "left",
+      "title": "输入侧",
+      "lines": ["识别关键对象", "沉淀约束条件", "统一判断口径"]
+    },
+    {
+      "slot": "right",
+      "title": "输出侧",
+      "lines": ["形成可执行方案", "同步角色责任", "推动结果落地"]
+    },
+    {
+      "slot": "bottom",
+      "title": "反馈侧",
+      "lines": ["复盘偏差", "刷新策略"]
+    }
+  ]
+}

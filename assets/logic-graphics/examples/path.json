@@ -1,0 +1,24 @@
+{
+  "canvas": {
+    "title": "路径图把复杂过程压成可执行阶段",
+    "subtitle": "适合表达流程、路线、阶段推进和交付节奏。",
+    "footer": "SimpleUX Logic Graphics · path"
+  },
+  "layout": { "type": "path" },
+  "nodes": [
+    { "id": "discover", "kind": "index", "title": "识别问题", "body": "收集上下文与约束", "badge": "01" },
+    { "id": "frame", "kind": "index", "title": "定义结构", "body": "拆解对象和关系", "badge": "02" },
+    { "id": "compose", "kind": "index", "title": "组合图形", "body": "选择组件与布局", "emphasis": true, "badge": "03" },
+    { "id": "verify", "kind": "index", "title": "运行质检", "body": "检查出界和重叠", "badge": "04" },
+    { "id": "ship", "kind": "index", "title": "嵌入页面", "body": "进入 deck 或报告", "badge": "05" }
+  ],
+  "connectors": [
+    { "from": "discover", "to": "frame", "kind": "arrow" },
+    { "from": "frame", "to": "compose", "kind": "arrow" },
+    { "from": "compose", "to": "verify", "kind": "arrow" },
+    { "from": "verify", "to": "ship", "kind": "arrow" }
+  ],
+  "callouts": [
+    { "target": "verify", "title": "硬门禁", "body": "失败样例必须返工，不用缩小字号硬塞。" }
+  ]
+}

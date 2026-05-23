@@ -1,0 +1,30 @@
+{
+  "type": "hub-orbit-network",
+  "canvas": { "title": "", "theme": "takram" },
+  "source": {
+    "title": "发起源"
+  },
+  "hub": {
+    "title": "核心",
+    "subtitle": "Service"
+  },
+  "orbitNodes": [
+    { "title": "用" },
+    { "title": "想" },
+    { "title": "拼" },
+    { "title": "比" }
+  ],
+  "orbitLabels": {
+    "top": "价值度",
+    "left": "品质感",
+    "right": "效益比",
+    "bottom": "信任感",
+    "outerTop": "品牌传递",
+    "outerBottom": "价值认同"
+  },
+  "targets": [
+    { "title": "参与者A" },
+    { "title": "参与者B" },
+    { "title": "参与者C" }
+  ]
+}
