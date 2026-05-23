@@ -1,0 +1,39 @@
+{
+  "type": "deployment-orbit-steps",
+  "canvas": { "title": "", "theme": "takram" },
+  "title": {
+    "heading": "数字员工部署实施关键步骤",
+    "subtitle": "依托行业真"
+  },
+  "center": {
+    "title": "双模协同",
+    "subtitle": "关键文本信息替换"
+  },
+  "steps": [
+    { "title": "需求\n调研" },
+    { "title": "方案\n设计" },
+    { "title": "流程\n建模" },
+    { "title": "系统\n集成" },
+    { "title": "数据\n对接" },
+    { "title": "开发\n配置" },
+    { "title": "场景\n测试" }
+  ],
+  "leftMilestones": [
+    { "title": "调研", "subtitle": "需求精准定位" },
+    { "title": "规划", "subtitle": "整体方案规划" },
+    { "title": "建模", "subtitle": "业务流程梳理" }
+  ],
+  "rightMilestones": [
+    { "title": "监控", "subtitle": "全量业务上线" },
+    { "title": "迭代", "subtitle": "全员实操培训" },
+    { "title": "复盘", "subtitle": "实时状态监控" }
+  ],
+  "arcLabels": [
+    { "title": "集成", "subtitle": "系统接口开发" },
+    { "title": "测试", "subtitle": "数据资源打通" },
+    { "title": "上线", "subtitle": "模型配置调试" },
+    { "title": "培训", "subtitle": "多场景联调测" },
+    { "title": "优化", "subtitle": "风险提前排查" },
+    { "title": "运维", "subtitle": "小范围试点运" }
+  ]
+}

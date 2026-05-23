@@ -1,0 +1,29 @@
+{
+  "type": "layered-core-diagnosis",
+  "canvas": { "title": "", "theme": "takram" },
+  "topInputs": [
+    { "title": "用户\n调研" },
+    { "title": "业务\n梳理" },
+    { "title": "行业\n趋势" },
+    { "title": "数据\n分析" }
+  ],
+  "cores": [
+    { "title": "产品现状" },
+    { "title": "品牌DNA" }
+  ],
+  "leftRows": [
+    { "title": "产品层面", "lines": ["这里是文字，这里是文字"] },
+    { "title": "结构层面", "lines": ["这里是文字，这里是文字", "这里是文字，这里是文字"] },
+    { "title": "视觉层面", "lines": ["这里是文字，这里是文字"] }
+  ],
+  "rightRows": [
+    { "title": "使命愿景", "lines": ["这里是文字，这里是文字", "这里是文字，这里是文字"] },
+    { "title": "核心价值", "lines": ["这里是文字，这里是文字", "这里是文字，这里是文字"] },
+    { "title": "品牌特征", "lines": ["这里是文字，这里是文字"] }
+  ],
+  "bottomItems": [
+    { "title": "结构不清晰" },
+    { "title": "品牌感知弱" },
+    { "title": "体验不友好" }
+  ]
+}

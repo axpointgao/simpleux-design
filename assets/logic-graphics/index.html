@@ -317,6 +317,8 @@
     <button type="button" data-id="motif:slide-07-hub-orbit-network">P7 中心轨道网络</button>
     <button type="button" data-id="motif:slide-08-ribbon-stage-pipeline">P8 阶段通道推进</button>
     <button type="button" data-id="motif:slide-09-triad-orbit-concept">P9 三元环绕概念</button>
+    <button type="button" data-id="motif:slide-10-layered-core-diagnosis">P10 分层核心诊断</button>
+    <button type="button" data-id="motif:slide-11-deployment-orbit-steps">P11 部署轨道步骤</button>
   </div>
 </aside>
 
@@ -426,6 +428,14 @@ const items = {
   "motif:slide-09-triad-orbit-concept": {
     title: "P9 三元环绕概念",
     description: "从用户挑选样例抽出的母题组件，适合表达中心概念、三个环绕构成要素、循环关系和两侧属性标签组。"
+  },
+  "motif:slide-10-layered-core-diagnosis": {
+    title: "P10 分层核心诊断",
+    description: "从用户挑选样例抽出的母题组件，适合表达顶部输入要素、中心双核心、左右分层说明和底部问题标签。"
+  },
+  "motif:slide-11-deployment-orbit-steps": {
+    title: "P11 部署轨道步骤",
+    description: "从用户提供截图抽出的母题组件，适合表达中心协同能力、半环部署步骤、外侧里程碑和步骤间动作说明。"
   }
 };
 
@@ -453,7 +463,9 @@ function jsonTemplate(id) {
       "slide-06-dual-focus-cone": "dual-focus-cone",
       "slide-07-hub-orbit-network": "hub-orbit-network",
       "slide-08-ribbon-stage-pipeline": "ribbon-stage-pipeline",
-      "slide-09-triad-orbit-concept": "triad-orbit-concept"
+      "slide-09-triad-orbit-concept": "triad-orbit-concept",
+      "slide-10-layered-core-diagnosis": "layered-core-diagnosis",
+      "slide-11-deployment-orbit-steps": "deployment-orbit-steps"
     };
     return {
       type: typeMap[motifId],

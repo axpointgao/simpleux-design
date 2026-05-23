@@ -129,6 +129,12 @@ function resolveMotifStyle(data) {
       triadSoft: userTokens.triadSoft || styleTokens.triadSoft || styleTokens.focusConeLeft || styleTokens.cycleAccentSoft || mergedTokens.cycleAccentSoft,
       triadLine: userTokens.triadLine || styleTokens.triadLine || styleTokens.cycleRing || mergedTokens.networkLine,
       triadInk: userTokens.triadInk || styleTokens.triadInk || styleTokens.focusInk || styleTokens.cycleInk || mergedTokens.networkInk,
+      layeredPrimary: userTokens.layeredPrimary || styleTokens.layeredPrimary || styleTokens.focusLeft || styleTokens.cycleAccent || mergedTokens.networkPrimary,
+      layeredDark: userTokens.layeredDark || styleTokens.layeredDark || styleTokens.focusRight || "#1f2c3b",
+      layeredSoft: userTokens.layeredSoft || styleTokens.layeredSoft || styleTokens.focusConeLeft || styleTokens.cycleAccentSoft || mergedTokens.cycleAccentSoft,
+      layeredLine: userTokens.layeredLine || styleTokens.layeredLine || styleTokens.cycleRing || mergedTokens.networkLine,
+      layeredInk: userTokens.layeredInk || styleTokens.layeredInk || styleTokens.focusInk || styleTokens.cycleInk || mergedTokens.networkInk,
+      layeredMuted: userTokens.layeredMuted || styleTokens.layeredMuted || styleTokens.cycleMuted || "#7c8794",
     },
   };
 }
@@ -399,6 +405,95 @@ export function renderOrbitFlywheel(data) {
 </div>
 ${satelliteHtml}
 ${notes}`);
+}
+
+function deploymentStepNodeHtml(step, index) {
+  const positions = [
+    { x: 314, y: 873 },
+    { x: 438, y: 634 },
+    { x: 651, y: 471 },
+    { x: 913, y: 413 },
+    { x: 1175, y: 471 },
+    { x: 1388, y: 634 },
+    { x: 1512, y: 873 },
+  ];
+  const pos = positions[index];
+  if (!pos) return "";
+  return `<div class="tm-deploy-step-node" data-lg-component="GraphicNode" data-lg-node-id="deploy-step-${index + 1}" style="left:${pos.x}px;top:${pos.y}px;">
+    <span data-lg-text-role="部署步骤节点" data-lg-max-chars="8">${esc(step.title || step.label || step)}</span>
+  </div>`;
+}
+
+function deploymentMilestoneHtml(item, side, index) {
+  const positions = {
+    left: [
+      { x: 32, y: 675 },
+      { x: 135, y: 520 },
+      { x: 353, y: 337 },
+    ],
+    right: [
+      { x: 1357, y: 337 },
+      { x: 1575, y: 520 },
+      { x: 1678, y: 675 },
+    ],
+  };
+  const pos = positions[side]?.[index];
+  if (!pos) return "";
+  return `<article class="tm-deploy-milestone ${side}" data-lg-component="GraphicCallout" style="left:${pos.x}px;top:${pos.y}px;">
+    <i aria-hidden="true"></i>
+    <div>
+      <strong data-lg-text-role="外侧阶段标签" data-lg-max-chars="4">${esc(item.title || item.label || "阶段")}</strong>
+      <span data-lg-text-role="外侧阶段说明" data-lg-max-chars="14">${esc(item.subtitle || item.body || "")}</span>
+    </div>
+  </article>`;
+}
+
+function deploymentArcLabelHtml(item, index) {
+  const positions = [
+    { x: 492, y: 868 },
+    { x: 617, y: 711 },
+    { x: 778, y: 633 },
+    { x: 986, y: 633 },
+    { x: 1147, y: 711 },
+    { x: 1272, y: 868 },
+  ];
+  const pos = positions[index];
+  if (!pos) return "";
+  return `<div class="tm-deploy-arc-label" data-lg-component="GraphicLabel" data-lg-text-role="步骤关系标签" data-lg-max-chars="16" style="left:${pos.x}px;top:${pos.y}px;">
+    <strong>${esc(item.title || item.label || "")}</strong>
+    <span>${esc(item.subtitle || item.body || "")}</span>
+  </div>`;
+}
+
+export function renderDeploymentOrbitSteps(data) {
+  const title = data.title || {};
+  const center = data.center || {};
+  const steps = (data.steps || []).slice(0, 7);
+  const leftMilestones = (data.leftMilestones || []).slice(0, 3);
+  const rightMilestones = (data.rightMilestones || []).slice(0, 3);
+  const arcLabels = (data.arcLabels || []).slice(0, 6);
+  const motifStyle = resolveMotifStyle(data);
+  const themeVars = cssVarTokens(motifStyle.tokens);
+  return frame(data, `
+<div class="tm-deploy-orbit" data-template-style="${esc(motifStyle.styleName)}"${themeVars}>
+<svg class="tm-canvas" viewBox="0 0 ${CANVAS.width} ${CANVAS.height}" aria-hidden="true">
+  <circle class="tm-deploy-dome" cx="960" cy="1080" r="820"></circle>
+  <path class="tm-deploy-outer-track" d="M 340 1080 A 620 620 0 0 1 1580 1080"></path>
+  <path class="tm-deploy-inner-track" d="M 530 1080 A 430 430 0 0 1 1390 1080"></path>
+</svg>
+<header class="tm-deploy-title" data-lg-component="GraphicLabel">
+  <strong data-lg-text-role="图形标题" data-lg-max-chars="18">${esc(title.heading || "数字员工部署实施关键步骤")}</strong>
+  <span data-lg-text-role="图形副标题" data-lg-max-chars="12">${esc(title.subtitle || "依托行业真")}</span>
+</header>
+<div class="tm-deploy-center" data-lg-component="GraphicNode" data-lg-node-id="deploy-center" data-lg-emphasis="true">
+  <strong data-lg-text-role="中心标题" data-lg-max-chars="8">${esc(center.title || "双模协同")}</strong>
+  <span data-lg-text-role="中心说明" data-lg-max-chars="12">${esc(center.subtitle || "关键文本信息替换")}</span>
+</div>
+${steps.map((step, index) => deploymentStepNodeHtml(step, index)).join("")}
+${leftMilestones.map((item, index) => deploymentMilestoneHtml(item, "left", index)).join("")}
+${rightMilestones.map((item, index) => deploymentMilestoneHtml(item, "right", index)).join("")}
+${arcLabels.map((item, index) => deploymentArcLabelHtml(item, index)).join("")}
+</div>`);
 }
 
 function focusPointHtml(item, side, index) {
@@ -716,14 +811,104 @@ ${pillGroups.right.map((item, index) => triadPillHtml(item, "right", index)).joi
 </div>`);
 }
 
+function layeredInputHtml(item, index) {
+  const positions = [
+    { x: 586, y: 131 },
+    { x: 784, y: 131 },
+    { x: 982, y: 131 },
+    { x: 1180, y: 131 },
+  ];
+  const pos = positions[index];
+  if (!pos) return "";
+  return `<div class="tm-layered-input" data-lg-component="GraphicNode" data-lg-node-id="input-${index + 1}" style="left:${pos.x}px;top:${pos.y}px;">
+    <span data-lg-text-role="顶部输入节点" data-lg-max-chars="8">${esc(item.title || item.label || item)}</span>
+  </div>`;
+}
+
+function layeredCoreHtml(item, index) {
+  const positions = [
+    { x: 720, y: 448, tone: "primary" },
+    { x: 980, y: 448, tone: "dark" },
+  ];
+  const pos = positions[index];
+  if (!pos) return "";
+  return `<div class="tm-layered-core-node ${pos.tone}" data-lg-component="GraphicNode" data-lg-node-id="core-${index + 1}" style="left:${pos.x}px;top:${pos.y}px;">
+    <span data-lg-text-role="核心节点" data-lg-max-chars="10">${esc(item.title || item.label || item)}</span>
+  </div>`;
+}
+
+function layeredSideRowHtml(row, side, index) {
+  const y = [350, 506, 662][index];
+  if (y === undefined) return "";
+  const left = side === "left" ? 48 : 1352;
+  const labelLeft = side === "left" ? 336 : 1372;
+  const textLeft = side === "left" ? 68 : 1610;
+  const titleTone = side === "left" ? "primary" : "muted";
+  const lines = row.lines || (row.body ? [row.body] : []);
+  const text = lines.slice(0, 2).map((line) => `<span>${esc(line)}</span>`).join("");
+  return `<article class="tm-layered-side-row ${side}" data-lg-component="GraphicCallout" style="left:${left}px;top:${y}px;">
+    <div class="tm-layered-row-label ${titleTone}" data-lg-component="GraphicBadge" data-lg-text-role="${side === "left" ? "左侧层级标签" : "右侧属性标签"}" data-lg-max-chars="8" style="left:${labelLeft - left}px;">${esc(row.title || row.label || "标签")}</div>
+    <div class="tm-layered-row-copy" data-lg-component="GraphicLabel" data-lg-text-role="侧边说明" data-lg-max-chars="34" style="left:${textLeft - left}px;">${text}</div>
+  </article>`;
+}
+
+function layeredBottomPillHtml(item, index) {
+  const positions = [
+    { x: 496, y: 825 },
+    { x: 816, y: 825 },
+    { x: 1136, y: 825 },
+  ];
+  const pos = positions[index];
+  if (!pos) return "";
+  return `<div class="tm-layered-bottom-pill" data-lg-component="GraphicBadge" data-lg-text-role="底部问题标签" data-lg-max-chars="10" style="left:${pos.x}px;top:${pos.y}px;">${esc(item.title || item.label || item)}</div>`;
+}
+
+export function renderLayeredCoreDiagnosis(data) {
+  const topInputs = (data.topInputs || []).slice(0, 4);
+  const cores = (data.cores || []).slice(0, 2);
+  const leftRows = (data.leftRows || []).slice(0, 3);
+  const rightRows = (data.rightRows || []).slice(0, 3);
+  const bottomItems = (data.bottomItems || []).slice(0, 3);
+  const motifStyle = resolveMotifStyle(data);
+  const themeVars = cssVarTokens(motifStyle.tokens);
+  return frame(data, `
+<div class="tm-layered-diagnosis" data-template-style="${esc(motifStyle.styleName)}"${themeVars}>
+<svg class="tm-canvas" viewBox="0 0 ${CANVAS.width} ${CANVAS.height}" aria-hidden="true">
+  <defs>
+    <linearGradient id="tm-layered-bridge" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="var(--tm-layered-primary)" stop-opacity="0"></stop>
+      <stop offset="36%" stop-color="var(--tm-layered-primary)" stop-opacity="0.95"></stop>
+      <stop offset="64%" stop-color="var(--tm-layered-primary)" stop-opacity="0.95"></stop>
+      <stop offset="100%" stop-color="var(--tm-layered-primary)" stop-opacity="0"></stop>
+    </linearGradient>
+  </defs>
+  <ellipse class="tm-layered-back-ring" cx="960" cy="565" rx="600" ry="420"></ellipse>
+  <path class="tm-layered-bridge top" d="M 920 300 L 1000 300 C 980 335 980 375 1000 410 L 920 410 C 940 374 940 335 920 300 Z"></path>
+  <path class="tm-layered-bridge bottom" d="M 920 705 L 1000 705 C 980 742 980 782 1000 820 L 920 820 C 940 782 940 742 920 705 Z"></path>
+  <polygon class="tm-layered-side-tab left" points="690,520 650,548 690,576"></polygon>
+  <polygon class="tm-layered-side-tab right" points="1230,520 1270,548 1230,576"></polygon>
+</svg>
+<section class="tm-layered-top-group" data-lg-component="GraphicGroup"></section>
+<section class="tm-layered-core-group" data-lg-component="GraphicGroup"></section>
+<section class="tm-layered-bottom-group" data-lg-component="GraphicGroup"></section>
+${topInputs.map((item, index) => layeredInputHtml(item, index)).join("")}
+${cores.map((item, index) => layeredCoreHtml(item, index)).join("")}
+${leftRows.map((row, index) => layeredSideRowHtml(row, "left", index)).join("")}
+${rightRows.map((row, index) => layeredSideRowHtml(row, "right", index)).join("")}
+${bottomItems.map((item, index) => layeredBottomPillHtml(item, index)).join("")}
+</div>`);
+}
+
 export function renderTemplateMotif(data) {
   if (data.type === "layered-stack-3d") return renderLayeredStack3D(data);
   if (data.type === "split-pyramid-matrix") return renderSplitPyramidMatrix(data);
   if (data.type === "triangle-cycle") return renderTriangleCycle(data);
   if (data.type === "orbit-flywheel") return renderOrbitFlywheel(data);
+  if (data.type === "deployment-orbit-steps") return renderDeploymentOrbitSteps(data);
   if (data.type === "dual-focus-cone") return renderDualFocusCone(data);
   if (data.type === "hub-orbit-network") return renderHubOrbitNetwork(data);
   if (data.type === "ribbon-stage-pipeline") return renderRibbonStagePipeline(data);
   if (data.type === "triad-orbit-concept") return renderTriadOrbitConcept(data);
+  if (data.type === "layered-core-diagnosis") return renderLayeredCoreDiagnosis(data);
   throw new Error(`未知模板母题类型：${data.type}`);
 }
