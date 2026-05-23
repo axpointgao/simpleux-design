@@ -315,6 +315,8 @@
     <button type="button" data-id="motif:slide-05-orbit-flywheel">P5 轨道飞轮指标</button>
     <button type="button" data-id="motif:slide-06-dual-focus-cone">P6 双侧聚焦对照</button>
     <button type="button" data-id="motif:slide-07-hub-orbit-network">P7 中心轨道网络</button>
+    <button type="button" data-id="motif:slide-08-ribbon-stage-pipeline">P8 阶段通道推进</button>
+    <button type="button" data-id="motif:slide-09-triad-orbit-concept">P9 三元环绕概念</button>
   </div>
 </aside>
 
@@ -416,6 +418,14 @@ const items = {
   "motif:slide-07-hub-orbit-network": {
     title: "P7 中心轨道网络",
     description: "从用户挑选样例抽出的母题组件，适合表达发起源、中心枢纽、轨道要素和外部结果节点之间的扩散与反馈关系。"
+  },
+  "motif:slide-08-ribbon-stage-pipeline": {
+    title: "P8 阶段通道推进",
+    description: "从用户挑选样例抽出的母题组件，适合表达起点、若干中间阶段、终点，以及外部输入或校准标签共同形成的推进管道。"
+  },
+  "motif:slide-09-triad-orbit-concept": {
+    title: "P9 三元环绕概念",
+    description: "从用户挑选样例抽出的母题组件，适合表达中心概念、三个环绕构成要素、循环关系和两侧属性标签组。"
   }
 };
 
@@ -441,7 +451,9 @@ function jsonTemplate(id) {
       "slide-04-triangle-cycle": "triangle-cycle",
       "slide-05-orbit-flywheel": "orbit-flywheel",
       "slide-06-dual-focus-cone": "dual-focus-cone",
-      "slide-07-hub-orbit-network": "hub-orbit-network"
+      "slide-07-hub-orbit-network": "hub-orbit-network",
+      "slide-08-ribbon-stage-pipeline": "ribbon-stage-pipeline",
+      "slide-09-triad-orbit-concept": "triad-orbit-concept"
     };
     return {
       type: typeMap[motifId],

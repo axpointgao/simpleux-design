@@ -117,6 +117,18 @@ function resolveMotifStyle(data) {
       networkDark: userTokens.networkDark || styleTokens.networkDark || styleTokens.focusRight || "#1f2c3b",
       networkLine: userTokens.networkLine || styleTokens.networkLine || styleTokens.cycleRing || mergedTokens.networkLine,
       networkInk: userTokens.networkInk || styleTokens.networkInk || styleTokens.focusInk || styleTokens.cycleInk || mergedTokens.networkInk,
+      ribbonPrimary: userTokens.ribbonPrimary || styleTokens.ribbonPrimary || styleTokens.focusLeft || styleTokens.cycleAccent || mergedTokens.networkPrimary,
+      ribbonDark: userTokens.ribbonDark || styleTokens.ribbonDark || styleTokens.focusRight || "#1f2c3b",
+      ribbonSoft: userTokens.ribbonSoft || styleTokens.ribbonSoft || styleTokens.focusConeLeft || styleTokens.cycleAccentSoft || mergedTokens.cycleAccentSoft,
+      ribbonLine: userTokens.ribbonLine || styleTokens.ribbonLine || styleTokens.cycleRing || mergedTokens.networkLine,
+      ribbonInk: userTokens.ribbonInk || styleTokens.ribbonInk || styleTokens.focusInk || styleTokens.cycleInk || mergedTokens.networkInk,
+      ribbonMuted: userTokens.ribbonMuted || styleTokens.ribbonMuted || styleTokens.cycleMuted || "#7c8794",
+      ribbonShadow: userTokens.ribbonShadow || styleTokens.ribbonShadow || styleTokens.cycleShadow || "0 14px 34px rgba(15, 23, 42, 0.10)",
+      triadPrimary: userTokens.triadPrimary || styleTokens.triadPrimary || styleTokens.focusLeft || styleTokens.cycleAccent || mergedTokens.networkPrimary,
+      triadDark: userTokens.triadDark || styleTokens.triadDark || styleTokens.focusRight || "#1f2c3b",
+      triadSoft: userTokens.triadSoft || styleTokens.triadSoft || styleTokens.focusConeLeft || styleTokens.cycleAccentSoft || mergedTokens.cycleAccentSoft,
+      triadLine: userTokens.triadLine || styleTokens.triadLine || styleTokens.cycleRing || mergedTokens.networkLine,
+      triadInk: userTokens.triadInk || styleTokens.triadInk || styleTokens.focusInk || styleTokens.cycleInk || mergedTokens.networkInk,
     },
   };
 }
@@ -534,6 +546,176 @@ ${targets.map((target, index) => hubTargetHtml(target, index)).join("")}
 </div>`);
 }
 
+function ribbonBadgeHtml(badge, owner, index) {
+  const startPositions = {
+    top: { x: 180, y: 310 },
+    right: { x: 326, y: 485 },
+    bottom: { x: 180, y: 690 },
+  };
+  const endPositions = {
+    "top-left": { x: 1452, y: 365 },
+    "bottom-left": { x: 1452, y: 645 },
+    top: { x: 1452, y: 365 },
+    bottom: { x: 1452, y: 645 },
+  };
+  const fallback = owner === "start"
+    ? [{ x: 180, y: 310 }, { x: 326, y: 485 }, { x: 180, y: 690 }]
+    : [{ x: 1452, y: 365 }, { x: 1452, y: 645 }];
+  const positions = owner === "start" ? startPositions : endPositions;
+  const pos = positions[badge.position] || fallback[index % fallback.length];
+  return `<div class="tm-ribbon-badge ${owner}" data-lg-component="GraphicBadge" style="left:${pos.x}px;top:${pos.y}px;"><span data-lg-text-role="阶段辅助标签" data-lg-max-chars="8">${esc(badge.title || badge.label || "短标签")}</span></div>`;
+}
+
+function ribbonStageHtml(stage, index, total) {
+  const positions = total <= 2
+    ? [{ x: 545, y: 360 }, { x: 1015, y: 360 }]
+    : [{ x: 485, y: 360 }, { x: 815, y: 360 }, { x: 1145, y: 360 }];
+  const pos = positions[index] || positions[index % positions.length];
+  const lines = stage.lines || (stage.body ? [stage.body] : []);
+  return `<article class="tm-ribbon-stage" data-lg-component="GraphicGroup" style="left:${pos.x}px;top:${pos.y}px;">
+    <div class="tm-ribbon-stage-dot" data-lg-component="GraphicNode" data-lg-node-id="stage-${index + 1}">
+      <span data-lg-text-role="阶段标题" data-lg-max-chars="10">${esc(stage.title || `阶段${index + 1}`)}</span>
+      <div class="tm-ribbon-stage-copy" data-lg-component="GraphicLabel" data-lg-text-role="阶段说明" data-lg-max-chars="42">
+        ${lines.slice(0, 2).map((line) => `<span>${esc(line)}</span>`).join("")}
+      </div>
+    </div>
+  </article>`;
+}
+
+export function renderRibbonStagePipeline(data) {
+  const start = data.start || {};
+  const end = data.end || {};
+  const stages = (data.stages || []).slice(0, 3);
+  const normalizedStages = stages.length ? stages : [
+    { title: "阶段一", lines: ["短说明", "短说明"] },
+    { title: "阶段二", lines: ["短说明", "短说明"] },
+  ];
+  const startBadges = (start.badges || data.badges?.start || []).slice(0, 3);
+  const endBadges = (end.badges || data.badges?.end || []).slice(0, 2);
+  const motifStyle = resolveMotifStyle(data);
+  const themeVars = cssVarTokens(motifStyle.tokens);
+  return frame(data, `
+<div class="tm-ribbon-pipeline" data-template-style="${esc(motifStyle.styleName)}"${themeVars}>
+<svg class="tm-canvas" viewBox="0 0 ${CANVAS.width} ${CANVAS.height}" aria-hidden="true">
+  <defs>
+    <linearGradient id="tm-ribbon-band-fill" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="var(--tm-ribbon-soft)" stop-opacity="0.76"></stop>
+      <stop offset="70%" stop-color="var(--tm-ribbon-soft)" stop-opacity="0.62"></stop>
+      <stop offset="100%" stop-color="var(--tm-ribbon-soft)" stop-opacity="0"></stop>
+    </linearGradient>
+    <linearGradient id="tm-ribbon-arrow-fill" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="var(--tm-ribbon-primary)" stop-opacity="0.18"></stop>
+      <stop offset="42%" stop-color="var(--tm-ribbon-primary)" stop-opacity="0.72"></stop>
+      <stop offset="100%" stop-color="var(--tm-ribbon-primary)" stop-opacity="1"></stop>
+    </linearGradient>
+  </defs>
+  <path class="tm-ribbon-band" d="M 304 486 L 1354 -30 L 1920 -30 L 1920 1110 L 1336 1110 L 304 642 Z"></path>
+  <circle class="tm-ribbon-end-ring start" cx="214" cy="560" r="184"></circle>
+  <circle class="tm-ribbon-end-ring end" cx="1712" cy="560" r="184"></circle>
+  <path class="tm-ribbon-stage-arc one top" d="M 672 270 C 710 352 734 443 744 523"></path>
+  <path class="tm-ribbon-stage-arc one bottom" d="M 744 597 C 732 684 704 774 666 845"></path>
+  <path class="tm-ribbon-stage-arc two top" d="M 1084 90 C 1144 226 1190 384 1208 523"></path>
+  <path class="tm-ribbon-stage-arc two bottom" d="M 1208 597 C 1190 738 1144 895 1084 1030"></path>
+  <path class="tm-ribbon-flow" d="M 920 514 L 980 560 L 920 606 Z"></path>
+  <path class="tm-ribbon-flow" d="M 1398 514 L 1458 560 L 1398 606 Z"></path>
+</svg>
+<div class="tm-ribbon-endpoint start" data-lg-component="GraphicNode" data-lg-node-id="start">
+  <span data-lg-text-role="起点标题" data-lg-max-chars="10">${esc(start.title || "起点")}</span>
+</div>
+<div class="tm-ribbon-endpoint end" data-lg-component="GraphicNode" data-lg-node-id="end">
+  <span data-lg-text-role="终点标题" data-lg-max-chars="10">${esc(end.title || "终点")}</span>
+</div>
+${normalizedStages.map((stage, index) => ribbonStageHtml(stage, index, normalizedStages.length)).join("")}
+${startBadges.map((badge, index) => ribbonBadgeHtml(badge, "start", index)).join("")}
+${endBadges.map((badge, index) => ribbonBadgeHtml(badge, "end", index)).join("")}
+</div>`);
+}
+
+function triadNodeHtml(node, slot) {
+  const positions = {
+    top: { x: 838, y: 76, tone: "dark" },
+    left: { x: 543, y: 642, tone: "primary" },
+    right: { x: 1132, y: 642, tone: "primary" },
+  };
+  const pos = positions[slot];
+  return `<div class="tm-triad-node ${pos.tone} ${slot}" data-lg-component="GraphicNode" data-lg-node-id="triad-${slot}" style="left:${pos.x}px;top:${pos.y}px;">
+    <strong data-lg-text-role="环绕节点标题" data-lg-max-chars="10">${esc(node.title || "视觉符号")}</strong>
+    <span data-lg-text-role="环绕节点说明" data-lg-max-chars="18">${esc(node.subtitle || "品牌体验规范")}</span>
+  </div>`;
+}
+
+function triadPillHtml(item, group, index) {
+  const positions = {
+    left: [
+      { x: 105, y: 605 },
+      { x: 105, y: 715 },
+      { x: 105, y: 825 },
+    ],
+    topRight: [
+      { x: 1346, y: 132 },
+      { x: 1346, y: 242 },
+    ],
+    right: [
+      { x: 1610, y: 550 },
+      { x: 1610, y: 660 },
+      { x: 1610, y: 770 },
+      { x: 1610, y: 880 },
+    ],
+  };
+  const pos = (positions[group] || positions.left)[index];
+  if (!pos) return "";
+  return `<div class="tm-triad-pill ${group}" data-lg-component="GraphicBadge" data-lg-text-role="属性标签" data-lg-max-chars="8" style="left:${pos.x}px;top:${pos.y}px;">${esc(item.title || item.label || item)}</div>`;
+}
+
+export function renderTriadOrbitConcept(data) {
+  const center = data.center || {};
+  const nodes = {
+    top: data.nodes?.top || data.nodes?.[0] || {},
+    left: data.nodes?.left || data.nodes?.[1] || {},
+    right: data.nodes?.right || data.nodes?.[2] || {},
+  };
+  const pillGroups = {
+    left: (data.pillGroups?.left || []).slice(0, 3),
+    topRight: (data.pillGroups?.topRight || []).slice(0, 2),
+    right: (data.pillGroups?.right || []).slice(0, 4),
+  };
+  const motifStyle = resolveMotifStyle(data);
+  const themeVars = cssVarTokens(motifStyle.tokens);
+  return frame(data, `
+<div class="tm-triad-orbit" data-template-style="${esc(motifStyle.styleName)}"${themeVars}>
+<svg class="tm-canvas" viewBox="0 0 ${CANVAS.width} ${CANVAS.height}" aria-hidden="true">
+  <defs>
+    <filter id="tm-triad-soft-shadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="rgba(15, 23, 42, 0.12)" flood-opacity="1"></feDropShadow>
+    </filter>
+    <marker id="tm-triad-arrow-head" viewBox="0 0 24 24" refX="18" refY="12" markerWidth="28" markerHeight="28" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 4 4 L 20 12 L 4 20 Z" fill="var(--tm-triad-primary)"></path>
+    </marker>
+  </defs>
+  <circle class="tm-triad-center-back" cx="970" cy="568" r="278"></circle>
+  <path class="tm-triad-orbit-arrow left" d="M 602 503 A 374 374 0 0 1 794 238"></path>
+  <path class="tm-triad-orbit-arrow right" d="M 1146 238 A 374 374 0 0 1 1338 503"></path>
+  <path class="tm-triad-orbit-arrow bottom" d="M 1134 904 A 374 374 0 0 1 806 904"></path>
+  <path class="tm-triad-bracket left" d="M 390 700 C 420 742 420 780 390 820"></path>
+  <line class="tm-triad-bracket-line left" x1="410" y1="760" x2="482" y2="760"></line>
+  <path class="tm-triad-bracket top-right" d="M 1288 178 C 1260 222 1260 258 1288 302"></path>
+  <line class="tm-triad-bracket-line top-right" x1="1208" y1="240" x2="1260" y2="240"></line>
+  <path class="tm-triad-bracket right" d="M 1576 705 C 1545 760 1545 800 1576 855"></path>
+  <line class="tm-triad-bracket-line right" x1="1500" y1="775" x2="1547" y2="775"></line>
+</svg>
+<div class="tm-triad-center-label" data-lg-component="GraphicLabel">
+  <strong data-lg-text-role="中心概念标题" data-lg-max-chars="14">${esc(center.title || "核心概念")}</strong>
+  <span data-lg-text-role="中心概念副标题" data-lg-max-chars="24">${esc(center.subtitle || "Central concept")}</span>
+</div>
+${triadNodeHtml(nodes.top, "top")}
+${triadNodeHtml(nodes.left, "left")}
+${triadNodeHtml(nodes.right, "right")}
+${pillGroups.left.map((item, index) => triadPillHtml(item, "left", index)).join("")}
+${pillGroups.topRight.map((item, index) => triadPillHtml(item, "topRight", index)).join("")}
+${pillGroups.right.map((item, index) => triadPillHtml(item, "right", index)).join("")}
+</div>`);
+}
+
 export function renderTemplateMotif(data) {
   if (data.type === "layered-stack-3d") return renderLayeredStack3D(data);
   if (data.type === "split-pyramid-matrix") return renderSplitPyramidMatrix(data);
@@ -541,5 +723,7 @@ export function renderTemplateMotif(data) {
   if (data.type === "orbit-flywheel") return renderOrbitFlywheel(data);
   if (data.type === "dual-focus-cone") return renderDualFocusCone(data);
   if (data.type === "hub-orbit-network") return renderHubOrbitNetwork(data);
+  if (data.type === "ribbon-stage-pipeline") return renderRibbonStagePipeline(data);
+  if (data.type === "triad-orbit-concept") return renderTriadOrbitConcept(data);
   throw new Error(`未知模板母题类型：${data.type}`);
 }

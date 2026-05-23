@@ -1,0 +1,31 @@
+{
+  "type": "ribbon-stage-pipeline",
+  "canvas": { "title": "", "theme": "takram" },
+  "start": {
+    "title": "榜单\n基建",
+    "badges": [
+      { "title": "用户\n调研", "position": "top" },
+      { "title": "用户\n调研", "position": "right" },
+      { "title": "用户\n调研", "position": "bottom" }
+    ]
+  },
+  "stages": [
+    {
+      "title": "视觉符号",
+      "lines": ["这里是文字", "这里是文字"],
+      "guide": "top"
+    },
+    {
+      "title": "视觉符号",
+      "lines": ["这里是文字", "这里是文字"],
+      "guide": "top"
+    }
+  ],
+  "end": {
+    "title": "榜单\n基建",
+    "badges": [
+      { "title": "用户\n调研", "position": "top-left" },
+      { "title": "用户\n调研", "position": "bottom-left" }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "type": "triad-orbit-concept",
+  "canvas": { "title": "", "theme": "takram" },
+  "center": {
+    "title": "心智建设\n信息传达",
+    "subtitle": "Mind building"
+  },
+  "labels": {
+    "left": "视觉概念"
+  },
+  "nodes": {
+    "top": {
+      "title": "视觉符号",
+      "subtitle": "品牌体验规范"
+    },
+    "left": {
+      "title": "视觉符号",
+      "subtitle": "品牌体验规范"
+    },
+    "right": {
+      "title": "视觉符号",
+      "subtitle": "品牌体验规范"
+    }
+  },
+  "pillGroups": {
+    "left": [
+      { "title": "年轻" },
+      { "title": "活力" },
+      { "title": "有趣" }
+    ],
+    "topRight": [
+      { "title": "年轻" },
+      { "title": "活力" }
+    ],
+    "right": [
+      { "title": "年轻" },
+      { "title": "活力" },
+      { "title": "有趣" },
+      { "title": "有趣" }
+    ]
+  }
+}
