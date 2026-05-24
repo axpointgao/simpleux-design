@@ -122,7 +122,7 @@ PPTX 可编辑的前提是 `html2pptx.cjs` 能把 DOM 逐元素翻译为 PowerPo
 │  ── kicker（绿色短横 + uppercase 标签）   │
 │  CHAPTER XX · SECTION NAME                 │
 │                                          │
-│  H1（中文 Noto Serif SC 900）             │
+│  H1（中文无衬线 800-900）                 │
 │  重点词单独上品牌主色                      │
 │                                          │
 │  English subtitle (Lora italic，副标题)   │
@@ -137,9 +137,9 @@ PPTX 可编辑的前提是 `html2pptx.cjs` 能把 DOM 逐元素翻译为 PowerPo
 
 ### 样式约定（直接抄走）
 
-- **H1**：中文 Noto Serif SC 900，字号 80-140px 看信息量，重点词单独上品牌主色（不要全文堆色）
+- **H1**：中文无衬线 800-900，字号按 `slide-decks.md` 的当前尺度规则执行，重点词单独上品牌主色（不要全文堆色）
 - **英文副**：Lora italic 26-46px，品牌签名词（如 "AI team"）粗体 + 主色斜体
-- **正文**：Noto Serif SC 17-21px，line-height 1.75-1.85
+- **正文**：中文无衬线，字号按当前 deck 正文规范执行，line-height 1.45-1.65
 - **accent 高亮**：正文里用主色加粗标注关键词，每页不超过 3 处（过多就失去锚点作用）
 - **背景**：暖米底 #FAFAFA + 极淡 radial-gradient noise（`rgba(33,33,33,0.015)`）增加纸感
 
@@ -918,7 +918,7 @@ Deck_stage 和 deck_index 都会给每页打标签（计数器显示）。给它
 ```markdown
 Deck系统：
 - 背景色：最多2种（90% 白 + 10% 深色 section divider）
-- 字型：display 用 Instrument Serif，body 用 Geist Sans
+- 字型：中文全部用无衬线；英文 display 可按风格使用 serif，body 用 sans
 - 节奏：section divider 用 full-bleed 彩色 + 白字，普通 slide 白底
 - 图像：hero slide 用 full-bleed 照片，data slide 用 chart
 

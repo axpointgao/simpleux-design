@@ -75,6 +75,11 @@ AI设计里最容易掉进去的陷阱。这是一份「不做什么」的清单
 - 开源字体站（Fraunces的兄弟字体、Adobe Fonts）
 - 不要凭空发明字体名
 
+Deck 特例：
+- HTML-first deck 中，中文标题、正文、注释、图形节点、页脚和封底信息必须使用无衬线字体。
+- deck 的中文字体栈优先用 `"PingFang SC"`, `"Microsoft YaHei"`, `"Noto Sans SC"`, `system-ui`, `sans-serif`。
+- 英文 display 可按风格使用 serif；中文不得回落到宋体、思源宋体、Noto Serif SC 等衬线字体。
+
 ### 色彩陷阱
 
 **❌ 凭空发明颜色**
