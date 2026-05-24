@@ -165,18 +165,20 @@ Deck 系统：
 
 ### 设备样机壳
 
-Deck 中展示 App/Web/PC/移动端 UI 截图时，必须读取 `references/device-mockups.md`，优先使用 `assets/device-mockups/` 的真实设备样机壳，不要默认手画黑色圆角框。手机外壳和 PC 外壳层级不同；具体使用时机、长图裁切、透视外壳限制、PC 屏幕填充和组合方式见 `references/device-mockups.md`。
+Deck 中展示 App/Web/PC/移动端 UI 截图时，必须读取 `references/device-mockups.md`，并使用 `assets/device-mockups/` 的真实设备样机壳和 `manifest.json` 屏幕区域参数，不要默认手画黑色圆角框、黑色浏览器框或普通黑色矩形外框。手机外壳和 PC 外壳层级不同；具体使用时机、长图裁切、透视外壳限制、PC 屏幕填充和组合方式见 `references/device-mockups.md`。
+
+如果当前项目确实没有匹配设备资产，先告诉用户缺少匹配样机并询问是否接受临时 CSS 占位；用户确认前，不要把 CSS 手画设备框当作正式交付。
 
 ### 图形表达
 
-图形只是增强理解的手段，不是 deck 优秀与否的核心。制作 deck 时先判断图形是否能让当前页更清楚：如果标题、分组文本、数据或图片已经足够表达，就保持常规 deck 版式；只有当页面核心是关系、流程、阶段、系统、矩阵、模型、信息图或图解说明时，才读取 `references/logic-graphics.md` 并考虑图形表达。
+图形只是增强理解的手段，不是 deck 优秀与否的核心。制作 deck 时先判断图形是否能让当前页更清楚：如果标题、分组文本、数据或图片已经足够表达，就保持常规 deck 版式；但当页面核心是关系、流程、阶段、系统、矩阵、模型、闭环、架构、服务地图、体验链路、经营逻辑、信息图或图解说明时，必须读取 `references/logic-graphics.md` 并做逻辑图形选型。
 
 执行规则：
 
 - 不要为了“更丰富”强行画图；如果图形不能减少理解成本，就不要画。
 - 先找内容关系，再找表达方式：并列、流程、闭环、层级、系统、对照、矩阵或诊断。
 - 简单图解优先用当前 deck 的 HTML/CSS 自由设计；需要稳定结构、复用组件或质检时再使用组件库。
-- 如需记录制作判断，可用 `graphicIntent`：`none`、`simple-custom`、`component-json`、`template-motif`，但不要把它变成繁琐流程。
+- 如需记录制作判断，可用 `graphicIntent`：`none`、`simple-custom`、`component-json`、`template-motif`，但不要把它变成繁琐流程。对于关系/流程/系统/矩阵/模型页，如果选择 `none` 或 `simple-custom`，必须能说明为什么组件库或模板母题不合适。
 - `component-json` 使用 `scripts/render_logic_graphic.mjs` 生成完整 HTML 页面或可嵌入片段；`template-motif` 使用 `scripts/render_template_motif.mjs`。
 - 使用组件库或模板母题时，组件根节点必须带 `data-logic-graphic`，固定 1920×1080 画布。
 - 文字优先使用 HTML 文本块，避免中文长句直接写入 SVG 单行文本。
@@ -334,3 +336,5 @@ PPTX 约束详见 `references/editable-pptx.md`。
 8. 打开 `index.html` 后不点击页面，直接按方向键和空格，确认可翻页。
 9. 若有目录页/章节页/封底页，确认它们来自固定模板，并已接入 `DECK_MANIFEST`。
 10. 确认 `shared/publisher/` 中有 SimpleUX 署名和封底所需资产，目录页/章节页/普通内页页脚没有破图。
+11. 若页面展示 App/Web/PC/移动端 UI，确认使用了 `assets/device-mockups/` 真实样机壳和屏幕层结构；不得出现未说明的手画黑框设备。
+12. 若页面表达关系/流程/系统/矩阵/模型/闭环/架构/服务地图，确认已做逻辑图形选型；使用 `component-json` 或 `template-motif` 时必须带 `data-logic-graphic` 并通过质检。

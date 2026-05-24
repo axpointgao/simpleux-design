@@ -2,7 +2,7 @@
 
 这是给 iOS / Android / 移动 App 原型的专门规则。
 
-App/Web/PC 原型和展示图需要设备外壳时，必须读取 `references/device-mockups.md`，优先使用 `assets/device-mockups/` 中的真实样机壳；只有缺少匹配设备或需要极简 wireframe 表达时，才使用 CSS 手绘设备框。
+App/Web/PC 原型和展示图需要设备外壳时，必须读取 `references/device-mockups.md`，并优先使用 `assets/device-mockups/` 中的真实样机壳；只有缺少匹配设备或需要极简 wireframe 表达且用户接受临时占位时，才使用 CSS 手绘设备框。正式客户展示、产品方案页和 UI 对比页不得默认手画黑色手机框、浏览器框或普通黑色矩形外框。
 
 ## 0. 默认架构
 

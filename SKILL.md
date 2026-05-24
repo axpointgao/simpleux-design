@@ -11,9 +11,9 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 
 使用本技能处理这些任务：
 
-- **交互原型**：App/Web 高保真原型、iOS/Android/浏览器/桌面窗口 mockup、可点击流程、设计 review demo；设备界面展示优先使用真实设备样机壳。
-- **幻灯片**：HTML-first deck、浏览器演示、PDF 导出、可编辑 PPTX 导出；客户交付 deck 按需处理 SimpleUX 出品方署名，并默认追加固定 SimpleUX 封底页；App/Web/PC 截图页优先使用真实设备样机壳。
-- **逻辑图形与信息图**：在 deck 或设计稿中生成模型图、关系图、路径图、系统图、流程图、矩阵图、图解页和信息图；图形只是增强理解的手段，优先靠设计判断，需要结构化复用或硬门禁质检时再使用本地逻辑图形组件库、数据驱动渲染和模板母题。
+- **交互原型**：App/Web 高保真原型、iOS/Android/浏览器/桌面窗口 mockup、可点击流程、设计 review demo；设备界面展示必须优先使用真实设备样机壳。
+- **幻灯片**：HTML-first deck、浏览器演示、PDF 导出、可编辑 PPTX 导出；客户交付 deck 按需处理 SimpleUX 出品方署名，并默认追加固定 SimpleUX 封底页；App/Web/PC 截图页必须使用真实设备样机壳，除非用户确认接受临时占位。
+- **逻辑图形与信息图**：在 deck 或设计稿中生成模型图、关系图、路径图、系统图、流程图、矩阵图、图解页和信息图；遇到结构化关系页必须先做逻辑图形选型，适合组件化、复用、模板母题或质检时必须使用本地逻辑图形组件库、数据驱动渲染和模板母题。
 - **设计变体**：3 个差异化视觉方向、showcase 对比、Tweaks 实时调参。
 - **品牌资产**：logo、产品图、UI 截图、色值、字体、品牌规范收集与 `brand-spec.md` 固化。
 - **专家评审**：从哲学一致性、视觉层级、细节执行、功能性、创新性五维评分，并输出 Keep/Fix/Quick Wins。
@@ -34,7 +34,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 6. 反 AI slop、内容准则、字体/色彩/尺度规范见 `references/content-guidelines.md`。
 7. 原型任务读 `references/app-prototype.md`，并使用 `assets/ios_frame.jsx`、`assets/android_frame.jsx`、`assets/browser_window.jsx` 或 `assets/macos_window.jsx`；需要展示 App/Web/PC 设备界面时必须读 `references/device-mockups.md`。
 8. 幻灯片任务先读 `references/slide-decks.md`；需要可编辑 PPTX 时再读 `references/editable-pptx.md`；遇到导出、单文件 deck 或历史坑点时读 `references/deck-case-notes.md`。
-9. 遇到模型图、关系图、路径图、系统图、流程图、矩阵图、信息图或图解页，先做信息设计判断：图形是否能让理解更快、更清楚；能增强表达时再读 `references/logic-graphics.md`，并在自定义 HTML/CSS 图解、基础组合示例和模板母题之间自主选择。
+9. 遇到模型图、关系图、路径图、系统图、流程图、矩阵图、闭环、架构、服务地图、体验链路、经营逻辑、信息图或图解页，必须先读 `references/logic-graphics.md` 并做 `graphicIntent` 选型；正式长 deck 至少盘点哪些页面应使用 `component-json` 或 `template-motif`，不能默认全用普通文字块或手写自由图形。
 10. 设计变体和实时调参读 `references/tweaks-system.md`，风格方向先读 `references/design-styles.md`；需要完整 20 风格库时再读 `references/design-styles-full.md`；showcase 读 `assets/showcases/INDEX.md`。
 11. 交付前按 `references/verification.md` 做浏览器和 Playwright 验证；包含 `data-logic-graphic` 时加跑逻辑图形质检。
 12. 需要设计评审时，按 `references/critique-guide.md` 输出评分和修复清单。
@@ -55,9 +55,9 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 
 ### 3. 按类型执行
 
-- 原型：选择 overview 平铺或 flow demo；App/Web/PC 设备界面展示必须优先用真实设备样机壳；关键流程必须可点。
-- 幻灯片：HTML 是源产物；PDF/PPTX 是派生物；如主题包含明确客户、品牌、产品或机构，必须先完成品牌资产和基础业务语境调研并形成 `brand-spec.md` 或等价摘要；再完成交付格式、架构、视觉方向和 deck 结构规划，之后才开始高保真批量制作；正文 10 页以上、正式客户汇报、报告型 deck、课件、长讲座或包含多个截图/章节/封底页时，必须使用多文件架构，不得默认使用单文件 `<deck-stage>`；正文 5 页以上时，必须先做 2 页视觉确认稿或等价 showcase，用户确认字体、色彩、间距、masthead、图像规则、信息密度和情绪基调后再批量制作；固定 SimpleUX 封底页不参与目录/章节判断，客户交付 deck 默认追加；需要可编辑 PPTX 时从第一行 HTML 遵守结构约束。
-- 逻辑图形与信息图：图形只服务于理解，不决定 deck 是否优秀；先判断图形是否真的增强表达，简单图解可用自定义 HTML/CSS，结构化模型可转成 JSON 组件、节点和关系，使用组件库或模板母题生成 HTML/SVG；带 `data-logic-graphic` 的产物必须跑硬门禁质检。
+- 原型：选择 overview 平铺或 flow demo；App/Web/PC 设备界面展示必须优先用真实设备样机壳；禁止把手画黑色设备框当作正式交付；关键流程必须可点。
+- 幻灯片：HTML 是源产物；PDF/PPTX 是派生物；如主题包含明确客户、品牌、产品或机构，必须先完成品牌资产和基础业务语境调研并形成 `brand-spec.md` 或等价摘要；再完成交付格式、架构、视觉方向、deck 结构规划、设备样机资产盘点和逻辑图形页面盘点，之后才开始高保真批量制作；正文 10 页以上、正式客户汇报、报告型 deck、课件、长讲座或包含多个截图/章节/封底页时，必须使用多文件架构，不得默认使用单文件 `<deck-stage>`；正文 5 页以上时，必须先做 2 页视觉确认稿或等价 showcase，用户确认字体、色彩、间距、masthead、图像规则、信息密度和情绪基调后再批量制作；固定 SimpleUX 封底页不参与目录/章节判断，客户交付 deck 默认追加；需要可编辑 PPTX 时从第一行 HTML 遵守结构约束。
+- 逻辑图形与信息图：图形只服务于理解，不决定 deck 是否优秀；但结构化关系页必须做选型，简单图解可用自定义 HTML/CSS，结构化模型、服务地图、体验链路、经营逻辑、矩阵、闭环、系统关系应优先转成 JSON 组件、节点和关系，使用组件库或模板母题生成 HTML/SVG；带 `data-logic-graphic` 的产物必须跑硬门禁质检。
 - 变体：至少 3 个差异化方向，来自不同流派或不同设计维度；可用 Tweaks 面板让用户切换。
 - 品牌：真实资产优先，找不到 logo 或关键资产时停下问用户。
 - 评审：先给问题，按严重程度排序，再给可执行修复建议。
