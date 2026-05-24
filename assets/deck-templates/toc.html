@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, height=1080">
+<title>SimpleUX 目录页模板</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    overflow: hidden;
+    margin: 0;
+    background: var(--deck-bg, #f45a22);
+    color: var(--deck-fg, #ffffff);
+    font-family: var(--font-sans, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif);
+  }
+
+  #stage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 1920px;
+    height: 1080px;
+    transform-origin: top left;
+    will-change: transform;
+    background:
+      var(--deck-bg-image, none),
+      var(--deck-bg, #f45a22);
+  }
+
+  .page {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: var(--page-padding-y, 132px) var(--page-padding-x, 188px) 100px;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, var(--deck-overlay-top, transparent), var(--deck-overlay-bottom, transparent));
+  }
+
+  .toc-title {
+    display: flex;
+    align-items: baseline;
+    gap: 28px;
+    margin: 0 0 64px;
+  }
+
+  .toc-title h1 {
+    margin: 0;
+    font-size: 56px;
+    line-height: 1;
+    font-weight: 760;
+    letter-spacing: 0;
+  }
+
+  .toc-title p {
+    margin: 0;
+    color: var(--deck-muted, rgba(255, 255, 255, 0.72));
+    font-size: 15px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .toc-list {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+
+  .toc-item {
+    display: grid;
+    grid-template-columns: 138px minmax(520px, 1fr) 430px;
+    align-items: center;
+    min-height: 156px;
+    border-top: 1px solid var(--deck-line, rgba(255, 255, 255, 0.24));
+  }
+
+  .toc-item:last-child {
+    border-bottom: 1px solid var(--deck-line, rgba(255, 255, 255, 0.24));
+  }
+
+  .toc-number {
+    margin: 0;
+    font-family: var(--font-din, "D-DIN", "DIN Alternate", "DIN Condensed", "Arial Narrow", Arial, sans-serif);
+    font-size: 64px;
+    line-height: 1;
+    font-weight: 560;
+    color: var(--deck-fg, #ffffff);
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .toc-heading {
+    margin: 0;
+    font-size: 48px;
+    line-height: 1.12;
+    font-weight: 760;
+    letter-spacing: 0;
+    color: var(--deck-fg, #ffffff);
+    white-space: nowrap;
+  }
+
+  .toc-notes {
+    margin: 0;
+    color: var(--toc-note-fg, color-mix(in srgb, var(--deck-fg, #ffffff) 62%, transparent));
+    font-size: 17px;
+    line-height: 1.35;
+    font-weight: 400;
+    text-align: right;
+  }
+
+  .signature {
+    position: absolute;
+    left: var(--signature-left, 110px);
+    bottom: var(--signature-bottom, 70px);
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--signature-fg, rgba(255, 255, 255, 0.9));
+    font-family: var(--font-sans, "PingFang SC", system-ui, sans-serif);
+  }
+
+  .signature-logo {
+    width: var(--signature-logo-w, 69px);
+    height: var(--signature-logo-h, 24px);
+    background-image: var(--signature-logo, none);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .signature-name {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1;
+    color: var(--signature-fg, rgba(255, 255, 255, 0.9));
+  }
+
+  .signature-rule {
+    width: 1px;
+    height: 10px;
+    background: var(--signature-rule, rgba(255, 255, 255, 0.42));
+  }
+
+  .signature-confidential {
+    margin: 0;
+    color: var(--signature-muted, rgba(255, 255, 255, 0.42));
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+  <div id="stage">
+    <main class="page">
+      <header class="toc-title">
+        <h1>目录</h1>
+        <p>Content</p>
+      </header>
+
+      <section class="toc-list" aria-label="目录">
+        <article class="toc-item">
+          <p class="toc-number">01.</p>
+          <h2 class="toc-heading">项目背景概述</h2>
+          <p class="toc-notes">项目背景<br>预期目标与价值<br>实施规划</p>
+        </article>
+        <article class="toc-item">
+          <p class="toc-number">02.</p>
+          <h2 class="toc-heading">目标与业务价值分析</h2>
+          <p class="toc-notes">用户与场景分析<br>业务价值拆解</p>
+        </article>
+        <article class="toc-item">
+          <p class="toc-number">03.</p>
+          <h2 class="toc-heading">产品现状与问题分析</h2>
+          <p class="toc-notes">调研数据分析<br>体验问题诊断<br>优化建议</p>
+        </article>
+        <article class="toc-item">
+          <p class="toc-number">04.</p>
+          <h2 class="toc-heading">设计策略及概念方案</h2>
+          <p class="toc-notes">核心设计目标<br>体验提升策略<br>交互设计方案</p>
+        </article>
+      </section>
+
+      <footer class="signature" aria-label="SimpleUX confidential signature">
+        <span class="signature-logo" aria-hidden="true"></span>
+        <p class="signature-name">SimpleUX</p>
+        <span class="signature-rule"></span>
+        <p class="signature-confidential">Confidential&Proprietary</p>
+      </footer>
+    </main>
+  </div>
+  <script>
+    function fitDeckTemplate() {
+      const stage = document.getElementById("stage");
+      const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      const x = (window.innerWidth - 1920 * scale) / 2;
+      const y = (window.innerHeight - 1080 * scale) / 2;
+      stage.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+      stage.style.top = "0";
+      stage.style.left = "0";
+    }
+
+    window.addEventListener("resize", fitDeckTemplate);
+    function ensurePublisherAsset(selector, cssVarName, projectPath, previewPath) {
+      const target = document.querySelector(selector);
+      if (!target) return;
+      if (getComputedStyle(target).backgroundImage !== "none") return;
+
+      const isTemplatePreview = window.location.pathname.includes("/assets/deck-templates/");
+      const assetPath = isTemplatePreview ? previewPath : projectPath;
+      document.documentElement.style.setProperty(cssVarName, `url("${assetPath}")`);
+    }
+
+    ensurePublisherAsset(".signature-logo", "--signature-logo", "../shared/publisher/simpleux-light.png", "../publisher/simpleux-light.png");
+
+    window.addEventListener("keydown", (event) => {
+      if (window.parent === window) return;
+
+      const commandByKey = {
+        ArrowRight: "next",
+        " ": "next",
+        PageDown: "next",
+        ArrowLeft: "prev",
+        PageUp: "prev",
+        Home: "home",
+        End: "end",
+        p: "print",
+        P: "print"
+      };
+      const command = commandByKey[event.key];
+      if (!command) return;
+
+      event.preventDefault();
+      window.parent.postMessage({ type: "simpleux-deck-command", command }, "*");
+    });
+    fitDeckTemplate();
+  </script>
+</body>
+</html>

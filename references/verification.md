@@ -28,7 +28,9 @@ python3 simpleux-design/scripts/verify.py path/to/design.html
 1. 用headless chromium打开HTML
 2. 截图保存到项目目录
 3. 抓取控制台错误
-4. 报告status
+4. 抓取资源请求失败
+5. 检查固定模板页的署名 logo、底部品牌图和封底视频是否加载
+6. 报告status
 
 详见`scripts/verify.py`。
 

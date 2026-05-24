@@ -409,13 +409,16 @@ deck/shared/publisher/
 
 客户交付 deck 默认额外追加一张封底页，用于正式收尾、设计方署名和留资。封底页是独立最后一页，不是内页页脚；不参与用户内容页数压缩，也不应挤占前面内容页。用户要求 N 页内容时，默认交付为 N 页内容 + 1 页固定封底；只有用户明确说不要 SimpleUX 署名/封底时才省略。
 
-固定封底模板已经沉淀为 `assets/publisher/back-cover.html`。模板文件本身可在 `assets/publisher/` 目录直接打开，内部显式引用同目录的 `SimpleUX.mp4` 和 `FullSpeed&SimpleUX.png`。实际制作时优先复制这个模板和封底媒体资产到项目内：
+固定封底模板已经沉淀为 `assets/deck-templates/back-cover.html`。模板文件本身可在 `assets/deck-templates/` 目录直接打开；在 skill 内预览时使用 `../publisher/` 内置资源，复制到项目 `slides/` 目录后默认使用 `../shared/publisher/` 项目资源。实际制作时优先复制这个模板和封底媒体资产到项目内：
 
 ```text
-deck/slides/
-├── 99-back-cover.html
-├── FullSpeed&SimpleUX.png
-└── SimpleUX.mp4
+deck/
+├── slides/
+│   └── 99-back-cover.html
+└── shared/
+    └── publisher/
+        ├── FullSpeed&SimpleUX.png
+        └── SimpleUX.mp4
 ```
 
 内页出品方署名另需把纯 logo 复制到：
@@ -474,7 +477,7 @@ www.simpleux.cn
 全速集团旗下用户体验设计品牌
 ```
 
-封底页 HTML/CSS 骨架维护在 `assets/publisher/back-cover.html`。实际制作不要临场重写，优先复制模板文件。
+封底页 HTML/CSS 骨架维护在 `assets/deck-templates/back-cover.html`。实际制作不要临场重写，优先复制模板文件。
 
 模板内部保留 1920×1080 固定设计画布，并使用与 `assets/deck_index.html` 相同的 `#stage + translate(x, y) scale(s)` 适配算法。单独打开模板时会按当前浏览器窗口自动缩放居中；作为多文件 deck 的一页放进 iframe 时，iframe 本身就是 1920×1080，缩放比例为 1。绿色品牌带始终固定在封底画布底部，留资信息 bottom 锚定在绿色品牌带上方。模板还会把 iframe 内的键盘事件转发给父级 `deck_index.html`，以保持全屏演讲和键盘翻页体验一致。
 
@@ -663,7 +666,7 @@ www.simpleux.cn
     <h1 class="thanks">Thanks</h1>
     <p class="tagline">简立方，一家专注于数字策略与数字产品的体验设计公司</p>
 
-    <video class="brand-motion" src="./SimpleUX.mp4" autoplay muted loop playsinline></video>
+    <video class="brand-motion" src="../shared/publisher/SimpleUX.mp4" autoplay muted loop playsinline></video>
 
     <section class="closing-info">
       <div class="contact" aria-label="SimpleUX contact information">
@@ -695,7 +698,7 @@ www.simpleux.cn
     </section>
 
     <footer class="brand-strip">
-      <img src="./FullSpeed&SimpleUX.png" alt="全速集团 / 简立方" />
+      <img src="../shared/publisher/FullSpeed&SimpleUX.png" alt="全速集团 / 简立方" />
       <p>全速集团旗下用户体验设计品牌</p>
     </footer>
     </main>

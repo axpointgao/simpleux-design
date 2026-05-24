@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, height=1080">
+<title>SimpleUX 章节页模板</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    overflow: hidden;
+    margin: 0;
+    background: var(--deck-bg, #050505);
+    color: var(--deck-fg, #ffffff);
+    font-family: var(--font-sans, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif);
+  }
+
+  #stage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 1920px;
+    height: 1080px;
+    transform-origin: top left;
+    will-change: transform;
+    background:
+      var(--deck-bg-image, none),
+      var(--deck-bg, #050505);
+  }
+
+  .page {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 192px 176px 96px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at var(--accent-x, 100%) var(--accent-y, 18%), var(--deck-glow, transparent), transparent 26%),
+      linear-gradient(180deg, var(--deck-overlay-top, transparent), var(--deck-overlay-bottom, transparent));
+  }
+
+  .masthead {
+    position: absolute;
+    left: 176px;
+    right: 176px;
+    top: 194px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 24px;
+    color: var(--masthead-fg, var(--deck-muted, rgba(255, 255, 255, 0.56)));
+  }
+
+  .masthead-title {
+    margin: 0;
+    color: var(--masthead-accent, var(--deck-muted, rgba(255, 255, 255, 0.56)));
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .masthead-mark {
+    margin: 0;
+    color: var(--masthead-mark, var(--deck-fg, #ffffff));
+    font-family: var(--font-din, "D-DIN", "DIN Alternate", "DIN Condensed", "Arial Narrow", Arial, sans-serif);
+    font-size: 16px;
+    line-height: 1;
+    letter-spacing: 0.16em;
+  }
+
+  .masthead::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -22px;
+    height: 1px;
+    background: var(--deck-line, rgba(255, 255, 255, 0.16));
+  }
+
+  .section-content {
+    position: absolute;
+    left: 176px;
+    top: 346px;
+    z-index: 2;
+    width: 860px;
+  }
+
+  .section-number {
+    margin: 0 0 22px;
+    color: var(--deck-fg, #ffffff);
+    font-family: var(--font-din, "D-DIN", "DIN Alternate", "DIN Condensed", "Arial Narrow", Arial, sans-serif);
+    font-size: 128px;
+    line-height: 0.82;
+    font-weight: 560;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .section-number .dot {
+    color: var(--deck-accent, currentColor);
+  }
+
+  .section-title {
+    margin: 0;
+    color: var(--deck-fg, #ffffff);
+    font-size: 104px;
+    line-height: 1.08;
+    font-weight: 820;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+
+  .section-topics {
+    margin: 28px 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--section-topic-fg, color-mix(in srgb, var(--deck-fg, #ffffff) 62%, transparent));
+    font-size: 23px;
+    line-height: 1.52;
+    font-weight: 400;
+  }
+
+  .section-topics li {
+    display: inline;
+  }
+
+  .section-topics li + li::before {
+    content: " · ";
+    color: var(--section-topic-dot, color-mix(in srgb, var(--deck-fg, #ffffff) 52%, transparent));
+  }
+
+  .background-words {
+    position: absolute;
+    right: 176px;
+    top: 390px;
+    z-index: 1;
+    width: 780px;
+    color: var(--deck-ghost, rgba(255, 255, 255, 0.14));
+    font-family: var(--font-display-en, var(--font-sans, system-ui, sans-serif));
+    font-size: 132px;
+    line-height: 1.18;
+    font-weight: 360;
+    letter-spacing: -0.03em;
+    text-align: right;
+    pointer-events: none;
+  }
+
+  .background-words p {
+    margin: 0;
+  }
+
+  .signature {
+    position: absolute;
+    left: var(--signature-left, 110px);
+    bottom: var(--signature-bottom, 70px);
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--signature-fg, rgba(255, 255, 255, 0.9));
+    font-family: var(--font-sans, "PingFang SC", system-ui, sans-serif);
+  }
+
+  .signature-logo {
+    width: var(--signature-logo-w, 69px);
+    height: var(--signature-logo-h, 24px);
+    background-image: var(--signature-logo, none);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .signature-name {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1;
+    color: var(--signature-fg, rgba(255, 255, 255, 0.9));
+  }
+
+  .signature-rule {
+    width: 1px;
+    height: 10px;
+    background: var(--signature-rule, rgba(255, 255, 255, 0.42));
+  }
+
+  .signature-confidential {
+    margin: 0;
+    color: var(--signature-muted, rgba(255, 255, 255, 0.42));
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+  <div id="stage">
+    <main class="page">
+      <header class="masthead">
+        <p class="masthead-title">项目名称或当前汇报主题</p>
+        <p class="masthead-mark">///</p>
+      </header>
+
+      <section class="section-content" aria-label="章节">
+        <p class="section-number">03<span class="dot">.</span></p>
+        <h1 class="section-title">方案展示</h1>
+        <ul class="section-topics">
+          <li>设计目标</li>
+          <li>设计策略</li>
+          <li>视觉风格定义</li>
+          <li>关键页面方案</li>
+        </ul>
+      </section>
+
+      <aside class="background-words" aria-hidden="true">
+        <p>Research</p>
+        <p>Analysis</p>
+      </aside>
+
+      <footer class="signature" aria-label="SimpleUX confidential signature">
+        <span class="signature-logo" aria-hidden="true"></span>
+        <p class="signature-name">SimpleUX</p>
+        <span class="signature-rule"></span>
+        <p class="signature-confidential">Confidential&Proprietary</p>
+      </footer>
+    </main>
+  </div>
+  <script>
+    function fitDeckTemplate() {
+      const stage = document.getElementById("stage");
+      const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      const x = (window.innerWidth - 1920 * scale) / 2;
+      const y = (window.innerHeight - 1080 * scale) / 2;
+      stage.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+      stage.style.top = "0";
+      stage.style.left = "0";
+    }
+
+    window.addEventListener("resize", fitDeckTemplate);
+    function ensurePublisherAsset(selector, cssVarName, projectPath, previewPath) {
+      const target = document.querySelector(selector);
+      if (!target) return;
+      if (getComputedStyle(target).backgroundImage !== "none") return;
+
+      const isTemplatePreview = window.location.pathname.includes("/assets/deck-templates/");
+      const assetPath = isTemplatePreview ? previewPath : projectPath;
+      document.documentElement.style.setProperty(cssVarName, `url("${assetPath}")`);
+    }
+
+    ensurePublisherAsset(".signature-logo", "--signature-logo", "../shared/publisher/simpleux-light.png", "../publisher/simpleux-light.png");
+
+    window.addEventListener("keydown", (event) => {
+      if (window.parent === window) return;
+
+      const commandByKey = {
+        ArrowRight: "next",
+        " ": "next",
+        PageDown: "next",
+        ArrowLeft: "prev",
+        PageUp: "prev",
+        Home: "home",
+        End: "end",
+        p: "print",
+        P: "print"
+      };
+      const command = commandByKey[event.key];
+      if (!command) return;
+
+      event.preventDefault();
+      window.parent.postMessage({ type: "simpleux-deck-command", command }, "*");
+    });
+    fitDeckTemplate();
+  </script>
+</body>
+</html>

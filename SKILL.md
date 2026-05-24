@@ -56,7 +56,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 ### 3. 按类型执行
 
 - 原型：选择 overview 平铺或 flow demo；App/Web/PC 设备界面展示必须优先用真实设备样机壳；关键流程必须可点。
-- 幻灯片：HTML 是源产物；PDF/PPTX 是派生物；需要可编辑 PPTX 时从第一行 HTML 遵守结构约束。
+- 幻灯片：HTML 是源产物；PDF/PPTX 是派生物；先做轻量 deck 结构规划，按内容结构判断是否使用目录页和章节页；固定 SimpleUX 封底页不参与该判断，客户交付 deck 默认追加；需要可编辑 PPTX 时从第一行 HTML 遵守结构约束。
 - 逻辑图形与信息图：图形只服务于理解，不决定 deck 是否优秀；先判断图形是否真的增强表达，简单图解可用自定义 HTML/CSS，结构化模型可转成 JSON 组件、节点和关系，使用组件库或模板母题生成 HTML/SVG；带 `data-logic-graphic` 的产物必须跑硬门禁质检。
 - 变体：至少 3 个差异化方向，来自不同流派或不同设计维度；可用 Tweaks 面板让用户切换。
 - 品牌：真实资产优先，找不到 logo 或关键资产时停下问用户。

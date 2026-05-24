@@ -91,6 +91,70 @@ Deck 系统：
 - Hero / 章节 / 大字观点页标题最多 120px；只有标题本身是页面主视觉时才使用。
 - 每页 1 个核心记忆点，超过就拆页。
 
+### Deck 结构规划
+
+制作 deck 时，即使用户没有明确要求目录页或章节页，也要先做轻量结构判断。这个判断只决定目录页和章节页是否需要；固定 SimpleUX 封底页按客户交付 deck 默认规则追加，不因结构规划省略。
+
+- 先从文档标题、一级标题、阶段词和内容主题中归纳一级章节。
+- 一级章节建议 3-5 个，最多不得超过 5 个。
+- 如果原始材料有 6+ 个标题，不要逐个变成章节；必须合并、降级或归入二级主题。
+- 章节是演讲导航，不是 Markdown 标题映射。
+
+目录页判断：
+
+- 目录页不是按页数机械添加。
+- 正文 6-8 页通常不默认添加目录页；除非是正式客户汇报，且内容天然分成 3+ 个清晰章节。
+- 正文 9-12 页可考虑目录页，但如果是线性叙事、短 pitch 或页数紧张，不加。
+- 正文 12 页以上默认考虑目录页。
+- 用户指定固定页数时，目录页计入内容页数；如果会挤压核心内容，优先不放独立目录页。
+
+章节页判断：
+
+- 章节页只服务一级章节，不为二级主题单独生成章节页。
+- 通常 12+ 页，或 3+ 个一级章节且每章有多页内容时，才使用独立章节页。
+- 短 deck 不默认放章节页；可用页内 masthead、章节标签、页码结构表达章节感。
+
+### 固定模板页
+
+目录页、章节页和封底页是固定模板页型。优先复制 `assets/deck-templates/toc.html`、`assets/deck-templates/section.html` 或 `assets/deck-templates/back-cover.html` 到项目 `slides/` 目录，再替换文案和 CSS 变量。结构、字体类别和字号固定；色彩、背景、分隔线透明度、光效、图片氛围和署名 logo 使用当前 deck token 适配，不逐像素复制参考页。
+
+`assets/deck-templates/` 只放可以复制到 `slides/` 的页面模板；`assets/publisher/` 只放这些模板依赖的 SimpleUX logo、视频和组合标识等品牌媒体资源。
+
+模板复制后至少设置这些变量：
+
+```css
+:root {
+  --deck-bg: 当前 deck 背景色;
+  --deck-fg: 当前 deck 前景文字色;
+  --deck-muted: 当前 deck 辅助文字色;
+  --deck-accent: 当前 deck 强调色;
+  --deck-line: 当前 deck 细分隔线颜色;
+  --signature-logo: url("../shared/publisher/simpleux-light.png");
+}
+```
+
+模板资源按页面所在位置选择路径：在 skill 的 `assets/deck-templates/` 目录直接预览时，模板使用 `../publisher/` 内置资源；复制到项目 `slides/` 目录后，模板默认使用 `../shared/publisher/` 项目资源。制作实际 deck 时，必须把署名 logo 复制到项目 `shared/publisher/` 或明确覆盖 `--signature-logo`，不能留下空 logo 占位。
+
+浅底目录页或章节页必须把 `--signature-logo` 覆盖为 `url("../shared/publisher/simpleux-dark.png")`，或使用项目内等价深色 logo 路径；不要沿用默认浅色 logo。
+
+目录页模板：
+
+- 左上放页面类型标识：中文 `目录`，可附小号英文 `CONTENT`。
+- 主体使用 2-5 个一级章节条目；超过 5 个时必须合并或降级为右侧短说明里的二级主题。每条包含 DIN 类数字编号、章节主标题和可选右侧短说明。
+- 章节编号约 64px，使用 DIN 类数字字体；章节主标题约 48px；右侧短说明约 16-18px，并使用较轻字重和低强调文字 token。
+- 条目之间使用横向 1px 细分隔线或等价网格线；不使用卡片堆叠，不使用复杂图形替代目录结构。
+- 目录页只承担全局导航，不承载正文段落、图表或复杂逻辑图形。
+
+章节页模板：
+
+- 顶部保留 masthead、项目名或细分隔线，作为 deck 连续性线索。
+- 左侧使用大号 DIN 类章节编号 + 中文章节标题；编号约 128px，标题约 104px。
+- 标题下放 1-4 条短主题，字号约 22-24px，用来说明本章范围；主题行属于辅助信息，必须比章节标题更轻、更小，并通过低强调文字 token 降低视觉权重。
+- 左下固定放置 SimpleUX 保密署名，沿用出品方署名规则。
+- 右侧可放弱化英文背景词，只做氛围和空间平衡，不参与主要阅读。
+- 可使用深色照片遮罩、纯色品牌底、黑底光带或极简线条，但必须映射到当前 deck token。
+- 章节页只做节奏切换，不承载大量正文、图表或复杂逻辑图形。
+
 ### 设备样机壳
 
 Deck 中展示 App/Web/PC/移动端 UI 截图时，必须读取 `references/device-mockups.md`，优先使用 `assets/device-mockups/` 的真实设备样机壳，不要默认手画黑色圆角框。手机外壳和 PC 外壳层级不同；具体使用时机、长图裁切、透视外壳限制、PC 屏幕填充和组合方式见 `references/device-mockups.md`。
@@ -137,10 +201,12 @@ Deck 中展示 App/Web/PC/移动端 UI 截图时，必须读取 `references/devi
 
 - 这是设计方/出品方署名，不是客户品牌；客户品牌仍按品牌资产协议决定主视觉。
 - 如果内页使用出品方署名，把 `simpleux-dark.png` 和 `simpleux-light.png` 复制到项目内的 `deck/shared/publisher/`。
+- 使用目录页或章节页固定模板时，必须保证对应 logo 资源可用；深底默认使用 `simpleux-light.png`，浅底必须覆盖为 `simpleux-dark.png`。
 - 页脚署名只做轻量归属和保密提示，不参与主视觉竞争。
 - 页脚署名文字必须很小，建议文字约 11px；但 logo 不应缩到不可识别，建议保持约 24px 高，只让说明文字轻量化。
 - 以上小字号只适用于出品方署名这种辅助角标，是特殊处理，不影响 deck 正文最小字号和内容页尺度规范。
-- 不是所有页面都放。封面、章节页、强视觉页、左下角已有正文/图表/客户品牌信息、或会与内容冲突时，不放。
+- 目录页和章节页作为固定模板默认放左下 SimpleUX 保密署名。
+- 其他内页不是所有页面都放。封面、强视觉页、左下角已有正文/图表/客户品牌信息、或会与内容冲突时，不放。
 - 不允许为了放署名压缩正文、遮挡图表或破坏构图。
 - 浅底页面使用 `simpleux-dark.png`；深底页面使用 `simpleux-light.png`。
 
@@ -152,15 +218,18 @@ Deck 中展示 App/Web/PC/移动端 UI 截图时，必须读取 `references/devi
 
 制作步骤：
 
-1. 复制 `assets/publisher/back-cover.html` 为项目内的 `slides/99-back-cover.html`。
-2. 把 `SimpleUX.mp4` 与 `FullSpeed&SimpleUX.png` 复制到同一 `slides/` 目录，保持模板内的同目录资源引用可用。
+1. 复制 `assets/deck-templates/back-cover.html` 为项目内的 `slides/99-back-cover.html`。
+2. 把 `assets/publisher/SimpleUX.mp4` 与 `assets/publisher/FullSpeed&SimpleUX.png` 复制到项目内的 `shared/publisher/`，保持模板内的 `../shared/publisher/` 资源引用可用。
 3. 在 `DECK_MANIFEST` 末尾追加封底页。
 
 ```text
-deck/slides/
-├── 99-back-cover.html
-├── FullSpeed&SimpleUX.png
-└── SimpleUX.mp4
+deck/
+├── slides/
+│   └── 99-back-cover.html
+└── shared/
+    └── publisher/
+        ├── FullSpeed&SimpleUX.png
+        └── SimpleUX.mp4
 ```
 
 ```js
@@ -169,7 +238,7 @@ deck/slides/
 
 封底页必须作为 `index.html` 演示流的最后一页参与键盘翻页和全屏演讲，不要作为独立文件单独交付。`assets/deck_index.html` 支持接收 iframe 内页面发出的翻页命令；封底模板已内置方向键、Space、Home/End 和 P 打印的转发逻辑。
 
-不要临场重写封底布局。除非用户明确要求，否则不修改模板结构、文案、联系信息、底部品牌带、同目录媒体引用、`#stage` 适配逻辑或键盘转发脚本。具体布局由 `assets/publisher/back-cover.html` 维护；历史说明和维护细节见 `references/deck-case-notes.md`。
+不要临场重写封底布局。除非用户明确要求，否则不修改模板结构、文案、联系信息、底部品牌带、媒体引用、`#stage` 适配逻辑或键盘转发脚本。具体布局由 `assets/deck-templates/back-cover.html` 维护；历史说明和维护细节见 `references/deck-case-notes.md`。
 
 ## 多文件模板
 

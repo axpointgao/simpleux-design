@@ -2,6 +2,8 @@
 
 > 7 种场景 × 3 种风格 = 21 个预制设计样例
 > 用于 Phase 3 推荐设计方向时，直接展示「这个风格做出来长什么样」
+>
+> 注意：showcase 是历史风格参考，不是 deck 字体规范。制作 HTML-first deck 时，中文标题、正文、注释、图形节点、页脚和封底信息必须按 `references/slide-decks.md` 使用中文无衬线字体；即使 showcase 源码里出现 `Noto Serif SC`，也不得照搬到 deck 中文文本。
 
 ## 风格说明
 

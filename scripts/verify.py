@@ -70,6 +70,18 @@ def verify_html(html_path, viewports=None, slides=0, output_dir=None, show=False
 
     console_errors = []
     page_errors = []
+    request_failures = []
+    asset_errors = []
+
+    def record_request_failure(req):
+        failure = req.failure
+        if isinstance(failure, str):
+            reason = failure
+        elif failure:
+            reason = getattr(failure, "error_text", str(failure))
+        else:
+            reason = "failed"
+        request_failures.append(f"{req.method} {req.url} :: {reason}")
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=not show)
@@ -80,10 +92,50 @@ def verify_html(html_path, viewports=None, slides=0, output_dir=None, show=False
 
             page.on("console", lambda msg: console_errors.append(f"[{msg.type}] {msg.text}") if msg.type in ("error", "warning") else None)
             page.on("pageerror", lambda err: page_errors.append(str(err)))
+            page.on("requestfailed", record_request_failure)
 
             print(f"\n→ 打开 {file_url} @ {viewport['width']}x{viewport['height']}")
             page.goto(file_url, wait_until='networkidle')
             page.wait_for_timeout(wait)
+            asset_report = page.evaluate("""
+                () => {
+                  const issues = [];
+                  const urlFromCssImage = (value) => {
+                    const match = String(value || "").match(/url\\(["']?([^"')]+)["']?\\)/);
+                    return match ? match[1] : "";
+                  };
+
+                  document.querySelectorAll(".signature-logo").forEach((el, index) => {
+                    const image = getComputedStyle(el).backgroundImage;
+                    const rect = el.getBoundingClientRect();
+                    if (!image || image === "none") {
+                      issues.push(`signature-logo[${index}] 缺少背景图`);
+                    }
+                    if (rect.width < 1 || rect.height < 1) {
+                      issues.push(`signature-logo[${index}] 尺寸异常 ${rect.width}x${rect.height}`);
+                    }
+                  });
+
+                  document.querySelectorAll(".brand-strip img").forEach((img, index) => {
+                    if (!img.currentSrc && !img.getAttribute("src")) {
+                      issues.push(`brand-strip img[${index}] 缺少 src`);
+                    } else if (img.complete && img.naturalWidth === 0) {
+                      issues.push(`brand-strip img[${index}] 加载失败: ${img.getAttribute("src")}`);
+                    }
+                  });
+
+                  document.querySelectorAll("video.brand-motion").forEach((video, index) => {
+                    if (!video.currentSrc && !video.getAttribute("src")) {
+                      issues.push(`brand-motion video[${index}] 缺少 src`);
+                    } else if (video.readyState === 0 && video.networkState === 3) {
+                      issues.push(`brand-motion video[${index}] 加载失败: ${video.getAttribute("src")}`);
+                    }
+                  });
+
+                  return issues;
+                }
+            """)
+            asset_errors.extend(asset_report)
 
             if slides > 0:
                 for i in range(slides):
@@ -132,9 +184,25 @@ def verify_html(html_path, viewports=None, slides=0, output_dir=None, show=False
     else:
         print("✅ Console干净")
 
+    if request_failures:
+        print(f"\n❌ 资源请求失败 ({len(request_failures)}):")
+        for e in request_failures[:20]:
+            print(f"  - {e}")
+        if len(request_failures) > 20:
+            print(f"  ... 还有{len(request_failures) - 20}条")
+    else:
+        print("✅ 资源请求无失败")
+
+    if asset_errors:
+        print(f"\n❌ 模板资源检查失败 ({len(asset_errors)}):")
+        for e in asset_errors:
+            print(f"  - {e}")
+    else:
+        print("✅ 模板资源检查通过")
+
     print(f"\n📸 截图保存至: {output_dir}")
 
-    exit_code = 0 if not page_errors else 1
+    exit_code = 0 if not page_errors and not request_failures and not asset_errors else 1
     if logic_graphics:
         exit_code = max(exit_code, verify_logic_graphics(html_path))
 

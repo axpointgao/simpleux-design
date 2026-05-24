@@ -205,7 +205,7 @@
       <h1 class="thanks">Thanks</h1>
       <p class="tagline">简立方，一家专注于数字策略与数字产品的体验设计公司</p>
 
-      <video class="brand-motion" src="./SimpleUX.mp4" autoplay muted loop playsinline></video>
+      <video class="brand-motion" autoplay muted loop playsinline></video>
 
       <section class="closing-info">
         <div class="contact" aria-label="SimpleUX contact information">
@@ -237,7 +237,7 @@
       </section>
 
       <footer class="brand-strip">
-        <img src="./FullSpeed&SimpleUX.png" alt="全速集团 / 简立方" />
+        <img alt="全速集团 / 简立方" />
         <p>全速集团旗下用户体验设计品牌</p>
       </footer>
     </main>
@@ -254,6 +254,18 @@
     }
 
     window.addEventListener("resize", fitBackCover);
+    function ensureMediaAsset(selector, attrName, projectPath, previewPath) {
+      const target = document.querySelector(selector);
+      if (!target) return;
+      if (target.getAttribute(attrName)) return;
+
+      const isTemplatePreview = window.location.pathname.includes("/assets/deck-templates/");
+      target.setAttribute(attrName, isTemplatePreview ? previewPath : projectPath);
+    }
+
+    ensureMediaAsset(".brand-motion", "src", "../shared/publisher/SimpleUX.mp4", "../publisher/SimpleUX.mp4");
+    ensureMediaAsset(".brand-strip img", "src", "../shared/publisher/FullSpeed&SimpleUX.png", "../publisher/FullSpeed&SimpleUX.png");
+
     window.addEventListener("keydown", (event) => {
       if (window.parent === window) return;
 
