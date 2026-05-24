@@ -124,7 +124,7 @@ Deck 系统：
 
 ### 固定模板页
 
-目录页、章节页和封底页是固定模板页型。优先复制 `assets/deck-templates/toc.html`、`assets/deck-templates/section.html` 或 `assets/deck-templates/back-cover.html` 到项目 `slides/` 目录，再替换文案和 CSS 变量。结构、字体类别和字号固定；色彩、背景、分隔线透明度、光效、图片氛围和署名 logo 使用当前 deck token 适配，不逐像素复制参考页。
+目录页、章节页和封底页是固定模板页型。凡结构判断需要目录页或章节页，或客户交付 deck 默认需要封底页时，必须复制 `assets/deck-templates/toc.html`、`assets/deck-templates/section.html` 或 `assets/deck-templates/back-cover.html` 到项目 `slides/` 目录，再替换文案和 CSS 变量。不得临场从零重写这些页面的结构。结构、字体类别和字号固定；色彩、背景、分隔线透明度、光效、图片氛围和署名 logo 使用当前 deck token 适配，不逐像素复制参考页。
 
 `assets/deck-templates/` 只放可以复制到 `slides/` 的页面模板；`assets/publisher/` 只放这些模板依赖的 SimpleUX logo、视频和组合标识等品牌媒体资源。
 
@@ -141,7 +141,7 @@ Deck 系统：
 }
 ```
 
-模板资源按页面所在位置选择路径：在 skill 的 `assets/deck-templates/` 目录直接预览时，模板使用 `../publisher/` 内置资源；复制到项目 `slides/` 目录后，模板默认使用 `../shared/publisher/` 项目资源。制作实际 deck 时，必须把署名 logo 复制到项目 `shared/publisher/` 或明确覆盖 `--signature-logo`，不能留下空 logo 占位。
+模板资源按页面所在位置选择路径：在 skill 的 `assets/deck-templates/` 目录直接预览时，模板使用 `../publisher/` 内置资源；复制到项目 `slides/` 目录后，模板默认使用 `../shared/publisher/` 项目资源。制作实际 deck 时，必须把署名 logo 复制到项目 `shared/publisher/` 或明确覆盖 `--signature-logo`，不能留下空 logo 占位。交付前必须打开目录页/章节页检查 SimpleUX 保密署名可见且没有破图。
 
 浅底目录页或章节页必须把 `--signature-logo` 覆盖为 `url("../shared/publisher/simpleux-dark.png")`，或使用项目内等价深色 logo 路径；不要沿用默认浅色 logo。
 
@@ -210,11 +210,12 @@ Deck 中展示 App/Web/PC/移动端 UI 截图时，必须读取 `references/devi
 - 这是设计方/出品方署名，不是客户品牌；客户品牌仍按品牌资产协议决定主视觉。
 - 如果内页使用出品方署名，把 `simpleux-dark.png` 和 `simpleux-light.png` 复制到项目内的 `deck/shared/publisher/`。
 - 使用目录页或章节页固定模板时，必须保证对应 logo 资源可用；深底默认使用 `simpleux-light.png`，浅底必须覆盖为 `simpleux-dark.png`。
+- 客户交付 deck 的普通内页默认使用 SimpleUX 保密署名页脚，除非该页是封面、强视觉页、客户品牌冲突页，或左下角已有正文/图表/关键信息会与署名冲突。
 - 页脚署名只做轻量归属和保密提示，不参与主视觉竞争。
 - 页脚署名文字必须很小，建议文字约 11px；但 logo 不应缩到不可识别，建议保持约 24px 高，只让说明文字轻量化。
 - 以上小字号只适用于出品方署名这种辅助角标，是特殊处理，不影响 deck 正文最小字号和内容页尺度规范。
 - 目录页和章节页作为固定模板默认放左下 SimpleUX 保密署名。
-- 其他内页不是所有页面都放。封面、强视觉页、左下角已有正文/图表/客户品牌信息、或会与内容冲突时，不放。
+- 不能因为省事完全省略普通内页署名。若某页不放署名，应有明确构图或品牌冲突原因。
 - 不允许为了放署名压缩正文、遮挡图表或破坏构图。
 - 浅底页面使用 `simpleux-dark.png`；深底页面使用 `simpleux-light.png`。
 
@@ -330,3 +331,6 @@ PPTX 约束详见 `references/editable-pptx.md`。
 5. 搜 `TODO` / `placeholder`，确认没有未替换内容。
 6. 如果页面包含 `data-logic-graphic`，运行逻辑图形质检并处理所有失败项。
 7. 如导出 PDF/PPTX，打开最终文件逐页检查。
+8. 打开 `index.html` 后不点击页面，直接按方向键和空格，确认可翻页。
+9. 若有目录页/章节页/封底页，确认它们来自固定模板，并已接入 `DECK_MANIFEST`。
+10. 确认 `shared/publisher/` 中有 SimpleUX 署名和封底所需资产，目录页/章节页/普通内页页脚没有破图。

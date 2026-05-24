@@ -128,10 +128,10 @@
   }
 </style>
 </head>
-<body>
+<body tabindex="-1">
 
-<div id="stage" tabindex="-1">
-  <iframe id="frame" src="about:blank" tabindex="0"></iframe>
+<div id="stage" tabindex="0" aria-label="SimpleUX deck stage">
+  <iframe id="frame" src="about:blank" tabindex="-1"></iframe>
 </div>
 
 <div class="nav-zone left"  id="navL"><div class="nav-hint">‹</div></div>
@@ -182,6 +182,8 @@
 
   function handleKeydown(e) {
     if (e.target.matches && e.target.matches('input, textarea, [contenteditable]')) return;
+    if (e.__simpleuxDeckHandled) return;
+    e.__simpleuxDeckHandled = true;
     switch (e.key) {
       case 'ArrowRight': case ' ': case 'PageDown': e.preventDefault(); next(); break;
       case 'ArrowLeft':  case 'PageUp':              e.preventDefault(); prev(); break;
@@ -199,22 +201,34 @@
   function attachFrameKeyboard() {
     try {
       frame.contentWindow.document.addEventListener('keydown', handleKeydown, true);
+      frame.contentWindow.addEventListener('keydown', handleKeydown, true);
     } catch (_) {}
     focusDeck();
   }
 
   function focusDeck() {
     requestAnimationFrame(() => {
-      try { frame.focus({ preventScroll: true }); } catch (_) {}
+      try { stage.focus({ preventScroll: true }); } catch (_) {}
       setTimeout(() => {
-        try { frame.focus({ preventScroll: true }); } catch (_) {}
+        try { stage.focus({ preventScroll: true }); } catch (_) {}
       }, 30);
+      setTimeout(() => {
+        try { stage.focus({ preventScroll: true }); } catch (_) {}
+      }, 250);
     });
   }
 
   // Keyboard
-  document.addEventListener('keydown', handleKeydown);
+  window.addEventListener('keydown', handleKeydown, true);
+  document.addEventListener('keydown', handleKeydown, true);
+  document.body.addEventListener('keydown', handleKeydown, true);
+  stage.addEventListener('keydown', handleKeydown, true);
+  frame.addEventListener('keydown', handleKeydown, true);
   frame.addEventListener('load', attachFrameKeyboard);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) focusDeck();
+  });
+  window.addEventListener('pointerdown', focusDeck, true);
 
   document.getElementById('navL').addEventListener('click', prev);
   document.getElementById('navR').addEventListener('click', next);
