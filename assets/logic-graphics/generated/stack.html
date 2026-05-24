@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=1920, initial-scale=1">
-<title>从目标到执行形成三层递进</title>
+<title>上下分层结构表达从原则到动作的递进关系</title>
 <style>
 :root {
   --lg-bg: #f7f8fb;
@@ -161,6 +161,11 @@ body {
   z-index: 1;
 }
 
+.lg-backdrop-layer {
+  z-index: 1;
+  overflow: visible;
+}
+
 .lg-node-layer,
 .lg-callout-layer,
 .lg-label-layer,
@@ -189,6 +194,34 @@ body {
   font-size: var(--lg-label-size);
   font-weight: 650;
   line-height: 1;
+}
+
+.lg-matrix-backdrop {
+  fill: rgba(255, 255, 255, 0.34);
+  stroke: rgba(141, 160, 182, 0.30);
+  stroke-width: 2;
+}
+
+.lg-matrix-axis {
+  stroke: rgba(141, 160, 182, 0.28);
+  stroke-width: 2;
+  stroke-dasharray: 10 12;
+}
+
+.lg-path-backbone {
+  stroke: rgba(141, 160, 182, 0.22);
+  stroke-width: 14;
+  stroke-linecap: round;
+}
+
+.lg-page[data-lg-theme="simpleux-dark"] .lg-matrix-backdrop {
+  fill: rgba(255, 255, 255, 0.04);
+  stroke: rgba(148, 163, 184, 0.24);
+}
+
+.lg-page[data-lg-theme="simpleux-dark"] .lg-matrix-axis,
+.lg-page[data-lg-theme="simpleux-dark"] .lg-path-backbone {
+  stroke: rgba(148, 163, 184, 0.22);
 }
 
 .lg-node {
@@ -387,21 +420,22 @@ body {
 <body>
 <main class="lg-page" data-logic-graphic="true" data-lg-component="GraphicFrame" data-lg-token-version="logic-graphics-v1" data-lg-theme="simpleux-light" style="width:1920px;height:1080px;">
 <header class="lg-header" data-lg-zone="header">
-<div class="lg-title" data-lg-text-role="canvas-title" data-lg-max-chars="30">从目标到执行形成三层递进</div>
-<div class="lg-subtitle" data-lg-text-role="canvas-subtitle" data-lg-max-chars="40">分层图用于表达上层原则、中层机制和下层动作的稳定关系。</div>
+<div class="lg-title" data-lg-text-role="canvas-title" data-lg-max-chars="30">上下分层结构表达从原则到动作的递进关系</div>
+<div class="lg-subtitle" data-lg-text-role="canvas-subtitle" data-lg-max-chars="40">适合表达目标层、机制层、执行层等纵向结构，不适合承载复杂交叉关系。</div>
 </header>
 <section class="lg-main" data-lg-zone="main" data-lg-layout="stack">
-<div class="lg-layer lg-group-layer"><div class="lg-group" data-lg-component="GraphicGroup" data-lg-group-id="目标层" style="left:0px;top:0px;width:1640px;height:225px;"><div class="lg-group-title">目标层</div></div><div class="lg-group" data-lg-component="GraphicGroup" data-lg-group-id="机制层" style="left:0px;top:255px;width:1640px;height:225px;"><div class="lg-group-title">机制层</div></div><div class="lg-group" data-lg-component="GraphicGroup" data-lg-group-id="执行层" style="left:0px;top:509px;width:1640px;height:225px;"><div class="lg-group-title">执行层</div></div></div>
+<div class="lg-layer lg-group-layer"><div class="lg-group" data-lg-component="GraphicGroup" data-lg-group-id="goal" style="left:0px;top:0px;width:1640px;height:225px;"><div class="lg-group-title">目标层</div></div><div class="lg-group" data-lg-component="GraphicGroup" data-lg-group-id="system" style="left:0px;top:255px;width:1640px;height:225px;"><div class="lg-group-title">机制层</div></div><div class="lg-group" data-lg-component="GraphicGroup" data-lg-group-id="action" style="left:0px;top:509px;width:1640px;height:225px;"><div class="lg-group-title">执行层</div></div></div>
+<svg class="lg-layer lg-backdrop-layer" data-lg-component="GraphicGroup" viewBox="0 0 1640 734" width="1640" height="734" aria-hidden="true"></svg>
 <svg class="lg-layer lg-connector-layer" data-lg-component="GraphicConnectorLayer" viewBox="0 0 1640 734" width="1640" height="734" aria-hidden="true">
 <defs><marker id="lg-arrow" viewBox="0 0 16 16" refX="13" refY="8" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M 2 2 L 14 8 L 2 14 z" fill="var(--lg-line)"></path></marker></defs>
-<path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c1" data-lg-from="goal" data-lg-to="team" data-lg-kind="arrow" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:426,&quot;y&quot;:211},{&quot;x&quot;:426,&quot;y&quot;:309}]" d="M 426.28627450980395 211 L 426.26666666666665 309" marker-end="url(#lg-arrow)"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c2" data-lg-from="team" data-lg-to="action" data-lg-kind="arrow" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:426,&quot;y&quot;:461},{&quot;x&quot;:426,&quot;y&quot;:563}]" d="M 426.26666666666665 461 L 426.2705882352941 563" marker-end="url(#lg-arrow)"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c3" data-lg-from="metric" data-lg-to="review" data-lg-kind="arrow" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:1215,&quot;y&quot;:206},{&quot;x&quot;:1215,&quot;y&quot;:309}]" d="M 1215.2666666666667 206 L 1215.2666666666667 309" marker-end="url(#lg-arrow)"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c4" data-lg-from="review" data-lg-to="risk" data-lg-kind="arrow" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:1215,&quot;y&quot;:461},{&quot;x&quot;:1215,&quot;y&quot;:563}]" d="M 1215.2666666666667 461 L 1215.270588235294 563" marker-end="url(#lg-arrow)"></path>
+
 </svg>
-<div class="lg-layer lg-node-layer"><div class="lg-node lg-node--pill" data-lg-component="GraphicNode" data-lg-node-id="goal" data-lg-kind="pill" data-lg-level="primary" data-lg-emphasis="true" data-lg-title-length="4" data-lg-body-length="6" style="left:236px;top:57px;width:380px;height:146px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">清晰目标</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">定义共同方向</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="metric" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="6" style="left:1045px;top:62px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">衡量指标</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">确认判断口径</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="team" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="6" style="left:256px;top:317px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">协作机制</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">同步角色边界</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="review" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="6" style="left:1045px;top:317px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">复盘节奏</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">稳定反馈循环</div> </div><div class="lg-node lg-node--index" data-lg-component="GraphicNode" data-lg-node-id="action" data-lg-kind="index" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="7" style="left:251px;top:571px;width:350px;height:138px;"> <div class="lg-node-index">5</div> <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">关键动作</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">把策略转为任务</div> </div><div class="lg-node lg-node--index" data-lg-component="GraphicNode" data-lg-node-id="risk" data-lg-kind="index" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="6" style="left:1040px;top:571px;width:350px;height:138px;"> <div class="lg-node-index">6</div> <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">风险处理</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">提前设置预案</div> </div></div>
-<div class="lg-layer lg-label-layer"><div class="lg-connector-label" data-lg-component="GraphicLabel" data-lg-text-role="connector-label" data-lg-max-chars="12" style="left:385px;top:243px;width:82px;">牵引</div><div class="lg-connector-label" data-lg-component="GraphicLabel" data-lg-text-role="connector-label" data-lg-max-chars="12" style="left:385px;top:495px;width:82px;">落地</div><div class="lg-connector-label" data-lg-component="GraphicLabel" data-lg-text-role="connector-label" data-lg-max-chars="12" style="left:1174px;top:241px;width:82px;">校准</div><div class="lg-connector-label" data-lg-component="GraphicLabel" data-lg-text-role="connector-label" data-lg-max-chars="12" style="left:1174px;top:495px;width:82px;">修正</div></div>
+<div class="lg-layer lg-node-layer"><div class="lg-node lg-node--pill" data-lg-component="GraphicNode" data-lg-node-id="north" data-lg-kind="pill" data-lg-level="primary" data-lg-emphasis="true" data-lg-title-length="4" data-lg-body-length="9" style="left:236px;top:57px;width:380px;height:146px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">共同目标</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">定义方向和成功标准</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="metric" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="7" style="left:1045px;top:62px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">衡量口径</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">让判断保持一致</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="flow" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="9" style="left:256px;top:317px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">协作机制</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">同步角色与交付边界</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="review" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="9" style="left:1045px;top:317px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">复盘节奏</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">固定反馈和调整周期</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="task" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="7" style="left:256px;top:572px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">关键动作</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">把策略转成任务</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="risk" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="6" style="left:1045px;top:572px;width:340px;height:136px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">风险处理</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">提前设置预案</div> </div></div>
+<div class="lg-layer lg-label-layer"></div>
 <div class="lg-layer lg-badge-layer"><div class="lg-badge" data-lg-component="GraphicBadge" data-lg-tone="default" data-lg-text-role="badge" data-lg-max-chars="8" style="left:564px;top:39px;width:72px;height:34px;">核心</div></div>
-<div class="lg-layer lg-callout-layer"><aside class="lg-callout" data-lg-component="GraphicCallout" data-lg-target="goal" style="left:660px;top:69px;width:330px;height:122px;"><div class="lg-callout-title" data-lg-text-role="callout-title" data-lg-max-chars="14">使用建议</div><div class="lg-callout-body" data-lg-text-role="callout-body" data-lg-max-chars="56">每层最多放三到四个节点，避免层级失焦。</div></aside></div>
+<div class="lg-layer lg-callout-layer"></div>
 </section>
-<footer class="lg-footer" data-lg-zone="footer"><span>SimpleUX Logic Graphics · stack</span></footer>
+<footer class="lg-footer" data-lg-zone="footer"><span>SimpleUX Logic Graphics · foundation · stack</span></footer>
 </main>
 </body>
 </html>

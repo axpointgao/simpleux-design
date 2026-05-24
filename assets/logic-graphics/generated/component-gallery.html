@@ -161,6 +161,11 @@ body {
   z-index: 1;
 }
 
+.lg-backdrop-layer {
+  z-index: 1;
+  overflow: visible;
+}
+
 .lg-node-layer,
 .lg-callout-layer,
 .lg-label-layer,
@@ -189,6 +194,34 @@ body {
   font-size: var(--lg-label-size);
   font-weight: 650;
   line-height: 1;
+}
+
+.lg-matrix-backdrop {
+  fill: rgba(255, 255, 255, 0.34);
+  stroke: rgba(141, 160, 182, 0.30);
+  stroke-width: 2;
+}
+
+.lg-matrix-axis {
+  stroke: rgba(141, 160, 182, 0.28);
+  stroke-width: 2;
+  stroke-dasharray: 10 12;
+}
+
+.lg-path-backbone {
+  stroke: rgba(141, 160, 182, 0.22);
+  stroke-width: 14;
+  stroke-linecap: round;
+}
+
+.lg-page[data-lg-theme="simpleux-dark"] .lg-matrix-backdrop {
+  fill: rgba(255, 255, 255, 0.04);
+  stroke: rgba(148, 163, 184, 0.24);
+}
+
+.lg-page[data-lg-theme="simpleux-dark"] .lg-matrix-axis,
+.lg-page[data-lg-theme="simpleux-dark"] .lg-path-backbone {
+  stroke: rgba(148, 163, 184, 0.22);
 }
 
 .lg-node {
@@ -392,6 +425,7 @@ body {
 </header>
 <section class="lg-main" data-lg-zone="main" data-lg-layout="modules">
 <div class="lg-layer lg-group-layer"><div class="lg-group" data-lg-component="GraphicGroup" data-lg-group-id="节点" style="left:0px;top:0px;width:525px;height:734px;"><div class="lg-group-title">GraphicNode</div></div><div class="lg-group" data-lg-component="GraphicGroup" data-lg-group-id="关系" style="left:557px;top:0px;width:525px;height:734px;"><div class="lg-group-title">GraphicConnector</div></div><div class="lg-group" data-lg-component="GraphicGroup" data-lg-group-id="辅助" style="left:1115px;top:0px;width:525px;height:734px;"><div class="lg-group-title">Label · Badge · Callout</div></div></div>
+<svg class="lg-layer lg-backdrop-layer" data-lg-component="GraphicGroup" viewBox="0 0 1640 734" width="1640" height="734" aria-hidden="true"></svg>
 <svg class="lg-layer lg-connector-layer" data-lg-component="GraphicConnectorLayer" viewBox="0 0 1640 734" width="1640" height="734" aria-hidden="true">
 <defs><marker id="lg-arrow" viewBox="0 0 16 16" refX="13" refY="8" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M 2 2 L 14 8 L 2 14 z" fill="var(--lg-line)"></path></marker></defs>
 <path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c1" data-lg-from="circle" data-lg-to="pill" data-lg-kind="arrow" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:499,&quot;y&quot;:134},{&quot;x&quot;:583,&quot;y&quot;:134}]" d="M 499 134.41023339317775 L 583 134.41023339317775" marker-end="url(#lg-arrow)"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c2" data-lg-from="diamond" data-lg-to="index" data-lg-kind="elbow" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:499,&quot;y&quot;:286},{&quot;x&quot;:541,&quot;y&quot;:286},{&quot;x&quot;:541,&quot;y&quot;:286},{&quot;x&quot;:583,&quot;y&quot;:286}]" d="M 499 286.41023339317775 L 541 286.41023339317775 L 541 286.41023339317775 L 583 286.41023339317775" marker-end="url(#lg-arrow)"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c3" data-lg-from="pill" data-lg-to="badgeNode" data-lg-kind="curve" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:1056,&quot;y&quot;:196},{&quot;x&quot;:1066,&quot;y&quot;:197},{&quot;x&quot;:1076,&quot;y&quot;:199},{&quot;x&quot;:1084,&quot;y&quot;:202},{&quot;x&quot;:1091,&quot;y&quot;:206},{&quot;x&quot;:1099,&quot;y&quot;:210},{&quot;x&quot;:1106,&quot;y&quot;:214},{&quot;x&quot;:1113,&quot;y&quot;:218},{&quot;x&quot;:1121,&quot;y&quot;:221},{&quot;x&quot;:1131,&quot;y&quot;:223},{&quot;x&quot;:1141,&quot;y&quot;:224}]" d="M 1056 196.2437275985663 C 1093.4 196.2437275985663, 1103.6 223.7562724014337, 1141 223.7562724014337" marker-end="url(#lg-arrow)"></path>
@@ -399,7 +433,7 @@ body {
 <div class="lg-layer lg-node-layer"><div class="lg-node lg-node--circle" data-lg-component="GraphicNode" data-lg-node-id="circle" data-lg-kind="circle" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="5" style="left:34px;top:68px;width:457px;height:132px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">圆形节点</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">中心或要素</div> </div><div class="lg-node lg-node--diamond" data-lg-component="GraphicNode" data-lg-node-id="diamond" data-lg-kind="diamond" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="5" style="left:34px;top:220px;width:457px;height:132px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">判断节点</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">分叉或条件</div> </div><div class="lg-node lg-node--pill" data-lg-component="GraphicNode" data-lg-node-id="pill" data-lg-kind="pill" data-lg-level="primary" data-lg-emphasis="true" data-lg-title-length="4" data-lg-body-length="4" style="left:591px;top:68px;width:457px;height:132px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">胶囊节点</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">阶段标签</div> </div><div class="lg-node lg-node--index" data-lg-component="GraphicNode" data-lg-node-id="index" data-lg-kind="index" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="4" style="left:591px;top:220px;width:457px;height:132px;"> <div class="lg-node-index">4</div> <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">编号节点</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">步骤排序</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="calloutNode" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="6" style="left:1149px;top:68px;width:457px;height:132px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">旁注目标</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">用于解释重点</div> </div><div class="lg-node lg-node--rect" data-lg-component="GraphicNode" data-lg-node-id="badgeNode" data-lg-kind="rect" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="4" style="left:1149px;top:220px;width:457px;height:132px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">状态徽标</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">短词高亮</div> </div></div>
 <div class="lg-layer lg-label-layer"><div class="lg-connector-label" data-lg-component="GraphicLabel" data-lg-text-role="connector-label" data-lg-max-chars="12" style="left:500px;top:117px;width:82px;">箭头</div><div class="lg-connector-label" data-lg-component="GraphicLabel" data-lg-text-role="connector-label" data-lg-max-chars="12" style="left:500px;top:269px;width:82px;">折线</div><div class="lg-connector-label" data-lg-component="GraphicLabel" data-lg-text-role="connector-label" data-lg-max-chars="12" style="left:1054px;top:191px;width:82px;">曲线</div></div>
 <div class="lg-layer lg-badge-layer"><div class="lg-badge" data-lg-component="GraphicBadge" data-lg-tone="default" data-lg-text-role="badge" data-lg-max-chars="8" style="left:996px;top:50px;width:72px;height:34px;">示例</div><div class="lg-badge" data-lg-component="GraphicBadge" data-lg-tone="default" data-lg-text-role="badge" data-lg-max-chars="8" style="left:1554px;top:202px;width:72px;height:34px;">状态</div></div>
-<div class="lg-layer lg-callout-layer"><aside class="lg-callout" data-lg-component="GraphicCallout" data-lg-target="calloutNode" style="left:775px;top:73px;width:330px;height:122px;"><div class="lg-callout-title" data-lg-text-role="callout-title" data-lg-max-chars="14">旁注组件</div><div class="lg-callout-body" data-lg-text-role="callout-body" data-lg-max-chars="56">只承载短解释，不替代正文段落。</div></aside></div>
+<div class="lg-layer lg-callout-layer"></div>
 </section>
 <footer class="lg-footer" data-lg-zone="footer"><span>SimpleUX Logic Graphics · components</span></footer>
 </main>

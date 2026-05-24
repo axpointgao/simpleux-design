@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=1920, initial-scale=1">
-<title>闭环图表达持续反馈而不是线性终点</title>
+<title>环形闭环表达持续反馈和周期性优化</title>
 <style>
 :root {
   --lg-bg: #f7f8fb;
@@ -161,6 +161,11 @@ body {
   z-index: 1;
 }
 
+.lg-backdrop-layer {
+  z-index: 1;
+  overflow: visible;
+}
+
 .lg-node-layer,
 .lg-callout-layer,
 .lg-label-layer,
@@ -189,6 +194,34 @@ body {
   font-size: var(--lg-label-size);
   font-weight: 650;
   line-height: 1;
+}
+
+.lg-matrix-backdrop {
+  fill: rgba(255, 255, 255, 0.34);
+  stroke: rgba(141, 160, 182, 0.30);
+  stroke-width: 2;
+}
+
+.lg-matrix-axis {
+  stroke: rgba(141, 160, 182, 0.28);
+  stroke-width: 2;
+  stroke-dasharray: 10 12;
+}
+
+.lg-path-backbone {
+  stroke: rgba(141, 160, 182, 0.22);
+  stroke-width: 14;
+  stroke-linecap: round;
+}
+
+.lg-page[data-lg-theme="simpleux-dark"] .lg-matrix-backdrop {
+  fill: rgba(255, 255, 255, 0.04);
+  stroke: rgba(148, 163, 184, 0.24);
+}
+
+.lg-page[data-lg-theme="simpleux-dark"] .lg-matrix-axis,
+.lg-page[data-lg-theme="simpleux-dark"] .lg-path-backbone {
+  stroke: rgba(148, 163, 184, 0.22);
 }
 
 .lg-node {
@@ -387,21 +420,22 @@ body {
 <body>
 <main class="lg-page" data-logic-graphic="true" data-lg-component="GraphicFrame" data-lg-token-version="logic-graphics-v1" data-lg-theme="simpleux-light" style="width:1920px;height:1080px;">
 <header class="lg-header" data-lg-zone="header">
-<div class="lg-title" data-lg-text-role="canvas-title" data-lg-max-chars="30">闭环图表达持续反馈而不是线性终点</div>
-<div class="lg-subtitle" data-lg-text-role="canvas-subtitle" data-lg-max-chars="40">适合增长飞轮、运营循环、学习闭环和质量改进流程。</div>
+<div class="lg-title" data-lg-text-role="canvas-title" data-lg-max-chars="30">环形闭环表达持续反馈和周期性优化</div>
+<div class="lg-subtitle" data-lg-text-role="canvas-subtitle" data-lg-max-chars="40">适合表达增长飞轮、运营循环、学习闭环和质量改进流程。</div>
 </header>
 <section class="lg-main" data-lg-zone="main" data-lg-layout="loop">
 <div class="lg-layer lg-group-layer"></div>
+<svg class="lg-layer lg-backdrop-layer" data-lg-component="GraphicGroup" viewBox="0 0 1640 734" width="1640" height="734" aria-hidden="true"></svg>
 <svg class="lg-layer lg-connector-layer" data-lg-component="GraphicConnectorLayer" viewBox="0 0 1640 734" width="1640" height="734" aria-hidden="true">
 <defs><marker id="lg-arrow" viewBox="0 0 16 16" refX="13" refY="8" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M 2 2 L 14 8 L 2 14 z" fill="var(--lg-line)"></path></marker></defs>
 <path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c1" data-lg-from="plan" data-lg-to="build" data-lg-kind="curve" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:926,&quot;y&quot;:160},{&quot;x&quot;:967,&quot;y&quot;:164},{&quot;x&quot;:1003,&quot;y&quot;:176},{&quot;x&quot;:1035,&quot;y&quot;:193},{&quot;x&quot;:1065,&quot;y&quot;:214},{&quot;x&quot;:1093,&quot;y&quot;:237},{&quot;x&quot;:1121,&quot;y&quot;:259},{&quot;x&quot;:1151,&quot;y&quot;:280},{&quot;x&quot;:1183,&quot;y&quot;:298},{&quot;x&quot;:1219,&quot;y&quot;:309},{&quot;x&quot;:1260,&quot;y&quot;:313}]" d="M 926 159.98245614035088 C 1072.96 159.98245614035088, 1113.04 313.49122807017545, 1260 313.49122807017545" marker-end="url(#lg-arrow)"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c2" data-lg-from="build" data-lg-to="measure" data-lg-kind="curve" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:1260,&quot;y&quot;:421},{&quot;x&quot;:1219,&quot;y&quot;:425},{&quot;x&quot;:1183,&quot;y&quot;:436},{&quot;x&quot;:1151,&quot;y&quot;:454},{&quot;x&quot;:1121,&quot;y&quot;:475},{&quot;x&quot;:1093,&quot;y&quot;:497},{&quot;x&quot;:1065,&quot;y&quot;:520},{&quot;x&quot;:1035,&quot;y&quot;:541},{&quot;x&quot;:1003,&quot;y&quot;:558},{&quot;x&quot;:967,&quot;y&quot;:570},{&quot;x&quot;:926,&quot;y&quot;:574}]" d="M 1260 420.50877192982455 C 1113.04 420.50877192982455, 1072.96 574.0175438596491, 926 574.0175438596491" marker-end="url(#lg-arrow)"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c3" data-lg-from="measure" data-lg-to="learn" data-lg-kind="curve" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:714,&quot;y&quot;:574},{&quot;x&quot;:670,&quot;y&quot;:569},{&quot;x&quot;:631,&quot;y&quot;:557},{&quot;x&quot;:597,&quot;y&quot;:539},{&quot;x&quot;:565,&quot;y&quot;:516},{&quot;x&quot;:535,&quot;y&quot;:492},{&quot;x&quot;:505,&quot;y&quot;:468},{&quot;x&quot;:473,&quot;y&quot;:445},{&quot;x&quot;:439,&quot;y&quot;:427},{&quot;x&quot;:400,&quot;y&quot;:415},{&quot;x&quot;:356,&quot;y&quot;:410}]" d="M 714 574.0175438596491 C 556.48 574.0175438596491, 513.52 409.9824561403509, 356 409.9824561403509" marker-end="url(#lg-arrow)"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c4" data-lg-from="learn" data-lg-to="plan" data-lg-kind="curve" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:356,&quot;y&quot;:324},{&quot;x&quot;:400,&quot;y&quot;:319},{&quot;x&quot;:439,&quot;y&quot;:307},{&quot;x&quot;:473,&quot;y&quot;:289},{&quot;x&quot;:505,&quot;y&quot;:266},{&quot;x&quot;:535,&quot;y&quot;:242},{&quot;x&quot;:565,&quot;y&quot;:218},{&quot;x&quot;:597,&quot;y&quot;:195},{&quot;x&quot;:631,&quot;y&quot;:177},{&quot;x&quot;:670,&quot;y&quot;:165},{&quot;x&quot;:714,&quot;y&quot;:160}]" d="M 356 324.0175438596491 C 513.52 324.0175438596491, 556.48 159.98245614035088, 714 159.98245614035088" marker-end="url(#lg-arrow)"></path>
 </svg>
 <div class="lg-layer lg-node-layer"><div class="lg-node lg-node--circle" data-lg-component="GraphicNode" data-lg-node-id="plan" data-lg-kind="circle" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="2" data-lg-body-length="4" style="left:722px;top:19px;width:196px;height:196px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">计划</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">明确目标</div> </div><div class="lg-node lg-node--circle" data-lg-component="GraphicNode" data-lg-node-id="build" data-lg-kind="circle" data-lg-level="primary" data-lg-emphasis="true" data-lg-title-length="2" data-lg-body-length="4" style="left:1268px;top:245px;width:244px;height:244px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">执行</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">形成产物</div> </div><div class="lg-node lg-node--circle" data-lg-component="GraphicNode" data-lg-node-id="measure" data-lg-kind="circle" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="2" data-lg-body-length="4" style="left:722px;top:519px;width:196px;height:196px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">衡量</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">获取数据</div> </div><div class="lg-node lg-node--circle" data-lg-component="GraphicNode" data-lg-node-id="learn" data-lg-kind="circle" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="2" data-lg-body-length="4" style="left:152px;top:269px;width:196px;height:196px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">学习</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">修正判断</div> </div></div>
-<div class="lg-layer lg-label-layer"><div class="lg-connector-label" data-lg-component="GraphicLabel" data-lg-text-role="connector-label" data-lg-max-chars="12" style="left:1038px;top:208px;width:82px;">启动</div><div class="lg-connector-label" data-lg-component="GraphicLabel" data-lg-text-role="connector-label" data-lg-max-chars="12" style="left:1066px;top:469px;width:82px;">观察</div><div class="lg-connector-label" data-lg-component="GraphicLabel" data-lg-text-role="connector-label" data-lg-max-chars="12" style="left:509px;top:487px;width:82px;">洞察</div><div class="lg-connector-label" data-lg-component="GraphicLabel" data-lg-text-role="connector-label" data-lg-max-chars="12" style="left:479px;top:237px;width:82px;">迭代</div></div>
-<div class="lg-layer lg-badge-layer"></div>
-<div class="lg-layer lg-callout-layer"><aside class="lg-callout" data-lg-component="GraphicCallout" data-lg-target="build" style="left:894px;top:306px;width:330px;height:122px;"><div class="lg-callout-title" data-lg-text-role="callout-title" data-lg-max-chars="14">闭环重点</div><div class="lg-callout-body" data-lg-text-role="callout-body" data-lg-max-chars="56">强调当前环节，其他节点维持同级关系。</div></aside></div>
+<div class="lg-layer lg-label-layer"></div>
+<div class="lg-layer lg-badge-layer"><div class="lg-badge" data-lg-component="GraphicBadge" data-lg-tone="default" data-lg-text-role="badge" data-lg-max-chars="8" style="left:1460px;top:227px;width:72px;height:34px;">当前</div></div>
+<div class="lg-layer lg-callout-layer"></div>
 </section>
-<footer class="lg-footer" data-lg-zone="footer"><span>SimpleUX Logic Graphics · loop</span></footer>
+<footer class="lg-footer" data-lg-zone="footer"><span>SimpleUX Logic Graphics · foundation · loop</span></footer>
 </main>
 </body>
 </html>

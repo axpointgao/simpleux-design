@@ -1,23 +1,16 @@
 {
   "canvas": {
-    "title": "中心扩散图突出一个核心概念",
-    "subtitle": "适合表达一个核心能力与周边要素之间的支撑关系。",
-    "footer": "SimpleUX Logic Graphics · radial"
+    "title": "单中心关系用于说明一个核心如何被多要素支撑",
+    "subtitle": "适合表达核心能力、关键主张、平台中枢和周边支撑条件。",
+    "footer": "SimpleUX Logic Graphics · foundation · radial"
   },
   "layout": { "type": "radial" },
   "nodes": [
-    { "id": "core", "kind": "circle", "title": "稳定生成", "body": "组件、布局和质检共同约束", "emphasis": true, "badge": "核心" },
-    { "id": "tokens", "kind": "pill", "title": "统一 token", "body": "字号颜色线宽一致" },
-    { "id": "layout", "kind": "pill", "title": "布局算法", "body": "避免手写坐标" },
-    { "id": "text", "kind": "pill", "title": "文本容量", "body": "超量拆页或拆节点" },
-    { "id": "safe", "kind": "pill", "title": "安全区", "body": "不压标题和页脚" },
-    { "id": "qa", "kind": "pill", "title": "质检门禁", "body": "失败后必须返工" }
-  ],
-  "connectors": [
-    { "from": "core", "to": "tokens", "kind": "line" },
-    { "from": "core", "to": "layout", "kind": "line" },
-    { "from": "core", "to": "text", "kind": "line" },
-    { "from": "core", "to": "safe", "kind": "line" },
-    { "from": "core", "to": "qa", "kind": "line" }
+    { "id": "core", "kind": "circle", "title": "核心能力", "body": "统一目标与判断口径", "emphasis": true, "badge": "核心" },
+    { "id": "data", "kind": "pill", "title": "数据基础", "body": "来源清晰" },
+    { "id": "process", "kind": "pill", "title": "流程约束", "body": "路径稳定" },
+    { "id": "role", "kind": "pill", "title": "角色协同", "body": "责任明确" },
+    { "id": "quality", "kind": "pill", "title": "质量门禁", "body": "风险可控" },
+    { "id": "review", "kind": "pill", "title": "复盘机制", "body": "持续优化" }
   ]
 }

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=1920, initial-scale=1">
-<title>中心扩散图突出一个核心概念</title>
+<title>单中心关系用于说明一个核心如何被多要素支撑</title>
 <style>
 :root {
   --lg-bg: #f7f8fb;
@@ -161,6 +161,11 @@ body {
   z-index: 1;
 }
 
+.lg-backdrop-layer {
+  z-index: 1;
+  overflow: visible;
+}
+
 .lg-node-layer,
 .lg-callout-layer,
 .lg-label-layer,
@@ -189,6 +194,34 @@ body {
   font-size: var(--lg-label-size);
   font-weight: 650;
   line-height: 1;
+}
+
+.lg-matrix-backdrop {
+  fill: rgba(255, 255, 255, 0.34);
+  stroke: rgba(141, 160, 182, 0.30);
+  stroke-width: 2;
+}
+
+.lg-matrix-axis {
+  stroke: rgba(141, 160, 182, 0.28);
+  stroke-width: 2;
+  stroke-dasharray: 10 12;
+}
+
+.lg-path-backbone {
+  stroke: rgba(141, 160, 182, 0.22);
+  stroke-width: 14;
+  stroke-linecap: round;
+}
+
+.lg-page[data-lg-theme="simpleux-dark"] .lg-matrix-backdrop {
+  fill: rgba(255, 255, 255, 0.04);
+  stroke: rgba(148, 163, 184, 0.24);
+}
+
+.lg-page[data-lg-theme="simpleux-dark"] .lg-matrix-axis,
+.lg-page[data-lg-theme="simpleux-dark"] .lg-path-backbone {
+  stroke: rgba(148, 163, 184, 0.22);
 }
 
 .lg-node {
@@ -387,21 +420,22 @@ body {
 <body>
 <main class="lg-page" data-logic-graphic="true" data-lg-component="GraphicFrame" data-lg-token-version="logic-graphics-v1" data-lg-theme="simpleux-light" style="width:1920px;height:1080px;">
 <header class="lg-header" data-lg-zone="header">
-<div class="lg-title" data-lg-text-role="canvas-title" data-lg-max-chars="30">中心扩散图突出一个核心概念</div>
-<div class="lg-subtitle" data-lg-text-role="canvas-subtitle" data-lg-max-chars="40">适合表达一个核心能力与周边要素之间的支撑关系。</div>
+<div class="lg-title" data-lg-text-role="canvas-title" data-lg-max-chars="30">单中心关系用于说明一个核心如何被多要素支撑</div>
+<div class="lg-subtitle" data-lg-text-role="canvas-subtitle" data-lg-max-chars="40">适合表达核心能力、关键主张、平台中枢和周边支撑条件。</div>
 </header>
 <section class="lg-main" data-lg-zone="main" data-lg-layout="radial">
 <div class="lg-layer lg-group-layer"></div>
+<svg class="lg-layer lg-backdrop-layer" data-lg-component="GraphicGroup" viewBox="0 0 1640 734" width="1640" height="734" aria-hidden="true"></svg>
 <svg class="lg-layer lg-connector-layer" data-lg-component="GraphicConnectorLayer" viewBox="0 0 1640 734" width="1640" height="734" aria-hidden="true">
 <defs><marker id="lg-arrow" viewBox="0 0 16 16" refX="13" refY="8" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M 2 2 L 14 8 L 2 14 z" fill="var(--lg-line)"></path></marker></defs>
-<path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c1" data-lg-from="core" data-lg-to="tokens" data-lg-kind="line" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:820,&quot;y&quot;:237},{&quot;x&quot;:820,&quot;y&quot;:183}]" d="M 820.478431372549 237 L 820.2470588235294 183"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c2" data-lg-from="core" data-lg-to="layout" data-lg-kind="line" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:950,&quot;y&quot;:350},{&quot;x&quot;:1262,&quot;y&quot;:306}]" d="M 950 350.38275862068963 L 1262 305.7068965517241"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c3" data-lg-from="core" data-lg-to="text" data-lg-kind="line" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:950,&quot;y&quot;:437},{&quot;x&quot;:1069,&quot;y&quot;:502}]" d="M 950 437.0055710306407 L 1069.2087378640776 502"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c4" data-lg-from="core" data-lg-to="safe" data-lg-kind="line" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:690,&quot;y&quot;:437},{&quot;x&quot;:571,&quot;y&quot;:502}]" d="M 690 437.0055710306407 L 570.7912621359224 502"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c5" data-lg-from="core" data-lg-to="qa" data-lg-kind="line" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:690,&quot;y&quot;:350},{&quot;x&quot;:378,&quot;y&quot;:306}]" d="M 690 350.38275862068963 L 378 305.7068965517241"></path>
+<path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c1" data-lg-from="core" data-lg-to="data" data-lg-kind="line" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:820,&quot;y&quot;:237},{&quot;x&quot;:820,&quot;y&quot;:183}]" d="M 820.478431372549 237 L 820.2470588235294 183"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c2" data-lg-from="core" data-lg-to="process" data-lg-kind="line" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:950,&quot;y&quot;:350},{&quot;x&quot;:1262,&quot;y&quot;:306}]" d="M 950 350.38275862068963 L 1262 305.7068965517241"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c3" data-lg-from="core" data-lg-to="role" data-lg-kind="line" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:950,&quot;y&quot;:437},{&quot;x&quot;:1069,&quot;y&quot;:502}]" d="M 950 437.0055710306407 L 1069.2087378640776 502"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c4" data-lg-from="core" data-lg-to="quality" data-lg-kind="line" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:690,&quot;y&quot;:437},{&quot;x&quot;:571,&quot;y&quot;:502}]" d="M 690 437.0055710306407 L 570.7912621359224 502"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c5" data-lg-from="core" data-lg-to="review" data-lg-kind="line" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:690,&quot;y&quot;:350},{&quot;x&quot;:378,&quot;y&quot;:306}]" d="M 690 350.38275862068963 L 378 305.7068965517241"></path>
 </svg>
-<div class="lg-layer lg-node-layer"><div class="lg-node lg-node--circle" data-lg-component="GraphicNode" data-lg-node-id="core" data-lg-kind="circle" data-lg-level="primary" data-lg-emphasis="true" data-lg-title-length="4" data-lg-body-length="12" style="left:698px;top:245px;width:244px;height:244px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">稳定生成</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">组件、布局和质检共同约束</div> </div><div class="lg-node lg-node--pill" data-lg-component="GraphicNode" data-lg-node-id="tokens" data-lg-kind="pill" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="8" data-lg-body-length="8" style="left:690px;top:49px;width:260px;height:126px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">统一 token</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">字号颜色线宽一致</div> </div><div class="lg-node lg-node--pill" data-lg-component="GraphicNode" data-lg-node-id="layout" data-lg-kind="pill" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="6" style="left:1270px;top:225px;width:260px;height:126px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">布局算法</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">避免手写坐标</div> </div><div class="lg-node lg-node--pill" data-lg-component="GraphicNode" data-lg-node-id="text" data-lg-kind="pill" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="8" style="left:1049px;top:510px;width:260px;height:126px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">文本容量</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">超量拆页或拆节点</div> </div><div class="lg-node lg-node--pill" data-lg-component="GraphicNode" data-lg-node-id="safe" data-lg-kind="pill" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="3" data-lg-body-length="7" style="left:331px;top:510px;width:260px;height:126px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">安全区</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">不压标题和页脚</div> </div><div class="lg-node lg-node--pill" data-lg-component="GraphicNode" data-lg-node-id="qa" data-lg-kind="pill" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="7" style="left:110px;top:225px;width:260px;height:126px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">质检门禁</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">失败后必须返工</div> </div></div>
+<div class="lg-layer lg-node-layer"><div class="lg-node lg-node--circle" data-lg-component="GraphicNode" data-lg-node-id="core" data-lg-kind="circle" data-lg-level="primary" data-lg-emphasis="true" data-lg-title-length="4" data-lg-body-length="9" style="left:698px;top:245px;width:244px;height:244px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">核心能力</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">统一目标与判断口径</div> </div><div class="lg-node lg-node--pill" data-lg-component="GraphicNode" data-lg-node-id="data" data-lg-kind="pill" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="4" style="left:690px;top:49px;width:260px;height:126px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">数据基础</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">来源清晰</div> </div><div class="lg-node lg-node--pill" data-lg-component="GraphicNode" data-lg-node-id="process" data-lg-kind="pill" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="4" style="left:1270px;top:225px;width:260px;height:126px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">流程约束</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">路径稳定</div> </div><div class="lg-node lg-node--pill" data-lg-component="GraphicNode" data-lg-node-id="role" data-lg-kind="pill" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="4" style="left:1049px;top:510px;width:260px;height:126px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">角色协同</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">责任明确</div> </div><div class="lg-node lg-node--pill" data-lg-component="GraphicNode" data-lg-node-id="quality" data-lg-kind="pill" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="4" style="left:331px;top:510px;width:260px;height:126px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">质量门禁</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">风险可控</div> </div><div class="lg-node lg-node--pill" data-lg-component="GraphicNode" data-lg-node-id="review" data-lg-kind="pill" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="4" style="left:110px;top:225px;width:260px;height:126px;">  <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">复盘机制</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">持续优化</div> </div></div>
 <div class="lg-layer lg-label-layer"></div>
 <div class="lg-layer lg-badge-layer"><div class="lg-badge" data-lg-component="GraphicBadge" data-lg-tone="default" data-lg-text-role="badge" data-lg-max-chars="8" style="left:890px;top:227px;width:72px;height:34px;">核心</div></div>
 <div class="lg-layer lg-callout-layer"></div>
 </section>
-<footer class="lg-footer" data-lg-zone="footer"><span>SimpleUX Logic Graphics · radial</span></footer>
+<footer class="lg-footer" data-lg-zone="footer"><span>SimpleUX Logic Graphics · foundation · radial</span></footer>
 </main>
 </body>
 </html>

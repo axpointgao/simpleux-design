@@ -162,7 +162,7 @@ function stackLayout(data) {
 
 function pathLayout(data) {
   const nodes = data.nodes;
-  const gap = 38;
+  const gap = 52;
   const maxW = (CANVAS.main.w - 88 - gap * (nodes.length - 1)) / nodes.length;
   const placed = [];
   const twoRows = nodes.length > 6;
@@ -174,7 +174,7 @@ function pathLayout(data) {
     const col = twoRows ? index % perRow : index;
     const rowCount = row === 0 ? Math.min(perRow, nodes.length) : nodes.length - perRow;
     const rowMaxW = (CANVAS.main.w - 88 - gap * (rowCount - 1)) / rowCount;
-    const size = nodeSize(node.kind === "rect" ? "index" : node.kind, "path", node.emphasis, Math.min(maxW, rowMaxW) * 0.86);
+    const size = nodeSize(node.kind === "rect" ? "index" : node.kind, "path", node.emphasis, Math.min(maxW, rowMaxW) * 0.9);
     const startX = 44 + (CANVAS.main.w - 88 - rowCount * rowMaxW - (rowCount - 1) * gap) / 2;
     const x = startX + col * (rowMaxW + gap) + rowMaxW / 2;
     placed.push(centerPlace({ ...node, kind: node.kind === "rect" ? "index" : node.kind }, x, rowCenters[row], size.w, size.h));
@@ -204,16 +204,16 @@ function radialLayout(data) {
 function matrixLayout(data) {
   const columns = clamp(Number(data.layout.columns) || Math.ceil(Math.sqrt(data.nodes.length)), 2, 4);
   const rows = Math.ceil(data.nodes.length / columns);
-  const gapX = 34;
-  const gapY = 30;
-  const cellW = (CANVAS.main.w - 72 - gapX * (columns - 1)) / columns;
+  const gapX = 70;
+  const gapY = 58;
+  const cellW = (CANVAS.main.w - 140 - gapX * (columns - 1)) / columns;
   const cellH = (CANVAS.main.h - 50 - gapY * (rows - 1)) / rows;
   const placed = [];
   data.nodes.forEach((node, index) => {
     const row = Math.floor(index / columns);
     const col = index % columns;
     const size = nodeSize(node.kind, "matrix", node.emphasis, cellW * 0.82);
-    const x = 36 + col * (cellW + gapX) + cellW / 2;
+    const x = 70 + col * (cellW + gapX) + cellW / 2;
     const y = 25 + row * (cellH + gapY) + cellH / 2;
     placed.push(centerPlace(node, x, y, size.w, Math.min(size.h, cellH * 0.78)));
   });
@@ -290,6 +290,31 @@ function computeNodesAndGroups(data) {
     default:
       return modulesLayout(data);
   }
+}
+
+function layoutBackdrop(data) {
+  if (data.layout.type === "matrix") {
+    const columns = clamp(Number(data.layout.columns) || Math.ceil(Math.sqrt(data.nodes.length)), 2, 4);
+    const rows = Math.ceil(data.nodes.length / columns);
+    return [{
+      kind: "matrix",
+      columns,
+      rows,
+      x: 120,
+      y: 38,
+      w: CANVAS.main.w - 240,
+      h: CANVAS.main.h - 88,
+    }];
+  }
+  if (data.layout.type === "path") {
+    return [{
+      kind: "path",
+      x: 92,
+      y: Math.round(CANVAS.main.h * 0.52),
+      w: CANVAS.main.w - 184,
+    }];
+  }
+  return [];
 }
 
 function anchorPoint(from, to) {
@@ -378,7 +403,7 @@ function computeConnectors(data, placedNodes) {
       from: from.id,
       to: to.id,
       kind,
-      label: connector.label ? String(connector.label) : "",
+      label: connector.label && data.layout.type !== "path" ? String(connector.label) : "",
       dashed: connector.kind === "dashed" || connector.dashed,
       arrow: kind !== "line" && kind !== "dashed",
       d: connectorPath(points, kind),
@@ -420,6 +445,21 @@ function computeCallouts(data, placedNodes) {
     if (!target) return [];
     const w = Number(callout.width) || 330;
     const h = Number(callout.height) || 122;
+    if (callout.x !== undefined || callout.y !== undefined) {
+      return [{
+        id: callout.id || `callout${index + 1}`,
+        target: target.id,
+        title: String(callout.title || ""),
+        body: String(callout.body || ""),
+        x: Math.round(clamp(Number(callout.x) || 0, 0, CANVAS.main.w - w)),
+        y: Math.round(clamp(Number(callout.y) || 0, 0, CANVAS.main.h - h)),
+        w,
+        h,
+      }];
+    }
+    if (data.layout.type === "matrix" || data.layout.type === "modules" || data.layout.type === "path") {
+      return [];
+    }
     const rightSpace = CANVAS.main.w - (target.x + target.w);
     const leftSpace = target.x;
     let x = rightSpace >= w + 58 ? target.x + target.w + 44 : target.x - w - 44;
@@ -452,11 +492,30 @@ function computeFreeLabels(data) {
 export function layoutLogicGraphic(input) {
   const data = normalizeData(input);
   const base = computeNodesAndGroups(data);
+  const backdrops = layoutBackdrop(data);
   const connectors = computeConnectors(data, base.nodes);
   const badges = computeBadges(data, base.nodes);
   const callouts = computeCallouts(data, base.nodes);
   const labels = computeFreeLabels(data);
-  return { data, nodes: base.nodes, groups: base.groups, connectors, badges, callouts, labels };
+  return { data, nodes: base.nodes, groups: base.groups, backdrops, connectors, badges, callouts, labels };
+}
+
+function renderBackdrop(backdrop) {
+  if (backdrop.kind === "matrix") {
+    const verticals = Array.from({ length: backdrop.columns - 1 }, (_, index) => {
+      const x = backdrop.x + (backdrop.w / backdrop.columns) * (index + 1);
+      return `<line class="lg-matrix-axis" x1="${Math.round(x)}" y1="${backdrop.y}" x2="${Math.round(x)}" y2="${backdrop.y + backdrop.h}"></line>`;
+    }).join("");
+    const horizontals = Array.from({ length: backdrop.rows - 1 }, (_, index) => {
+      const y = backdrop.y + (backdrop.h / backdrop.rows) * (index + 1);
+      return `<line class="lg-matrix-axis" x1="${backdrop.x}" y1="${Math.round(y)}" x2="${backdrop.x + backdrop.w}" y2="${Math.round(y)}"></line>`;
+    }).join("");
+    return `<rect class="lg-matrix-backdrop" x="${backdrop.x}" y="${backdrop.y}" width="${backdrop.w}" height="${backdrop.h}" rx="28"></rect>${verticals}${horizontals}`;
+  }
+  if (backdrop.kind === "path") {
+    return `<line class="lg-path-backbone" x1="${backdrop.x}" y1="${backdrop.y}" x2="${backdrop.x + backdrop.w}" y2="${backdrop.y}"></line>`;
+  }
+  return "";
 }
 
 function renderGroup(group) {
@@ -515,7 +574,7 @@ function renderLabel(label) {
 }
 
 export function renderLogicGraphic(input, options = {}) {
-  const { data, nodes, groups, connectors, badges, callouts, labels } = layoutLogicGraphic(input);
+  const { data, nodes, groups, backdrops, connectors, badges, callouts, labels } = layoutLogicGraphic(input);
   const title = escapeHtml(data.canvas.title);
   const subtitle = data.canvas.subtitle ? `<div class="lg-subtitle" data-lg-text-role="canvas-subtitle" data-lg-max-chars="${NODE_LIMITS.canvasSubtitle}">${escapeHtml(data.canvas.subtitle)}</div>` : "";
   return [
@@ -526,6 +585,7 @@ export function renderLogicGraphic(input, options = {}) {
     `</header>`,
     `<section class="lg-main" data-lg-zone="main" data-lg-layout="${escapeAttr(data.layout.type)}">`,
     `<div class="lg-layer lg-group-layer">${groups.map(renderGroup).join("")}</div>`,
+    `<svg class="lg-layer lg-backdrop-layer" data-lg-component="GraphicGroup" viewBox="0 0 ${CANVAS.main.w} ${CANVAS.main.h}" width="${CANVAS.main.w}" height="${CANVAS.main.h}" aria-hidden="true">${backdrops.map(renderBackdrop).join("")}</svg>`,
     `<svg class="lg-layer lg-connector-layer" data-lg-component="GraphicConnectorLayer" viewBox="0 0 ${CANVAS.main.w} ${CANVAS.main.h}" width="${CANVAS.main.w}" height="${CANVAS.main.h}" aria-hidden="true">`,
     `<defs><marker id="lg-arrow" viewBox="0 0 16 16" refX="13" refY="8" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M 2 2 L 14 8 L 2 14 z" fill="var(--lg-line)"></path></marker></defs>`,
     connectors.map(renderConnector).join(""),

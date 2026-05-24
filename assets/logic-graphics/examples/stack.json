@@ -1,30 +1,70 @@
 {
   "canvas": {
-    "title": "从目标到执行形成三层递进",
-    "subtitle": "分层图用于表达上层原则、中层机制和下层动作的稳定关系。",
-    "footer": "SimpleUX Logic Graphics · stack"
+    "title": "上下分层结构表达从原则到动作的递进关系",
+    "subtitle": "适合表达目标层、机制层、执行层等纵向结构，不适合承载复杂交叉关系。",
+    "footer": "SimpleUX Logic Graphics · foundation · stack"
   },
-  "layout": { "type": "stack" },
+  "layout": {
+    "type": "stack"
+  },
   "groups": [
-    { "id": "目标层", "title": "目标层" },
-    { "id": "机制层", "title": "机制层" },
-    { "id": "执行层", "title": "执行层" }
+    {
+      "id": "goal",
+      "title": "目标层"
+    },
+    {
+      "id": "system",
+      "title": "机制层"
+    },
+    {
+      "id": "action",
+      "title": "执行层"
+    }
   ],
   "nodes": [
-    { "id": "goal", "group": "目标层", "kind": "pill", "title": "清晰目标", "body": "定义共同方向", "emphasis": true, "badge": "核心" },
-    { "id": "metric", "group": "目标层", "kind": "rect", "title": "衡量指标", "body": "确认判断口径" },
-    { "id": "team", "group": "机制层", "kind": "rect", "title": "协作机制", "body": "同步角色边界" },
-    { "id": "review", "group": "机制层", "kind": "rect", "title": "复盘节奏", "body": "稳定反馈循环" },
-    { "id": "action", "group": "执行层", "kind": "index", "title": "关键动作", "body": "把策略转为任务" },
-    { "id": "risk", "group": "执行层", "kind": "index", "title": "风险处理", "body": "提前设置预案" }
-  ],
-  "connectors": [
-    { "from": "goal", "to": "team", "kind": "arrow", "label": "牵引" },
-    { "from": "team", "to": "action", "kind": "arrow", "label": "落地" },
-    { "from": "metric", "to": "review", "kind": "arrow", "label": "校准" },
-    { "from": "review", "to": "risk", "kind": "arrow", "label": "修正" }
-  ],
-  "callouts": [
-    { "target": "goal", "title": "使用建议", "body": "每层最多放三到四个节点，避免层级失焦。" }
+    {
+      "id": "north",
+      "group": "goal",
+      "kind": "pill",
+      "title": "共同目标",
+      "body": "定义方向和成功标准",
+      "emphasis": true,
+      "badge": "核心"
+    },
+    {
+      "id": "metric",
+      "group": "goal",
+      "kind": "rect",
+      "title": "衡量口径",
+      "body": "让判断保持一致"
+    },
+    {
+      "id": "flow",
+      "group": "system",
+      "kind": "rect",
+      "title": "协作机制",
+      "body": "同步角色与交付边界"
+    },
+    {
+      "id": "review",
+      "group": "system",
+      "kind": "rect",
+      "title": "复盘节奏",
+      "body": "固定反馈和调整周期"
+    },
+    {
+      "id": "task",
+      "group": "action",
+      "kind": "rect",
+      "title": "关键动作",
+      "body": "把策略转成任务"
+    },
+    {
+      "id": "risk",
+      "group": "action",
+      "kind": "rect",
+      "title": "风险处理",
+      "body": "提前设置预案"
+    }
   ]
 }

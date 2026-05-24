@@ -290,21 +290,16 @@
 <body>
 <aside>
   <h1>Logic Graphics</h1>
-  <p class="intro">SimpleUX 逻辑图形 HTML 组件库。这里用于浏览底层组件、基础组合、输入 JSON 和质检命令。</p>
-
-  <div class="nav-group">
-    <p class="nav-label">组件</p>
-    <button type="button" data-id="component-gallery">底层组件一览</button>
-  </div>
+  <p class="intro">SimpleUX 逻辑图形 HTML 组件库。这里用于浏览基础图形模式、模板母题、输入 JSON 和质检命令。</p>
 
   <div class="nav-group">
     <p class="nav-label">基础组合</p>
-    <button type="button" data-id="stack">分层 Stack</button>
-    <button type="button" data-id="path">路径 Path</button>
-    <button type="button" data-id="radial">中心扩散 Radial</button>
-    <button type="button" data-id="matrix">矩阵 Matrix</button>
-    <button type="button" data-id="loop">闭环 Loop</button>
-    <button type="button" data-id="modules">模块系统 Modules</button>
+    <button type="button" data-id="radial">单中心关系</button>
+    <button type="button" data-id="path">横向阶段路径</button>
+    <button type="button" data-id="stack">上下分层结构</button>
+    <button type="button" data-id="matrix">四象限矩阵</button>
+    <button type="button" data-id="loop">环形闭环</button>
+    <button type="button" data-id="modules">模块架构</button>
   </div>
 
   <div class="nav-group">
@@ -317,6 +312,11 @@
     <button type="button" data-id="motif:slide-06-layered-core-diagnosis">P6 分层核心诊断</button>
     <button type="button" data-id="motif:slide-07-deployment-orbit-steps">P7 部署轨道步骤</button>
     <button type="button" data-id="motif:slide-08-bilateral-core-loop">P8 双端核心闭环</button>
+  </div>
+
+  <div class="nav-group">
+    <p class="nav-label">开发调试</p>
+    <button type="button" data-id="component-gallery">底层组件一览</button>
   </div>
 </aside>
 
@@ -369,31 +369,31 @@
 const items = {
   "component-gallery": {
     title: "底层组件一览",
-    description: "确认 GraphicFrame、GraphicNode、GraphicConnector、GraphicGroup、GraphicBadge、GraphicCallout 和 GraphicLabel 都能被稳定组合。"
+    description: "开发调试入口，用于确认 GraphicFrame、GraphicNode、GraphicConnector、GraphicGroup、GraphicBadge、GraphicCallout 和 GraphicLabel 的底层渲染能力。"
   },
   stack: {
-    title: "分层 Stack",
-    description: "表达上层原则、中层机制、下层动作等递进关系，重点控制层间留白和组内亲密性。"
+    title: "上下分层结构",
+    description: "表达目标层、机制层、执行层等纵向递进关系，适合低复杂度层级图。"
   },
   path: {
-    title: "路径 Path",
-    description: "表达阶段、流程和路线。紧凑路径默认不放连接标签，避免箭头标签压住节点。"
+    title: "横向阶段路径",
+    description: "表达项目推进、交付路线、实施步骤和跨团队协作节奏。"
   },
   radial: {
-    title: "中心扩散 Radial",
-    description: "表达一个核心概念与周边要素的支撑关系，单页只保留一个主焦点。"
+    title: "单中心关系",
+    description: "表达一个核心能力、关键主张或平台中枢与周边支撑条件的关系。"
   },
   matrix: {
-    title: "矩阵 Matrix",
-    description: "表达二维分类和优先级选择，节点同层级样式保持一致。"
+    title: "四象限矩阵",
+    description: "表达优先级、投入产出、风险收益和能力成熟度等二维判断。"
   },
   loop: {
-    title: "闭环 Loop",
-    description: "表达飞轮、反馈循环和持续改进，连接线必须避开非目标节点文字。"
+    title: "环形闭环",
+    description: "表达增长飞轮、运营循环、学习闭环和质量改进流程。"
   },
   modules: {
-    title: "模块系统 Modules",
-    description: "表达系统组成、业务架构和能力地图，用分组容器建立区块边界。"
+    title: "模块架构",
+    description: "表达平台架构、业务能力地图和组织协作分工。"
   },
   "motif:slide-01-triangle-cycle": {
     title: "P1 三角循环能力",
@@ -548,7 +548,7 @@ buttons.forEach((button) => {
 
 window.addEventListener("resize", scalePreview);
 preview.addEventListener("load", scalePreview);
-selectItem(location.hash.replace(/^#/, "") || "component-gallery");
+selectItem(location.hash.replace(/^#/, "") || "radial");
 scalePreview();
 </script>
 </body>

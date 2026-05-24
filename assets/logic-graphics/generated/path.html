@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=1920, initial-scale=1">
-<title>路径图把复杂过程压成可执行阶段</title>
+<title>横向阶段路径把过程压缩成清晰的执行顺序</title>
 <style>
 :root {
   --lg-bg: #f7f8fb;
@@ -161,6 +161,11 @@ body {
   z-index: 1;
 }
 
+.lg-backdrop-layer {
+  z-index: 1;
+  overflow: visible;
+}
+
 .lg-node-layer,
 .lg-callout-layer,
 .lg-label-layer,
@@ -189,6 +194,34 @@ body {
   font-size: var(--lg-label-size);
   font-weight: 650;
   line-height: 1;
+}
+
+.lg-matrix-backdrop {
+  fill: rgba(255, 255, 255, 0.34);
+  stroke: rgba(141, 160, 182, 0.30);
+  stroke-width: 2;
+}
+
+.lg-matrix-axis {
+  stroke: rgba(141, 160, 182, 0.28);
+  stroke-width: 2;
+  stroke-dasharray: 10 12;
+}
+
+.lg-path-backbone {
+  stroke: rgba(141, 160, 182, 0.22);
+  stroke-width: 14;
+  stroke-linecap: round;
+}
+
+.lg-page[data-lg-theme="simpleux-dark"] .lg-matrix-backdrop {
+  fill: rgba(255, 255, 255, 0.04);
+  stroke: rgba(148, 163, 184, 0.24);
+}
+
+.lg-page[data-lg-theme="simpleux-dark"] .lg-matrix-axis,
+.lg-page[data-lg-theme="simpleux-dark"] .lg-path-backbone {
+  stroke: rgba(148, 163, 184, 0.22);
 }
 
 .lg-node {
@@ -387,21 +420,22 @@ body {
 <body>
 <main class="lg-page" data-logic-graphic="true" data-lg-component="GraphicFrame" data-lg-token-version="logic-graphics-v1" data-lg-theme="simpleux-light" style="width:1920px;height:1080px;">
 <header class="lg-header" data-lg-zone="header">
-<div class="lg-title" data-lg-text-role="canvas-title" data-lg-max-chars="30">路径图把复杂过程压成可执行阶段</div>
-<div class="lg-subtitle" data-lg-text-role="canvas-subtitle" data-lg-max-chars="40">适合表达流程、路线、阶段推进和交付节奏。</div>
+<div class="lg-title" data-lg-text-role="canvas-title" data-lg-max-chars="30">横向阶段路径把过程压缩成清晰的执行顺序</div>
+<div class="lg-subtitle" data-lg-text-role="canvas-subtitle" data-lg-max-chars="40">适合表达项目推进、交付路线、实施步骤和跨团队协作节奏。</div>
 </header>
 <section class="lg-main" data-lg-zone="main" data-lg-layout="path">
 <div class="lg-layer lg-group-layer"></div>
+<svg class="lg-layer lg-backdrop-layer" data-lg-component="GraphicGroup" viewBox="0 0 1640 734" width="1640" height="734" aria-hidden="true"><line class="lg-path-backbone" x1="92" y1="382" x2="1548" y2="382"></line></svg>
 <svg class="lg-layer lg-connector-layer" data-lg-component="GraphicConnectorLayer" viewBox="0 0 1640 734" width="1640" height="734" aria-hidden="true">
 <defs><marker id="lg-arrow" viewBox="0 0 16 16" refX="13" refY="8" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M 2 2 L 14 8 L 2 14 z" fill="var(--lg-line)"></path></marker></defs>
-<path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c1" data-lg-from="discover" data-lg-to="frame" data-lg-kind="arrow" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:322,&quot;y&quot;:382},{&quot;x&quot;:364,&quot;y&quot;:382}]" d="M 322 382.40880503144655 L 364 382.40880503144655" marker-end="url(#lg-arrow)"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c2" data-lg-from="frame" data-lg-to="compose" data-lg-kind="arrow" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:640,&quot;y&quot;:382},{&quot;x&quot;:682,&quot;y&quot;:382}]" d="M 640 382.40880503144655 L 682 382.40880503144655" marker-end="url(#lg-arrow)"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c3" data-lg-from="compose" data-lg-to="verify" data-lg-kind="arrow" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:958,&quot;y&quot;:382},{&quot;x&quot;:1000,&quot;y&quot;:382}]" d="M 958 382.40880503144655 L 1000 382.40880503144655" marker-end="url(#lg-arrow)"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c4" data-lg-from="verify" data-lg-to="ship" data-lg-kind="arrow" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:1276,&quot;y&quot;:382},{&quot;x&quot;:1318,&quot;y&quot;:382}]" d="M 1276 382.40880503144655 L 1318 382.40880503144655" marker-end="url(#lg-arrow)"></path>
+<path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c1" data-lg-from="discover" data-lg-to="frame" data-lg-kind="arrow" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:316,&quot;y&quot;:382},{&quot;x&quot;:361,&quot;y&quot;:382}]" d="M 316 382.404984423676 L 361 382.404984423676" marker-end="url(#lg-arrow)"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c2" data-lg-from="frame" data-lg-to="compose" data-lg-kind="arrow" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:637,&quot;y&quot;:382},{&quot;x&quot;:682,&quot;y&quot;:382}]" d="M 637 382.404984423676 L 682 382.404984423676" marker-end="url(#lg-arrow)"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c3" data-lg-from="compose" data-lg-to="verify" data-lg-kind="arrow" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:958,&quot;y&quot;:382},{&quot;x&quot;:1003,&quot;y&quot;:382}]" d="M 958 382.404984423676 L 1003 382.404984423676" marker-end="url(#lg-arrow)"></path><path class="lg-connector-path" data-lg-component="GraphicConnector" data-lg-connector="c4" data-lg-from="verify" data-lg-to="ship" data-lg-kind="arrow" data-lg-dashed="false" data-lg-points="[{&quot;x&quot;:1279,&quot;y&quot;:382},{&quot;x&quot;:1324,&quot;y&quot;:382}]" d="M 1279 382.404984423676 L 1324 382.404984423676" marker-end="url(#lg-arrow)"></path>
 </svg>
-<div class="lg-layer lg-node-layer"><div class="lg-node lg-node--index" data-lg-component="GraphicNode" data-lg-node-id="discover" data-lg-kind="index" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="8" style="left:54px;top:313px;width:260px;height:138px;"> <div class="lg-node-index">1</div> <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">识别问题</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">收集上下文与约束</div> </div><div class="lg-node lg-node--index" data-lg-component="GraphicNode" data-lg-node-id="frame" data-lg-kind="index" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="7" style="left:372px;top:313px;width:260px;height:138px;"> <div class="lg-node-index">2</div> <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">定义结构</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">拆解对象和关系</div> </div><div class="lg-node lg-node--index" data-lg-component="GraphicNode" data-lg-node-id="compose" data-lg-kind="index" data-lg-level="primary" data-lg-emphasis="true" data-lg-title-length="4" data-lg-body-length="7" style="left:690px;top:304px;width:260px;height:156px;"> <div class="lg-node-index">3</div> <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">组合图形</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">选择组件与布局</div> </div><div class="lg-node lg-node--index" data-lg-component="GraphicNode" data-lg-node-id="verify" data-lg-kind="index" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="7" style="left:1008px;top:313px;width:260px;height:138px;"> <div class="lg-node-index">4</div> <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">运行质检</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">检查出界和重叠</div> </div><div class="lg-node lg-node--index" data-lg-component="GraphicNode" data-lg-node-id="ship" data-lg-kind="index" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="11" style="left:1326px;top:313px;width:260px;height:138px;"> <div class="lg-node-index">5</div> <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">嵌入页面</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">进入 deck 或报告</div> </div></div>
+<div class="lg-layer lg-node-layer"><div class="lg-node lg-node--index" data-lg-component="GraphicNode" data-lg-node-id="discover" data-lg-kind="index" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="10" style="left:48px;top:313px;width:260px;height:138px;"> <div class="lg-node-index">1</div> <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">识别问题</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">收集目标、受众和约束</div> </div><div class="lg-node lg-node--index" data-lg-component="GraphicNode" data-lg-node-id="frame" data-lg-kind="index" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="11" style="left:369px;top:313px;width:260px;height:138px;"> <div class="lg-node-index">2</div> <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">定义结构</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">拆解对象、关系和优先级</div> </div><div class="lg-node lg-node--index" data-lg-component="GraphicNode" data-lg-node-id="compose" data-lg-kind="index" data-lg-level="primary" data-lg-emphasis="true" data-lg-title-length="4" data-lg-body-length="9" style="left:690px;top:304px;width:260px;height:156px;"> <div class="lg-node-index">3</div> <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">组合方案</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">选择组件并生成初稿</div> </div><div class="lg-node lg-node--index" data-lg-component="GraphicNode" data-lg-node-id="verify" data-lg-kind="index" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="10" style="left:1011px;top:313px;width:260px;height:138px;"> <div class="lg-node-index">4</div> <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">质量校验</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">检查出界、重叠和容量</div> </div><div class="lg-node lg-node--index" data-lg-component="GraphicNode" data-lg-node-id="ship" data-lg-kind="index" data-lg-level="secondary" data-lg-emphasis="false" data-lg-title-length="4" data-lg-body-length="9" style="left:1332px;top:313px;width:260px;height:138px;"> <div class="lg-node-index">5</div> <div class="lg-node-title" data-lg-text-role="node-title" data-lg-max-chars="18">交付使用</div> <div class="lg-node-body" data-lg-text-role="node-body" data-lg-max-chars="48">嵌入页面或演示材料</div> </div></div>
 <div class="lg-layer lg-label-layer"></div>
-<div class="lg-layer lg-badge-layer"><div class="lg-badge" data-lg-component="GraphicBadge" data-lg-tone="default" data-lg-text-role="badge" data-lg-max-chars="8" style="left:262px;top:295px;width:72px;height:34px;">01</div><div class="lg-badge" data-lg-component="GraphicBadge" data-lg-tone="default" data-lg-text-role="badge" data-lg-max-chars="8" style="left:580px;top:295px;width:72px;height:34px;">02</div><div class="lg-badge" data-lg-component="GraphicBadge" data-lg-tone="default" data-lg-text-role="badge" data-lg-max-chars="8" style="left:898px;top:286px;width:72px;height:34px;">03</div><div class="lg-badge" data-lg-component="GraphicBadge" data-lg-tone="default" data-lg-text-role="badge" data-lg-max-chars="8" style="left:1216px;top:295px;width:72px;height:34px;">04</div><div class="lg-badge" data-lg-component="GraphicBadge" data-lg-tone="default" data-lg-text-role="badge" data-lg-max-chars="8" style="left:1534px;top:295px;width:72px;height:34px;">05</div></div>
-<div class="lg-layer lg-callout-layer"><aside class="lg-callout" data-lg-component="GraphicCallout" data-lg-target="verify" style="left:634px;top:321px;width:330px;height:122px;"><div class="lg-callout-title" data-lg-text-role="callout-title" data-lg-max-chars="14">硬门禁</div><div class="lg-callout-body" data-lg-text-role="callout-body" data-lg-max-chars="56">失败样例必须返工，不用缩小字号硬塞。</div></aside></div>
+<div class="lg-layer lg-badge-layer"></div>
+<div class="lg-layer lg-callout-layer"></div>
 </section>
-<footer class="lg-footer" data-lg-zone="footer"><span>SimpleUX Logic Graphics · path</span></footer>
+<footer class="lg-footer" data-lg-zone="footer"><span>SimpleUX Logic Graphics · foundation · path</span></footer>
 </main>
 </body>
 </html>

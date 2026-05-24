@@ -1,30 +1,21 @@
 {
   "canvas": {
-    "title": "模块系统图把复杂对象拆成稳定区块",
+    "title": "模块架构把复杂系统拆成稳定区块",
     "subtitle": "适合表达平台架构、业务能力地图和组织协作分工。",
-    "footer": "SimpleUX Logic Graphics · modules"
+    "footer": "SimpleUX Logic Graphics · foundation · modules"
   },
   "layout": { "type": "modules", "columns": 3 },
   "groups": [
-    { "id": "输入层", "title": "输入层" },
-    { "id": "处理层", "title": "处理层" },
-    { "id": "输出层", "title": "输出层" }
+    { "id": "input", "title": "输入层" },
+    { "id": "process", "title": "处理层" },
+    { "id": "output", "title": "输出层" }
   ],
   "nodes": [
-    { "id": "brief", "group": "输入层", "kind": "rect", "title": "任务意图", "body": "目标、受众、内容" },
-    { "id": "asset", "group": "输入层", "kind": "rect", "title": "参考资产", "body": "品牌、截图、图库" },
-    { "id": "component", "group": "处理层", "kind": "rect", "title": "组件选择", "body": "节点、分组、连接线", "emphasis": true, "badge": "关键" },
-    { "id": "layout", "group": "处理层", "kind": "rect", "title": "布局约束", "body": "安全区和容量" },
-    { "id": "html", "group": "输出层", "kind": "rect", "title": "HTML 图形", "body": "可嵌入 deck" },
-    { "id": "check", "group": "输出层", "kind": "rect", "title": "质检报告", "body": "失败问题可定位" }
-  ],
-  "connectors": [
-    { "from": "brief", "to": "component", "kind": "elbow", "label": "解析" },
-    { "from": "asset", "to": "layout", "kind": "elbow", "label": "参考" },
-    { "from": "component", "to": "html", "kind": "elbow", "label": "生成" },
-    { "from": "layout", "to": "check", "kind": "elbow", "label": "验证" }
-  ],
-  "callouts": [
-    { "target": "component", "title": "不是模板复刻", "body": "按表达需求选组件，再由布局约束稳定输出。" }
+    { "id": "brief", "group": "input", "kind": "rect", "title": "任务意图", "body": "目标、受众、内容" },
+    { "id": "asset", "group": "input", "kind": "rect", "title": "参考资产", "body": "品牌、截图、素材" },
+    { "id": "component", "group": "process", "kind": "rect", "title": "结构选择", "body": "节点、分组、连接线", "emphasis": true, "badge": "关键" },
+    { "id": "layout", "group": "process", "kind": "rect", "title": "布局约束", "body": "安全区和容量" },
+    { "id": "html", "group": "output", "kind": "rect", "title": "HTML 图形", "body": "可嵌入 deck" },
+    { "id": "check", "group": "output", "kind": "rect", "title": "质检报告", "body": "失败问题可定位" }
   ]
 }
