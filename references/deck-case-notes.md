@@ -297,7 +297,7 @@ window.DECK_MANIFEST = [
 ];
 ```
 
-拼接器已内置：键盘导航（←/→/Home/End/数字键/P 打印）、scale + letterbox、右下计数器、localStorage 记忆、hash 跳页、打印模式（遍历 iframe 按页输出 PDF）。
+拼接器已内置：键盘导航（←/→/Home/End/数字键/P 打印/C 切换控制层）、scale + letterbox、localStorage 记忆、hash 跳页、打印模式（遍历 iframe 按页输出 PDF）。计数器和箭头提示属于预览控制层，默认隐藏；调试时按 C 临时显示，不得进入全屏投影或导出内容。
 
 ### 单页验证（这是多文件架构的杀手级优势）
 

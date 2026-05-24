@@ -10,6 +10,7 @@
  * - Speaker notes postMessage (支持外层渲染)
  * - Hash导航 (#slide-5 跳到第5张)
  * - Print-to-PDF支持 (Cmd+P / Ctrl+P 一页一slide)
+ * - C 键切换预览控制层；默认演讲态不显示计数器和箭头提示
  * - 自动给每个slide添加 data-screen-label
  *
  * 用法：
@@ -169,6 +170,32 @@
             opacity: 1;
           }
 
+          :host(:not([show-controls])) .counter {
+            opacity: 0;
+            pointer-events: none;
+          }
+
+          :host(:not([show-controls])) .nav-zone {
+            cursor: none;
+          }
+
+          :host(:not([show-controls])) .nav-hint {
+            opacity: 0 !important;
+          }
+
+          :host([show-controls]) .counter {
+            opacity: 0.6;
+          }
+
+          @media (display-mode: fullscreen) {
+            .counter, .nav-hint {
+              display: none !important;
+            }
+            .nav-zone {
+              cursor: none;
+            }
+          }
+
           @media print {
             :host {
               position: static;
@@ -248,6 +275,11 @@
           case 'End':
             e.preventDefault();
             this.goTo(this._slides.length - 1);
+            break;
+          case 'c':
+          case 'C':
+            e.preventDefault();
+            this.toggleAttribute('show-controls');
             break;
         }
       });

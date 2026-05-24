@@ -23,7 +23,7 @@
     · shared/chrome.html — 页眉页脚可复用片段
     · 每页 HTML 自己 <link> 进去即可
 
-  键盘：← / → / Space / PgUp / PgDown / Home / End / 1-9 跳页 / P 打印
+  键盘：← / → / Space / PgUp / PgDown / Home / End / 1-9 跳页 / P 打印 / C 切换预览控制层
 -->
 
 <!-- ═══════════════════════════════════════════════════════ -->
@@ -111,6 +111,25 @@
   .nav-zone.right .nav-hint { right: 20px; }
   .nav-zone:hover .nav-hint { opacity: 1; }
 
+  body:not(.show-controls) .counter {
+    opacity: 0;
+    pointer-events: none;
+  }
+  body:not(.show-controls) .nav-zone {
+    cursor: none;
+  }
+  body:not(.show-controls) .nav-zone .nav-hint {
+    opacity: 0 !important;
+  }
+  body.show-controls .counter {
+    opacity: 0.7;
+  }
+
+  @media (display-mode: fullscreen) {
+    .counter, .nav-hint { display: none !important; }
+    .nav-zone { cursor: none; }
+  }
+
   /* Print: one slide per page, no navigation UI */
   @media print {
     @page { size: 1920px 1080px; margin: 0; }
@@ -190,6 +209,7 @@
       case 'Home':                                    e.preventDefault(); show(0); break;
       case 'End':                                     e.preventDefault(); show(deck.length - 1); break;
       case 'p': case 'P':                             window.print(); break;
+      case 'c': case 'C':                             e.preventDefault(); document.body.classList.toggle('show-controls'); break;
       default:
         if (e.key >= '1' && e.key <= '9') {
           const i = parseInt(e.key, 10) - 1;
@@ -248,6 +268,7 @@
       case 'home':  show(0); break;
       case 'end':   show(deck.length - 1); break;
       case 'print': window.print(); break;
+      case 'controls': document.body.classList.toggle('show-controls'); break;
     }
   });
 
