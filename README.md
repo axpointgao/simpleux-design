@@ -45,15 +45,44 @@ simpleux-design/
 └── requirements.txt         # Python 验证脚本依赖
 ```
 
-## 可选依赖
+## 完整依赖
 
-核心技能只需要安装到 Codex 技能目录即可。只有在使用本地脚本导出 PDF/PPTX、渲染逻辑图形或跑 Playwright 验证时，才需要安装依赖。
+核心技能只需要安装到 Codex 技能目录即可。若只让 Codex 读取 `SKILL.md` 和 `references/`，不需要安装 Node 或 Python 依赖。
+
+如果要完整使用本技能的本地脚本能力，例如 PDF/PPTX 导出、逻辑图形渲染、逻辑图形质检、Playwright 截图验证，需要先准备：
+
+- Git：安装和更新技能。
+- curl 与 bash：执行一行安装命令。
+- Node.js 18+ 与 npm：运行 `scripts/*.mjs`、PDF/PPTX 导出、逻辑图形渲染和 Node 版 Playwright。
+- Python 3.9+ 与 pip：运行 `scripts/verify.py`。
+- Chromium：由 Playwright 安装，用于截图、PDF 导出和 HTML 验证。
+
+完整安装命令：
 
 ```bash
 cd "${CODEX_HOME:-$HOME/.codex}/skills/simpleux-design"
 npm install
 npm run install-browsers
 python3 -m pip install -r requirements.txt
+python3 -m playwright install chromium
+```
+
+Linux 用户如果遇到 Chromium 缺少系统库，可追加安装 Playwright 系统依赖：
+
+```bash
+npx playwright install-deps chromium
+python3 -m playwright install-deps chromium
+```
+
+依赖对应关系：
+
+```text
+技能触发、读取工作流                 不需要额外依赖
+逻辑图形 JSON 渲染                  Node.js + npm install
+逻辑图形质检                         Node.js + Playwright Chromium
+PDF 导出                             Node.js + Playwright Chromium + pdf-lib
+可编辑 PPTX 导出                     Node.js + Playwright Chromium + pptxgenjs + sharp
+HTML 截图与控制台验证                Python + Python Playwright Chromium
 ```
 
 ## 常用验证
