@@ -1,0 +1,54 @@
+{
+  "type": "bilateral-core-loop",
+  "canvas": { "title": "", "theme": "takram" },
+  "center": {
+    "title": "AI digital",
+    "subtitle": "AI digital"
+  },
+  "quadrants": [
+    { "title": "风险\n规避" },
+    { "title": "风险\n规避" },
+    { "title": "风险\n规避" },
+    { "title": "风险\n规避" }
+  ],
+  "left": {
+    "title": "协同提效",
+    "subtitle": "模块协同 风险规避",
+    "labels": [
+      { "title": "引力运营聚合模型", "subtitle": "AI digital" },
+      { "title": "引力运营聚合模型", "subtitle": "AI digital" }
+    ]
+  },
+  "right": {
+    "title": "协同提效",
+    "subtitle": "模块协同 风险规避",
+    "labels": [
+      { "title": "引力运营聚合模型", "subtitle": "AI digital" },
+      { "title": "引力运营聚合模型", "subtitle": "AI digital" }
+    ]
+  },
+  "flows": {
+    "left": [
+      { "label": "精准定位协同提效" },
+      { "label": "精准锚定协同联动" }
+    ],
+    "right": [
+      { "label": "精准定位协同提效" },
+      { "label": "精准锚定协同联动" }
+    ]
+  },
+  "diagonalFlows": {
+    "left": [
+      { "label": "定位精准联动增效" },
+      { "label": "精准锚定协同联动" }
+    ],
+    "right": [
+      { "label": "定位精准联动增效" },
+      { "label": "精准锚定协同联动" }
+    ]
+  },
+  "arcLabels": {
+    "top": { "label": "AI digital" },
+    "bottom": { "label": "AI digital" }
+  }
+}

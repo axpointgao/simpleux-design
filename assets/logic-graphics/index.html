@@ -319,6 +319,7 @@
     <button type="button" data-id="motif:slide-09-triad-orbit-concept">P9 三元环绕概念</button>
     <button type="button" data-id="motif:slide-10-layered-core-diagnosis">P10 分层核心诊断</button>
     <button type="button" data-id="motif:slide-11-deployment-orbit-steps">P11 部署轨道步骤</button>
+    <button type="button" data-id="motif:slide-12-bilateral-core-loop">P12 双端核心闭环</button>
   </div>
 </aside>
 
@@ -436,6 +437,10 @@ const items = {
   "motif:slide-11-deployment-orbit-steps": {
     title: "P11 部署轨道步骤",
     description: "从用户提供截图抽出的母题组件，适合表达中心协同能力、半环部署步骤、外侧里程碑和步骤间动作说明。"
+  },
+  "motif:slide-12-bilateral-core-loop": {
+    title: "P12 双端核心闭环",
+    description: "从用户提供截图抽象出的母题组件，适合表达中心能力环驱动左右两端协同，并通过外层闭环反馈持续优化。"
   }
 };
 
@@ -465,7 +470,8 @@ function jsonTemplate(id) {
       "slide-08-ribbon-stage-pipeline": "ribbon-stage-pipeline",
       "slide-09-triad-orbit-concept": "triad-orbit-concept",
       "slide-10-layered-core-diagnosis": "layered-core-diagnosis",
-      "slide-11-deployment-orbit-steps": "deployment-orbit-steps"
+      "slide-11-deployment-orbit-steps": "deployment-orbit-steps",
+      "slide-12-bilateral-core-loop": "bilateral-core-loop"
     };
     return {
       type: typeMap[motifId],

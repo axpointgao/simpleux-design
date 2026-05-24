@@ -386,6 +386,62 @@
 - 中心节点是唯一主焦点；外层穹顶和两条虚线轨道只表达路径关系，不承载文字。
 - 若需要超过 7 个步骤，优先拆成两页或改用路径 Path 组合。
 
+### 双端核心闭环
+
+适用场景：表达一个中心能力环同时驱动左右两个协同端点，并通过上下外层弧线形成反馈闭环。适合“中心平台 + 左右业务端”“AI 中枢 + 双端协作”“核心运营模型 + 双向提效 + 持续反馈”等结构。
+
+输入字段：
+
+```json
+{
+  "type": "bilateral-core-loop",
+  "canvas": { "title": "", "theme": "takram" },
+  "center": {
+    "title": "AI digital",
+    "subtitle": "AI digital"
+  },
+  "quadrants": [
+    { "title": "风险\n规避" },
+    { "title": "风险\n规避" },
+    { "title": "风险\n规避" },
+    { "title": "风险\n规避" }
+  ],
+  "left": {
+    "title": "协同提效",
+    "subtitle": "模块协同 风险规避",
+    "labels": [
+      { "title": "引力运营聚合模型", "subtitle": "AI digital" },
+      { "title": "引力运营聚合模型", "subtitle": "AI digital" }
+    ]
+  },
+  "right": {
+    "title": "协同提效",
+    "subtitle": "模块协同 风险规避",
+    "labels": [
+      { "title": "引力运营聚合模型", "subtitle": "AI digital" },
+      { "title": "引力运营聚合模型", "subtitle": "AI digital" }
+    ]
+  },
+  "flows": {
+    "left": [{ "label": "精准定位协同提效" }, { "label": "精准锚定协同联动" }],
+    "right": [{ "label": "精准定位协同提效" }, { "label": "精准锚定协同联动" }]
+  },
+  "arcLabels": {
+    "top": { "label": "AI digital" },
+    "bottom": { "label": "AI digital" }
+  }
+}
+```
+
+容量边界：
+
+- `quadrants` 固定支持 4 个中心环分区，每个标题最长 8 个中文字符，推荐 2 行短词。
+- `left` 和 `right` 固定各 1 个端点；端点标题最长 8 个中文字符，副标题最长 16 个中文字符。
+- `left.labels` 和 `right.labels` 各稳定支持 2 组外侧说明；标题最长 10 个中文字符，副标题最长 14 个中文字符。
+- `flows.left` 和 `flows.right` 各稳定支持 2 条横向关系标签，每条最长 16 个中文字符。
+- `arcLabels.top` 和 `arcLabels.bottom` 只承载短闭环标签，每个最长 12 个中文字符。
+- 参考图里的电路底纹、强发光和斜向长文字不进入母题；如需更多说明，优先拆页或改用模块系统。
+
 ## 硬门禁
 
 生成后运行逻辑图形质检。以下情况必须失败并返工：

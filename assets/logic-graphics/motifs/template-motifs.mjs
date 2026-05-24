@@ -45,6 +45,29 @@ function triangleBandPath({ cx, topY, baseY, halfWidth, y1, y2, inset = 0 }) {
   ]);
 }
 
+function polarPoint(cx, cy, r, angleDeg) {
+  const angle = (angleDeg * Math.PI) / 180;
+  return {
+    x: Math.round((cx + r * Math.cos(angle)) * 100) / 100,
+    y: Math.round((cy + r * Math.sin(angle)) * 100) / 100,
+  };
+}
+
+function annularSectorPath({ cx, cy, innerR, outerR, startAngle, endAngle }) {
+  const largeArc = Math.abs(endAngle - startAngle) > 180 ? 1 : 0;
+  const outerStart = polarPoint(cx, cy, outerR, startAngle);
+  const outerEnd = polarPoint(cx, cy, outerR, endAngle);
+  const innerEnd = polarPoint(cx, cy, innerR, endAngle);
+  const innerStart = polarPoint(cx, cy, innerR, startAngle);
+  return [
+    `M ${outerStart.x} ${outerStart.y}`,
+    `A ${outerR} ${outerR} 0 ${largeArc} 1 ${outerEnd.x} ${outerEnd.y}`,
+    `L ${innerEnd.x} ${innerEnd.y}`,
+    `A ${innerR} ${innerR} 0 ${largeArc} 0 ${innerStart.x} ${innerStart.y}`,
+    "Z",
+  ].join(" ");
+}
+
 function cssVarTokens(theme = {}) {
   const pairs = Object.entries(theme)
     .filter(([, value]) => value !== undefined && value !== null && value !== "")
@@ -135,6 +158,12 @@ function resolveMotifStyle(data) {
       layeredLine: userTokens.layeredLine || styleTokens.layeredLine || styleTokens.cycleRing || mergedTokens.networkLine,
       layeredInk: userTokens.layeredInk || styleTokens.layeredInk || styleTokens.focusInk || styleTokens.cycleInk || mergedTokens.networkInk,
       layeredMuted: userTokens.layeredMuted || styleTokens.layeredMuted || styleTokens.cycleMuted || "#7c8794",
+      bilateralPrimary: userTokens.bilateralPrimary || styleTokens.bilateralPrimary || styleTokens.focusLeft || styleTokens.cycleAccent || mergedTokens.networkPrimary,
+      bilateralDark: userTokens.bilateralDark || styleTokens.bilateralDark || styleTokens.focusRight || "#1f2c3b",
+      bilateralSoft: userTokens.bilateralSoft || styleTokens.bilateralSoft || styleTokens.focusConeLeft || styleTokens.cycleAccentSoft || mergedTokens.cycleAccentSoft,
+      bilateralLine: userTokens.bilateralLine || styleTokens.bilateralLine || styleTokens.cycleRing || mergedTokens.networkLine,
+      bilateralInk: userTokens.bilateralInk || styleTokens.bilateralInk || styleTokens.focusInk || styleTokens.cycleInk || mergedTokens.networkInk,
+      bilateralMuted: userTokens.bilateralMuted || styleTokens.bilateralMuted || styleTokens.cycleMuted || "#7c8794",
     },
   };
 }
@@ -899,6 +928,169 @@ ${bottomItems.map((item, index) => layeredBottomPillHtml(item, index)).join("")}
 </div>`);
 }
 
+function bilateralEndpointHtml(endpoint, side) {
+  const pos = side === "left"
+    ? { x: 160, y: 390, tone: "primary" }
+    : { x: 1510, y: 390, tone: "dark" };
+  return `<div class="tm-bilateral-endpoint ${side} ${pos.tone}" data-lg-component="GraphicNode" data-lg-node-id="${side}-endpoint" style="left:${pos.x}px;top:${pos.y}px;">
+    <strong data-lg-text-role="${side === "left" ? "左端节点标题" : "右端节点标题"}" data-lg-max-chars="8">${esc(endpoint.title || "协同提效")}</strong>
+    <span data-lg-text-role="${side === "left" ? "左端节点说明" : "右端节点说明"}" data-lg-max-chars="16">${esc(endpoint.subtitle || "模块协同 风险规避")}</span>
+  </div>`;
+}
+
+function bilateralOutsideLabelHtml(item, side, index) {
+  const positions = {
+    left: [
+      { x: 65, y: 220 },
+      { x: 65, y: 810 },
+    ],
+    right: [
+      { x: 1608, y: 220 },
+      { x: 1608, y: 810 },
+    ],
+  };
+  const pos = positions[side]?.[index];
+  if (!pos) return "";
+  return `<article class="tm-bilateral-outside ${side}" data-lg-component="GraphicCallout" style="left:${pos.x}px;top:${pos.y}px;">
+    <strong data-lg-text-role="外侧说明标题" data-lg-max-chars="10">${esc(item.title || "聚合模型")}</strong>
+    <span data-lg-text-role="外侧说明副标题" data-lg-max-chars="14">${esc(item.subtitle || "AI digital")}</span>
+  </article>`;
+}
+
+function bilateralFlowLabelHtml(item, side) {
+  const positions = {
+    left: { x: 410, y: 529 },
+    right: { x: 1296, y: 529 },
+  };
+  const pos = positions[side];
+  if (!pos) return "";
+  return `<div class="tm-bilateral-flow-label ${side}" data-lg-component="GraphicLabel" data-lg-text-role="横向关系标签" data-lg-max-chars="16" style="left:${pos.x}px;top:${pos.y}px;">${esc(item.label || item.title || item)}</div>`;
+}
+
+function bilateralDiagonalLabelHtml(item, side, index) {
+  const positions = {
+    left: [
+      { x: 500, y: 326, rotate: -31 },
+      { x: 500, y: 716, rotate: 31 },
+    ],
+    right: [
+      { x: 1216, y: 326, rotate: 31 },
+      { x: 1216, y: 716, rotate: -31 },
+    ],
+  };
+  const pos = positions[side]?.[index];
+  if (!pos) return "";
+  return `<div class="tm-bilateral-diagonal-label ${side}" data-lg-component="GraphicLabel" data-lg-text-role="斜向关系标签" data-lg-max-chars="16" style="left:${pos.x}px;top:${pos.y}px;--tm-bilateral-label-rotate:${pos.rotate}deg;">${esc(item.label || item.title || item)}</div>`;
+}
+
+function bilateralArcBadgeHtml(item, slot) {
+  const positions = {
+    top: { x: 852, y: 62 },
+    bottom: { x: 852, y: 930 },
+  };
+  const pos = positions[slot];
+  return `<div class="tm-bilateral-arc-badge ${slot}" data-lg-component="GraphicBadge" data-lg-text-role="外层闭环标签" data-lg-max-chars="12" style="left:${pos.x}px;top:${pos.y}px;">${esc(item.label || item.title || "AI digital")}</div>`;
+}
+
+export function renderBilateralCoreLoop(data) {
+  const center = data.center || {};
+  const left = data.left || {};
+  const right = data.right || {};
+  const quadrants = (data.quadrants || []).slice(0, 4);
+  const normalizedQuadrants = quadrants.length ? quadrants : [
+    { title: "风险\n规避" },
+    { title: "定位\n增强" },
+    { title: "协同\n提效" },
+    { title: "运营\n聚合" },
+  ];
+  const leftLabels = (left.labels || []).slice(0, 2);
+  const rightLabels = (right.labels || []).slice(0, 2);
+  const leftFlows = (data.flows?.left || []).slice(0, 2);
+  const rightFlows = (data.flows?.right || []).slice(0, 2);
+  const leftDiagonals = (data.diagonalFlows?.left || data.diagonals?.left || leftFlows).slice(0, 2);
+  const rightDiagonals = (data.diagonalFlows?.right || data.diagonals?.right || rightFlows).slice(0, 2);
+  const arcLabels = {
+    top: data.arcLabels?.top || { label: "AI digital" },
+    bottom: data.arcLabels?.bottom || { label: "AI digital" },
+  };
+  const motifStyle = resolveMotifStyle(data);
+  const themeVars = cssVarTokens(motifStyle.tokens);
+  const cx = 960;
+  const cy = 540;
+  const outerR = 246;
+  const innerR = 120;
+  const sectorAngles = [
+    [-90, 0],
+    [0, 90],
+    [90, 180],
+    [180, 270],
+  ];
+  const sectorHtml = normalizedQuadrants.map((item, index) => {
+    const [startAngle, endAngle] = sectorAngles[index] || sectorAngles[0];
+    return `<path class="tm-bilateral-sector sector-${index + 1}" data-lg-component="GraphicGroup" d="${annularSectorPath({ cx, cy, innerR, outerR, startAngle, endAngle })}"></path>`;
+  }).join("");
+  const quadrantLabelPositions = [
+    { x: 1046, y: 394 },
+    { x: 1046, y: 626 },
+    { x: 774, y: 626 },
+    { x: 774, y: 394 },
+  ];
+  const quadrantLabels = normalizedQuadrants.map((item, index) => {
+    const pos = quadrantLabelPositions[index] || quadrantLabelPositions[0];
+    return `<div class="tm-bilateral-quadrant-label" data-lg-component="GraphicLabel" data-lg-text-role="中心环分区标签" data-lg-max-chars="8" style="left:${pos.x}px;top:${pos.y}px;">${esc(item.title || item.label || item)}</div>`;
+  }).join("");
+  return frame(data, `
+<div class="tm-bilateral-loop" data-template-style="${esc(motifStyle.styleName)}"${themeVars}>
+<svg class="tm-canvas" viewBox="0 0 ${CANVAS.width} ${CANVAS.height}" aria-hidden="true">
+  <defs>
+    <marker id="tm-bilateral-arrow-primary" viewBox="0 0 24 24" refX="19" refY="12" markerWidth="24" markerHeight="24" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 4 4 L 20 12 L 4 20 Z" fill="var(--tm-bilateral-primary)"></path>
+    </marker>
+    <marker id="tm-bilateral-arrow-muted" viewBox="0 0 20 20" refX="17" refY="10" markerWidth="18" markerHeight="18" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 4 4 L 17 10 L 4 16 Z" fill="rgba(31, 42, 36, 0.48)"></path>
+    </marker>
+  </defs>
+  <path class="tm-bilateral-soft-band left" d="M 374 540 L 730 244 L 730 836 Z"></path>
+  <path class="tm-bilateral-soft-band right" d="M 1546 540 L 1190 244 L 1190 836 Z"></path>
+  <path class="tm-bilateral-outer-arc top" d="M 404 214 C 680 82 1240 82 1516 214"></path>
+  <path class="tm-bilateral-outer-arc bottom" d="M 404 866 C 680 998 1240 998 1516 866"></path>
+  <path class="tm-bilateral-outer-arrow top" d="M 1488 198 C 1500 205 1509 211 1516 214"></path>
+  <path class="tm-bilateral-outer-arrow bottom" d="M 404 866 C 411 863 420 857 432 850"></path>
+  <path class="tm-bilateral-diagonal-line left top" d="M 700 330 L 430 475"></path>
+  <path class="tm-bilateral-diagonal-line left bottom" d="M 700 750 L 430 605"></path>
+  <path class="tm-bilateral-diagonal-line right top" d="M 1220 330 L 1490 475"></path>
+  <path class="tm-bilateral-diagonal-line right bottom" d="M 1220 750 L 1490 605"></path>
+  <path class="tm-bilateral-flow-line muted left top" d="M 652 482 L 420 482"></path>
+  <path class="tm-bilateral-flow-line muted left bottom" d="M 420 598 L 652 598"></path>
+  <path class="tm-bilateral-flow-line muted right top" d="M 1268 482 L 1500 482"></path>
+  <path class="tm-bilateral-flow-line muted right bottom" d="M 1500 598 L 1268 598"></path>
+  <circle class="tm-bilateral-core-shadow" cx="${cx}" cy="${cy}" r="302"></circle>
+  <circle class="tm-bilateral-core-shell" cx="${cx}" cy="${cy}" r="278"></circle>
+  ${sectorHtml}
+  <line class="tm-bilateral-sector-split" x1="${cx}" y1="${cy - outerR}" x2="${cx}" y2="${cy - innerR}"></line>
+  <line class="tm-bilateral-sector-split" x1="${cx + innerR}" y1="${cy}" x2="${cx + outerR}" y2="${cy}"></line>
+  <line class="tm-bilateral-sector-split" x1="${cx}" y1="${cy + innerR}" x2="${cx}" y2="${cy + outerR}"></line>
+  <line class="tm-bilateral-sector-split" x1="${cx - innerR}" y1="${cy}" x2="${cx - outerR}" y2="${cy}"></line>
+  <circle class="tm-bilateral-core-hole" cx="${cx}" cy="${cy}" r="${innerR}"></circle>
+</svg>
+${bilateralArcBadgeHtml(arcLabels.top, "top")}
+${bilateralArcBadgeHtml(arcLabels.bottom, "bottom")}
+${bilateralEndpointHtml(left, "left")}
+${bilateralEndpointHtml(right, "right")}
+${leftLabels.map((item, index) => bilateralOutsideLabelHtml(item, "left", index)).join("")}
+${rightLabels.map((item, index) => bilateralOutsideLabelHtml(item, "right", index)).join("")}
+${bilateralFlowLabelHtml(leftFlows[0] || {}, "left")}
+${bilateralFlowLabelHtml(rightFlows[0] || {}, "right")}
+${leftDiagonals.map((item, index) => bilateralDiagonalLabelHtml(item, "left", index)).join("")}
+${rightDiagonals.map((item, index) => bilateralDiagonalLabelHtml(item, "right", index)).join("")}
+${quadrantLabels}
+<div class="tm-bilateral-center-label" data-lg-component="GraphicNode" data-lg-node-id="bilateral-center" data-lg-emphasis="true">
+  <strong data-lg-text-role="中心标题" data-lg-max-chars="10">${esc(center.title || "AI digital")}</strong>
+  <span data-lg-text-role="中心副标题" data-lg-max-chars="14">${esc(center.subtitle || "AI digital")}</span>
+</div>
+</div>`);
+}
+
 export function renderTemplateMotif(data) {
   if (data.type === "layered-stack-3d") return renderLayeredStack3D(data);
   if (data.type === "split-pyramid-matrix") return renderSplitPyramidMatrix(data);
@@ -910,5 +1102,6 @@ export function renderTemplateMotif(data) {
   if (data.type === "ribbon-stage-pipeline") return renderRibbonStagePipeline(data);
   if (data.type === "triad-orbit-concept") return renderTriadOrbitConcept(data);
   if (data.type === "layered-core-diagnosis") return renderLayeredCoreDiagnosis(data);
+  if (data.type === "bilateral-core-loop") return renderBilateralCoreLoop(data);
   throw new Error(`未知模板母题类型：${data.type}`);
 }
