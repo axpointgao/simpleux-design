@@ -28,7 +28,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 
 1. 事实优先。涉及具体产品、技术、人物、事件、版本或规格，先按 `references/fact-verification.md` 查证。
 2. 先找 design context。读用户给的设计系统、代码、截图、品牌规范；详见 `references/design-context.md`。
-3. 涉及具体品牌、产品或客户，必须走 `references/brand-asset-protocol.md`。
+3. 涉及具体品牌、产品、客户或机构名称，必须先走 `references/brand-asset-protocol.md` 做品牌资产和基础业务语境调研；没有完成 logo、品牌色、官网、现有 App/产品截图、业务关键词、品牌主张和可用素材确认前，不得直接进入高保真批量制作。
 4. 需求模糊时，走 `references/fallback-advisor.md`，给 3 个差异化方向，再进入主流程。
 5. 新设计任务按 `references/workflow.md` 对齐 context、variations、fidelity、tweaks 和范围。
 6. 反 AI slop、内容准则、字体/色彩/尺度规范见 `references/content-guidelines.md`。
@@ -56,7 +56,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 ### 3. 按类型执行
 
 - 原型：选择 overview 平铺或 flow demo；App/Web/PC 设备界面展示必须优先用真实设备样机壳；关键流程必须可点。
-- 幻灯片：HTML 是源产物；PDF/PPTX 是派生物；先完成交付格式、架构、视觉方向和 deck 结构规划，再开始高保真批量制作；正文 10 页以上、正式客户汇报、报告型 deck、课件、长讲座或包含多个截图/章节/封底页时，必须使用多文件架构，不得默认使用单文件 `<deck-stage>`；正文 5 页以上时，必须先做 2 页视觉确认稿或等价 showcase，用户确认字体、色彩、间距、masthead、图像规则、信息密度和情绪基调后再批量制作；固定 SimpleUX 封底页不参与目录/章节判断，客户交付 deck 默认追加；需要可编辑 PPTX 时从第一行 HTML 遵守结构约束。
+- 幻灯片：HTML 是源产物；PDF/PPTX 是派生物；如主题包含明确客户、品牌、产品或机构，必须先完成品牌资产和基础业务语境调研并形成 `brand-spec.md` 或等价摘要；再完成交付格式、架构、视觉方向和 deck 结构规划，之后才开始高保真批量制作；正文 10 页以上、正式客户汇报、报告型 deck、课件、长讲座或包含多个截图/章节/封底页时，必须使用多文件架构，不得默认使用单文件 `<deck-stage>`；正文 5 页以上时，必须先做 2 页视觉确认稿或等价 showcase，用户确认字体、色彩、间距、masthead、图像规则、信息密度和情绪基调后再批量制作；固定 SimpleUX 封底页不参与目录/章节判断，客户交付 deck 默认追加；需要可编辑 PPTX 时从第一行 HTML 遵守结构约束。
 - 逻辑图形与信息图：图形只服务于理解，不决定 deck 是否优秀；先判断图形是否真的增强表达，简单图解可用自定义 HTML/CSS，结构化模型可转成 JSON 组件、节点和关系，使用组件库或模板母题生成 HTML/SVG；带 `data-logic-graphic` 的产物必须跑硬门禁质检。
 - 变体：至少 3 个差异化方向，来自不同流派或不同设计维度；可用 Tweaks 面板让用户切换。
 - 品牌：真实资产优先，找不到 logo 或关键资产时停下问用户。
