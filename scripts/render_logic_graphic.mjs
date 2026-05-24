@@ -15,7 +15,7 @@ function usage() {
   console.log(`Usage:
   node scripts/render_logic_graphic.mjs input.json --out output.html
   node scripts/render_logic_graphic.mjs input.json --fragment --out fragment.html
-  node scripts/render_logic_graphic.mjs --examples --out-dir assets/logic-graphics/generated
+  node scripts/render_logic_graphic.mjs --examples --out-dir .tmp/logic-graphics/generated
 
 Options:
   --out <file>       输出 HTML 文件
@@ -90,7 +90,7 @@ function main() {
   }
 
   if (args.examples) {
-    const outDir = path.resolve(args.outDir || path.join(assetRoot, "generated"));
+    const outDir = path.resolve(args.outDir || path.join(skillRoot, ".tmp", "logic-graphics", "generated"));
     const outputs = renderExamples(outDir);
     outputs.forEach((file) => console.log(`✓ ${path.relative(process.cwd(), file)}`));
     return 0;

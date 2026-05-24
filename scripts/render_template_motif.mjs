@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const root = path.resolve(__dirname, "..");
 const examplesDir = path.join(root, "assets", "logic-graphics", "motifs", "examples");
-const generatedDir = path.join(root, "assets", "logic-graphics", "motifs", "generated");
+const generatedDir = path.join(root, ".tmp", "logic-graphics", "motifs", "generated");
 
 function parseArgs(argv) {
   const args = { input: null, out: null, examples: false, outDir: generatedDir };

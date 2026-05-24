@@ -80,6 +80,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 - `references/content-guidelines.md`：反 AI slop、内容与尺度规范。
 - `references/app-prototype.md`：App/Web 原型规则。
 - `references/device-mockups.md`：真实设备样机壳 overlay 资产和使用模板。
+- `references/icon-assets.md`：本地 SVG 图标库使用原则。
 - `references/react-setup.md`：单文件 HTML + React + Babel 原型规范。
 - `references/slide-decks.md`：HTML-first 幻灯片规范。
 - `references/logic-graphics.md`：逻辑图形组件库、布局原则、容量规则和质检门禁。
@@ -90,7 +91,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 - `references/design-styles-full.md`：完整 20 风格库，按需加载。
 - `references/verification.md`：浏览器/Playwright 验证。
 - `references/critique-guide.md`：五维专家评审。
-- `assets/`：设备框、设计画布、deck 拼接器、逻辑图形组件库和 showcase。
+- `assets/`：设备框、图标库、设计画布、deck 拼接器、逻辑图形组件库和 showcase。
 - `scripts/`：验证、逻辑图形渲染/质检、HTML deck 导 PDF/PPTX 的工具脚本。
 - `package.json`：PDF/PPTX 导出脚本的 Node 依赖；使用脚本前在技能目录或项目目录安装依赖，并安装 Chromium。
 - `requirements.txt`：Python 验证脚本依赖。

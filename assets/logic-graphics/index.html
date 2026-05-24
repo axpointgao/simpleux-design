@@ -191,6 +191,28 @@
     transform-origin: center center;
   }
 
+  .empty-preview {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 42px;
+    color: rgba(255, 255, 255, 0.76);
+    text-align: center;
+  }
+
+  .empty-preview strong {
+    display: block;
+    margin-bottom: 12px;
+    color: #ffffff;
+    font-size: 24px;
+  }
+
+  .empty-preview code {
+    color: #bbf7d0;
+    white-space: normal;
+  }
+
   .details {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
@@ -327,18 +349,24 @@
       <p id="description">确认 GraphicFrame、GraphicNode、GraphicConnector、GraphicGroup、GraphicBadge、GraphicCallout 和 GraphicLabel 都能被稳定组合。</p>
     </div>
     <div class="actions">
-      <a class="action" id="openHtml" href="generated/component-gallery.html">打开 HTML</a>
+      <a class="action" id="openHtml" href="../../.tmp/logic-graphics/generated/component-gallery.html">打开 HTML</a>
       <a class="action" id="openJson" href="examples/component-gallery.json">打开 JSON</a>
     </div>
   </div>
 
   <div class="preview-shell">
     <div class="preview-head">
-      <span id="previewPath">generated/component-gallery.html</span>
+      <span id="previewPath">../../.tmp/logic-graphics/generated/component-gallery.html</span>
       <span>1920×1080</span>
     </div>
     <div class="stage" id="stage">
-      <iframe id="preview" title="逻辑图形预览" src="generated/component-gallery.html"></iframe>
+      <iframe id="preview" title="逻辑图形预览" src="about:blank"></iframe>
+      <div class="empty-preview" id="emptyPreview">
+        <div>
+          <strong>预览 HTML 不随 skill 跟踪</strong>
+          <div>先在 <code>simpleux-design/</code> 下运行 <code>npm run logic:render-examples && npm run logic:render-motifs</code>，再打开生成到 <code>.tmp/logic-graphics/</code> 的 HTML。</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -354,9 +382,9 @@
           <dt>组件</dt>
           <dd><code>GraphicFrame</code> <code>GraphicNode</code> <code>GraphicConnector</code> <code>GraphicGroup</code> <code>GraphicBadge</code> <code>GraphicCallout</code></dd>
           <dt>渲染</dt>
-          <dd><code id="renderCommand">node scripts/render_logic_graphic.mjs assets/logic-graphics/examples/component-gallery.json --out /tmp/component-gallery.html</code></dd>
+          <dd><code id="renderCommand">npm run logic:render-examples</code></dd>
           <dt>质检</dt>
-          <dd><code id="verifyCommand">node scripts/verify_logic_graphics.mjs assets/logic-graphics/generated/component-gallery.html</code></dd>
+          <dd><code id="verifyCommand">node scripts/verify_logic_graphics.mjs .tmp/logic-graphics/generated/component-gallery.html</code></dd>
           <dt>原则</dt>
           <dd>亲密性、对齐、重复、对比、留白、层级、安全区、信息容量。</dd>
         </dl>
@@ -437,6 +465,7 @@ const description = document.getElementById("description");
 const previewPath = document.getElementById("previewPath");
 const openHtml = document.getElementById("openHtml");
 const openJson = document.getElementById("openJson");
+const emptyPreview = document.getElementById("emptyPreview");
 const jsonText = document.getElementById("jsonText");
 const renderCommand = document.getElementById("renderCommand");
 const verifyCommand = document.getElementById("verifyCommand");
@@ -513,7 +542,7 @@ async function selectItem(id) {
   const item = items[id] || items["component-gallery"];
   const isMotif = id.startsWith("motif:");
   const fileId = isMotif ? id.replace("motif:", "") : id;
-  const htmlPath = isMotif ? `motifs/generated/${fileId}.html` : `generated/${fileId}.html`;
+  const htmlPath = isMotif ? `../../.tmp/logic-graphics/motifs/generated/${fileId}.html` : `../../.tmp/logic-graphics/generated/${fileId}.html`;
   const jsonPath = isMotif ? `motifs/examples/${fileId}.json` : `examples/${fileId}.json`;
 
   buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.id === id)));
@@ -521,12 +550,13 @@ async function selectItem(id) {
   description.textContent = item.description;
   previewPath.textContent = htmlPath;
   preview.src = htmlPath;
+  emptyPreview.style.display = "grid";
   openHtml.href = htmlPath;
   openJson.href = jsonPath;
   renderCommand.textContent = isMotif
-    ? `node scripts/render_template_motif.mjs assets/logic-graphics/motifs/examples/${fileId}.json --out /tmp/${fileId}.html`
-    : `node scripts/render_logic_graphic.mjs assets/logic-graphics/examples/${fileId}.json --out /tmp/${fileId}.html`;
-  verifyCommand.textContent = `node scripts/verify_logic_graphics.mjs assets/logic-graphics/${isMotif ? "motifs/" : ""}generated/${fileId}.html`;
+    ? `node scripts/render_template_motif.mjs assets/logic-graphics/motifs/examples/${fileId}.json --out .tmp/logic-graphics/motifs/generated/${fileId}.html`
+    : `node scripts/render_logic_graphic.mjs assets/logic-graphics/examples/${fileId}.json --out .tmp/logic-graphics/generated/${fileId}.html`;
+  verifyCommand.textContent = `node scripts/verify_logic_graphics.mjs ${isMotif ? ".tmp/logic-graphics/motifs/generated" : ".tmp/logic-graphics/generated"}/${fileId}.html`;
   if (location.protocol === "file:") {
     jsonText.textContent = JSON.stringify(jsonTemplate(id), null, 2);
   } else {
@@ -548,6 +578,16 @@ buttons.forEach((button) => {
 
 window.addEventListener("resize", scalePreview);
 preview.addEventListener("load", scalePreview);
+preview.addEventListener("load", () => {
+  const currentSrc = preview.getAttribute("src") || "";
+  try {
+    if (currentSrc !== "about:blank" && preview.contentDocument?.body?.children.length) {
+      emptyPreview.style.display = "none";
+    }
+  } catch (_) {
+    emptyPreview.style.display = "none";
+  }
+});
 selectItem(location.hash.replace(/^#/, "") || "radial");
 scalePreview();
 </script>

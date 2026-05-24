@@ -495,13 +495,13 @@ node scripts/render_logic_graphic.mjs assets/logic-graphics/examples/path.json -
 批量渲染内置示例：
 
 ```bash
-node scripts/render_logic_graphic.mjs --examples --out-dir assets/logic-graphics/generated
+npm run logic:render-examples
 ```
 
 质检 HTML：
 
 ```bash
-node scripts/verify_logic_graphics.mjs assets/logic-graphics/generated/path.html
+node scripts/verify_logic_graphics.mjs .tmp/logic-graphics/generated/path.html
 ```
 
 现有 HTML 验证中启用逻辑图质检：
