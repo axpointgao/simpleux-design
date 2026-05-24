@@ -88,20 +88,32 @@ Deck 系统：
 
 Deck 中展示 App/Web/PC/移动端 UI 截图时，必须读取 `references/device-mockups.md`，优先使用 `assets/device-mockups/` 的真实设备样机壳，不要默认手画黑色圆角框。手机外壳和 PC 外壳层级不同；具体使用时机、长图裁切、透视外壳限制、PC 屏幕填充和组合方式见 `references/device-mockups.md`。
 
-### 逻辑图形页
+### 图形表达
 
-Deck 中出现模型图、关系图、路径图、系统图、流程图、矩阵图时，必须先读取 `references/logic-graphics.md`，并优先使用 `assets/logic-graphics/` 的组件库。
+图形只是增强理解的手段，不是 deck 优秀与否的核心。制作 deck 时先判断图形是否能让当前页更清楚：如果标题、分组文本、数据或图片已经足够表达，就保持常规 deck 版式；只有当页面核心是关系、流程、阶段、系统、矩阵、模型、信息图或图解说明时，才读取 `references/logic-graphics.md` 并考虑图形表达。
 
 执行规则：
 
-- 先把页面内容整理为 JSON：`canvas`、`layout`、`nodes`、`connectors`、`callouts`。
-- 使用 `scripts/render_logic_graphic.mjs` 生成完整 HTML 页面或可嵌入片段。
-- 组件根节点必须带 `data-logic-graphic`，固定 1920×1080 画布。
+- 不要为了“更丰富”强行画图；如果图形不能减少理解成本，就不要画。
+- 先找内容关系，再找表达方式：并列、流程、闭环、层级、系统、对照、矩阵或诊断。
+- 简单图解优先用当前 deck 的 HTML/CSS 自由设计；需要稳定结构、复用组件或质检时再使用组件库。
+- 如需记录制作判断，可用 `graphicIntent`：`none`、`simple-custom`、`component-json`、`template-motif`，但不要把它变成繁琐流程。
+- `component-json` 使用 `scripts/render_logic_graphic.mjs` 生成完整 HTML 页面或可嵌入片段；`template-motif` 使用 `scripts/render_template_motif.mjs`。
+- 使用组件库或模板母题时，组件根节点必须带 `data-logic-graphic`，固定 1920×1080 画布。
 - 文字优先使用 HTML 文本块，避免中文长句直接写入 SVG 单行文本。
 - 同一层级组件必须共享字号、线宽、圆角、颜色和间距 token。
-- 生成后运行 `scripts/verify_logic_graphics.mjs`，或在 `scripts/verify.py` 中加 `--logic-graphics`。
+- 带 `data-logic-graphic` 的页面生成后运行 `scripts/verify_logic_graphics.mjs`，或在 `scripts/verify.py` 中加 `--logic-graphics`。
 
-图形库示例页只说明组件组合方式，不是固定模板。不要把历史页面或外部参考翻译成逐像素坐标；真实项目应根据当前页要表达的关系选择基础图形模式或模板母题。
+图形页交付前做轻量质量门槛检查，这不是复杂流程，而是设计师的最后一眼：
+
+- 图形必须比普通排版更快说明关系；如果读图成本更高，退回文字、分区或数据页。
+- 文本、节点、标签、箭头和装饰线不得互相遮挡；连接线不得穿过正文。
+- 箭头只表达真实方向、因果或流转；能用空间位置、分组、编号或方向带说明时，少用箭头。
+- 箭头、连接线和节点边缘之间要留安全距离，不贴字、不插入卡片、不压中心标题。
+- 曲线箭头的箭头角度要顺着曲线末端自然延续；做不到时改直线、折线、方向带或三栏流程。
+- 半透明线条不要叠出脏色或让箭头尾部穿帮；关键箭头优先用实色浅线、低对比实色或更简洁的分区表达。
+
+基础组合示例只说明 JSON、布局和组件调用方式，不是可以直接作为 deck 交付页的稳定模板。不要把历史页面或外部参考翻译成逐像素坐标；真实项目应根据当前页要表达的关系选择轻量自定义图解、组件库 JSON 或模板母题。
 
 ### 出品方署名
 
