@@ -407,14 +407,21 @@ deck/shared/publisher/
 
 ### 固定 SimpleUX 封底页
 
-所有 deck 默认额外追加一张封底页，用于正式收尾、设计方署名和留资。封底页是独立最后一页，不是内页页脚；不参与用户内容页数压缩，也不应挤占前面内容页。
+客户交付 deck 默认额外追加一张封底页，用于正式收尾、设计方署名和留资。封底页是独立最后一页，不是内页页脚；不参与用户内容页数压缩，也不应挤占前面内容页。用户要求 N 页内容时，默认交付为 N 页内容 + 1 页固定封底；只有用户明确说不要 SimpleUX 署名/封底时才省略。
 
-实际 deck 中，把出品方资产复制到：
+固定封底模板已经沉淀为 `assets/publisher/back-cover.html`。模板文件本身可在 `assets/publisher/` 目录直接打开，内部显式引用同目录的 `SimpleUX.mp4` 和 `FullSpeed&SimpleUX.png`。实际制作时优先复制这个模板和封底媒体资产到项目内：
+
+```text
+deck/slides/
+├── 99-back-cover.html
+├── FullSpeed&SimpleUX.png
+└── SimpleUX.mp4
+```
+
+内页出品方署名另需把纯 logo 复制到：
 
 ```text
 deck/shared/publisher/
-├── FullSpeed&SimpleUX.png
-├── SimpleUX.mp4
 ├── simpleux-dark.png
 └── simpleux-light.png
 ```
@@ -424,6 +431,8 @@ deck/shared/publisher/
 ```js
 { file: "slides/99-back-cover.html", label: "封底" }
 ```
+
+封底页必须作为 `index.html` 演示流的最后一页，不要脱离 deck 单独交付。`assets/deck_index.html` 会监听 iframe 内页面发出的 `simpleux-deck-command` 消息；封底模板内置键盘转发脚本，确保用户点进封底页后，方向键、Space、Home/End 和 P 打印仍能控制整套 deck。
 
 封底页固定内容：
 
@@ -465,31 +474,30 @@ www.simpleux.cn
 全速集团旗下用户体验设计品牌
 ```
 
-封底页 HTML/CSS 骨架：
+封底页 HTML/CSS 骨架维护在 `assets/publisher/back-cover.html`。实际制作不要临场重写，优先复制模板文件。
+
+模板内部保留 1920×1080 固定设计画布，并使用与 `assets/deck_index.html` 相同的 `#stage + translate(x, y) scale(s)` 适配算法。单独打开模板时会按当前浏览器窗口自动缩放居中；作为多文件 deck 的一页放进 iframe 时，iframe 本身就是 1920×1080，缩放比例为 1。绿色品牌带始终固定在封底画布底部，留资信息 bottom 锚定在绿色品牌带上方。模板还会把 iframe 内的键盘事件转发给父级 `deck_index.html`，以保持全屏演讲和键盘翻页体验一致。
+
+下面只保留关键结构片段作为阅读参考：
 
 ```html
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="../shared/tokens.css">
 <style>
-  body {
+  html, body { height: 100%; }
+  body { overflow: hidden; margin: 0; background: #050505; }
+  #stage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
     width: 1920px;
     height: 1080px;
-    overflow: hidden;
-    margin: 0;
-    background: #050505;
-    color: #fff;
-    font-family: var(--font-sans, Inter, Arial, "PingFang SC", sans-serif);
+    transform-origin: top left;
+    will-change: transform;
   }
-
-  .back-cover {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    padding: 86px 98px 0;
-  }
+  .back-cover { position: relative; width: 100%; height: 100%; }
 
   .thanks {
     margin: 0 0 0 -36px;
@@ -650,11 +658,12 @@ www.simpleux.cn
 </style>
 </head>
 <body>
-  <main class="back-cover">
+  <div id="stage">
+    <main class="back-cover">
     <h1 class="thanks">Thanks</h1>
     <p class="tagline">简立方，一家专注于数字策略与数字产品的体验设计公司</p>
 
-    <video class="brand-motion" src="../shared/publisher/SimpleUX.mp4" autoplay muted loop playsinline></video>
+    <video class="brand-motion" src="./SimpleUX.mp4" autoplay muted loop playsinline></video>
 
     <section class="closing-info">
       <div class="contact" aria-label="SimpleUX contact information">
@@ -686,10 +695,42 @@ www.simpleux.cn
     </section>
 
     <footer class="brand-strip">
-      <img src="../shared/publisher/FullSpeed&SimpleUX.png" alt="全速集团 / 简立方" />
+      <img src="./FullSpeed&SimpleUX.png" alt="全速集团 / 简立方" />
       <p>全速集团旗下用户体验设计品牌</p>
     </footer>
-  </main>
+    </main>
+  </div>
+  <script>
+    function fitBackCover() {
+      const stage = document.getElementById("stage");
+      const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      const x = (window.innerWidth - 1920 * scale) / 2;
+      const y = (window.innerHeight - 1080 * scale) / 2;
+      stage.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+      stage.style.top = "0";
+      stage.style.left = "0";
+    }
+    window.addEventListener("resize", fitBackCover);
+    window.addEventListener("keydown", (event) => {
+      if (window.parent === window) return;
+      const commandByKey = {
+        ArrowRight: "next",
+        " ": "next",
+        PageDown: "next",
+        ArrowLeft: "prev",
+        PageUp: "prev",
+        Home: "home",
+        End: "end",
+        p: "print",
+        P: "print"
+      };
+      const command = commandByKey[event.key];
+      if (!command) return;
+      event.preventDefault();
+      window.parent.postMessage({ type: "simpleux-deck-command", command }, "*");
+    });
+    fitBackCover();
+  </script>
 </body>
 </html>
 ```

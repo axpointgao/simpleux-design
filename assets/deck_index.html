@@ -204,6 +204,19 @@
     if (m) show(parseInt(m[1], 10) - 1);
   });
 
+  window.addEventListener('message', (event) => {
+    const data = event.data || {};
+    if (data.type !== 'simpleux-deck-command') return;
+
+    switch (data.command) {
+      case 'next':  next(); break;
+      case 'prev':  prev(); break;
+      case 'home':  show(0); break;
+      case 'end':   show(deck.length - 1); break;
+      case 'print': window.print(); break;
+    }
+  });
+
   // Initial: hash > localStorage > 0
   const hashMatch = location.hash.match(/^#(\d+)$/);
   if (hashMatch) current = Math.min(parseInt(hashMatch[1], 10) - 1, deck.length - 1);
