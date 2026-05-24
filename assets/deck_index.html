@@ -130,8 +130,8 @@
 </head>
 <body>
 
-<div id="stage">
-  <iframe id="frame" src="about:blank"></iframe>
+<div id="stage" tabindex="-1">
+  <iframe id="frame" src="about:blank" tabindex="0"></iframe>
 </div>
 
 <div class="nav-zone left"  id="navL"><div class="nav-hint">‹</div></div>
@@ -174,14 +174,14 @@
     if (location.hash !== '#' + (idx + 1)) {
       history.replaceState(null, '', '#' + (idx + 1));
     }
+    focusDeck();
   }
 
   function next() { show(Math.min(current + 1, deck.length - 1)); }
   function prev() { show(Math.max(current - 1, 0)); }
 
-  // Keyboard
-  document.addEventListener('keydown', (e) => {
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  function handleKeydown(e) {
+    if (e.target.matches && e.target.matches('input, textarea, [contenteditable]')) return;
     switch (e.key) {
       case 'ArrowRight': case ' ': case 'PageDown': e.preventDefault(); next(); break;
       case 'ArrowLeft':  case 'PageUp':              e.preventDefault(); prev(); break;
@@ -194,7 +194,27 @@
           if (i < deck.length) { e.preventDefault(); show(i); }
         }
     }
-  });
+  }
+
+  function attachFrameKeyboard() {
+    try {
+      frame.contentWindow.document.addEventListener('keydown', handleKeydown, true);
+    } catch (_) {}
+    focusDeck();
+  }
+
+  function focusDeck() {
+    requestAnimationFrame(() => {
+      try { frame.focus({ preventScroll: true }); } catch (_) {}
+      setTimeout(() => {
+        try { frame.focus({ preventScroll: true }); } catch (_) {}
+      }, 30);
+    });
+  }
+
+  // Keyboard
+  document.addEventListener('keydown', handleKeydown);
+  frame.addEventListener('load', attachFrameKeyboard);
 
   document.getElementById('navL').addEventListener('click', prev);
   document.getElementById('navR').addEventListener('click', next);
@@ -226,6 +246,7 @@
   } catch (_) {}
   fit();
   show(current);
+  window.addEventListener('pageshow', focusDeck);
 
   // Print: build a stack of all iframes so browser prints every slide
   window.addEventListener('beforeprint', () => {
