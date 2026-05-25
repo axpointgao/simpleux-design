@@ -1,6 +1,12 @@
 # Slide Decks：HTML-first 幻灯片主流程
 
-本文件只保留默认执行路径。需要完整踩坑记录、长案例和脚本细节时，再读 `references/deck-case-notes.md`。
+常规 HTML deck 优先读 `references/deck-quick-guide.md`。本文件用于正式客户交付、复杂结构判断、署名/封底策略冲突或 quick guide 不足以决策的场景。需要完整踩坑记录、长案例和脚本细节时，再读 `references/deck-case-notes.md`。
+
+## 读取边界
+
+- 不要把本文件和 `deck-case-notes.md` 作为所有 deck 任务的默认必读组合。
+- 普通短 deck、内部草稿和快速演示优先使用 quick guide，并按 `references/verification.md` 的 Level 1 QA 验证。
+- 正式客户交付、报告型 deck、复杂目录/章节/封底判断、署名例外、导出失败或视觉风险高时，再进入本文件的完整规则。
 
 ## 能力边界
 
@@ -402,10 +408,10 @@ PPTX 约束详见 `references/editable-pptx.md`。
 
 ## 验证清单
 
-1. 浏览器打开 `index.html`，首页无破图、字体正常。
-2. 按方向键翻完所有页，无空白页、重叠、裁切。
-3. 随机打开 3 个 `slides/*.html` 单页检查。
-4. Playwright 批量截图，人工肉眼过一遍。
+1. 先按 `references/verification.md` 执行 Level 1 QA：HTML 可打开、控制台无错误、脚本硬门禁、关键翻页交互、全屏隐藏控制层。
+2. 命中 Level 2 时抽样检查封面、目录/章节页、1-2 张普通内页、封底，以及所有设备样机页和逻辑图形页。
+3. 命中 Level 3 时再逐页截图或逐页打开检查，不要把全量逐页视觉 QA 作为所有 deck 的默认动作。
+4. Playwright 截图只总结失败项、修复项和必要证据，避免逐页复述无问题页面。
 5. 搜 `TODO` / `placeholder`，确认没有未替换内容。
 6. 如果页面包含 `data-logic-graphic`，运行逻辑图形质检并处理所有失败项。
 7. 如导出 PDF/PPTX，打开最终文件逐页检查。

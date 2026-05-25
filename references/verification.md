@@ -2,9 +2,19 @@
 
 一些 design-agent 原生环境（如 Claude.ai Artifacts）有内置的 `fork_verifier_agent` 起 subagent 用 iframe 截图检查。大部分 agent 环境（Claude Code / Codex / Cursor / Trae / 等）里没有这个内置能力——用 Playwright 手动做就能覆盖相同的验证场景。
 
+## 分层 QA 总则
+
+验证要保质量，也要控制上下文成本。默认先做 Level 1；命中风险条件再升级 Level 2 或 Level 3。不要把每页截图、每页 HTML/CSS 和无问题页面都转成文字复述。
+
+- **Level 1 默认 QA**：HTML 可打开、控制台无错误、资源无关键失败、脚本硬门禁、关键交互可用。
+- **Level 2 抽样 QA**：抽查封面、目录/章节页、1-2 张普通内页、封底，以及所有设备样机页、逻辑图形页和强视觉页。
+- **Level 3 全量 QA**：客户交付、正式汇报、正文 15 页以上、用户明确要求、脚本失败后修复、导出前最终检查或视觉风险高时逐页检查。
+
+输出 QA 结果时，只总结失败项、修复项、剩余风险和必要截图路径；无问题页面不逐页复述。
+
 ## 验证清单
 
-每次产出HTML后，按这个清单做一遍：
+每次产出 HTML 后，至少完成对应风险层级的检查；常规草稿只需 Level 1，命中风险条件再执行 Level 2/3。
 
 ### 1. 浏览器渲染检查（必做）
 
@@ -52,26 +62,32 @@ page.wait_for_timeout(300)
 page.screenshot(path='after-click.png')
 ```
 
-### 5. 幻灯片逐页检查
+### 5. 幻灯片分层检查
 
-Deck类HTML，一张张截：
+Deck 类 HTML 默认不要一上来全量逐页截图。先按风险选择层级：
+
+- Level 1：打开 `index.html`，检查控制台、关键资源、方向键/空格翻页、全屏隐藏控制层。
+- Level 2：抽样截图封面、目录/章节、1-2 张普通内页、封底，以及所有高风险页。
+- Level 3：逐页截图或逐页打开检查。
+
+需要全量逐页时再运行：
 
 ```bash
 python verify.py deck.html --slides 10  # 截前10张
 ```
 
-生成 `deck-slide-01.png`、`deck-slide-02.png`... 方便快速浏览。
+生成 `deck-slide-01.png`、`deck-slide-02.png`... 方便快速浏览。汇报结果时默认只描述异常页和修复动作。
 
 ### 6. Deck 交付门禁检查
 
-正文 5 页以上、正式客户汇报或客户交付 deck，除了截图检查，还必须跑交付门禁：
+正文 5 页以上、正式客户汇报或客户交付 deck，除了对应层级的截图检查，还必须跑交付门禁：
 
 ```bash
 cd simpleux-design
 npm run deck:verify -- --deck /path/to/deck --customer --min-slides 5
 ```
 
-这个脚本会检查 `DECK_MANIFEST`、`STYLE_CONFIRMATION.md`、`shared/publisher/` 必要资产、固定 SimpleUX 封底、普通内页 SimpleUX 保密署名、`PUBLISHER_EXCEPTIONS.md` 里的署名例外记录，以及 HTML 默认键盘翻页和全屏隐藏控制层逻辑。脚本失败时不要交付，先修页面、资产、确认记录或 deck 外壳。
+这个脚本会检查 `DECK_MANIFEST`、`STYLE_CONFIRMATION.md`、`shared/publisher/` 必要资产、固定 SimpleUX 封底、普通内页 SimpleUX 保密署名、`PUBLISHER_EXCEPTIONS.md` 里的署名例外记录，以及 HTML 默认键盘翻页和全屏隐藏控制层逻辑。脚本失败时不要交付，先修页面、资产、确认记录或 deck 外壳。脚本通过不等于视觉免检；按 Level 2/3 触发条件补做抽样或全量视觉 QA。
 
 ## Playwright Setup
 
@@ -174,7 +190,7 @@ python ~/Documents/写作/tools/upload_image.py screenshot.png
 
 ## 验证=设计师的第二双眼
 
-**永远要自己过一遍**。AI写代码时经常出现：
+**永远要自己过一遍关键路径**。AI写代码时经常出现：
 
 - 看起来对但interaction有bug
 - 静态截图好但scroll时错位
@@ -182,7 +198,7 @@ python ~/Documents/写作/tools/upload_image.py screenshot.png
 - Dark mode忘了测
 - Tweaks切换后某些组件没响应
 
-**最后1分钟的验证可以省1小时的返工**。
+**最后1分钟的分层验证可以省1小时的返工**。常规草稿不必全量逐页文字化；正式交付不能跳过必要的抽样或全量检查。
 
 ## 常用验证脚本命令
 

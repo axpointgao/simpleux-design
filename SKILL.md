@@ -24,6 +24,12 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 - voiceover 解说驱动动画。
 - 生产级 Web App、SEO 网站或需要后端的动态系统。
 
+## Token 高效读取
+
+1. 默认先走轻量入口，再按风险深读；只有遇到复杂决策、脚本失败或正式交付时才升级参考资料。
+2. 搜索默认排除 `node_modules/`、`assets/icon/` 和大媒体文件；需要图标、设备样机或 publisher 资产时，只读索引、manifest 或目标文件。
+3. 常规 HTML deck 默认先读 `references/deck-quick-guide.md`；只有命中正式客户交付、复杂结构、导出疑难、可编辑 PPTX、设备样机、逻辑图形或完整风格库时，再读对应专项文档。
+
 ## 工作原则
 
 1. 事实优先。涉及具体产品、技术、人物、事件、版本或规格，先按 `references/fact-verification.md` 查证。
@@ -33,10 +39,10 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 5. 新设计任务按 `references/workflow.md` 对齐 context、variations、fidelity、tweaks 和范围。
 6. 反 AI slop、内容准则、字体/色彩/尺度规范见 `references/content-guidelines.md`。
 7. 原型任务读 `references/app-prototype.md`，并使用 `assets/ios_frame.jsx`、`assets/android_frame.jsx`、`assets/browser_window.jsx` 或 `assets/macos_window.jsx`；需要展示 App/Web/PC 设备界面时必须读 `references/device-mockups.md`。
-8. 幻灯片任务先读 `references/slide-decks.md`，并执行其中“开工停止门禁”；需要可编辑 PPTX 时再读 `references/editable-pptx.md`；遇到导出、单文件 deck 或历史坑点时读 `references/deck-case-notes.md`。
-9. 遇到模型图、关系图、路径图、系统图、流程图、矩阵图、闭环、架构、服务地图、体验链路、经营逻辑、信息图或图解页，必须先读 `references/logic-graphics.md` 并做 `graphicIntent` 选型；正式长 deck 至少盘点哪些页面应使用 `component-json` 或 `template-motif`，不能默认全用普通文字块或手写自由图形。
-10. 设计变体和实时调参读 `references/tweaks-system.md`，风格方向先读 `references/design-styles.md`；需要完整 20 风格库时再读 `references/design-styles-full.md`；showcase 读 `assets/showcases/INDEX.md`。
-11. 交付前按 `references/verification.md` 做浏览器和 Playwright 验证；包含 `data-logic-graphic` 时加跑逻辑图形质检。
+8. 幻灯片任务先读 `references/deck-quick-guide.md` 并执行其中开工停止门禁；需要复杂判断时再读 `references/slide-decks.md`；需要可编辑 PPTX 时再读 `references/editable-pptx.md`；遇到导出、单文件 deck 或历史坑点时读 `references/deck-case-notes.md`。
+9. 遇到模型图、关系图、路径图、系统图、流程图、矩阵图、闭环、架构、服务地图、体验链路、经营逻辑、信息图或图解页，先判断是否只是轻量自定义图解；当图形复杂、需要复用组件、模板母题或硬门禁质检时，读 `references/logic-graphics.md` 并做 `graphicIntent` 选型。
+10. 设计变体和实时调参读 `references/tweaks-system.md`，风格方向先读 `references/design-styles.md`；只有快速索引不够用、需要完整 20 风格库或提示词 DNA 时，才读 `references/design-styles-full.md`；showcase 只读 `assets/showcases/INDEX.md`。
+11. 交付前按 `references/verification.md` 做分层 QA；包含 `data-logic-graphic` 时加跑逻辑图形质检。
 12. 需要设计评审时，按 `references/critique-guide.md` 输出评分和修复清单。
 
 ## 默认工作流
@@ -67,7 +73,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 - HTML 必须能打开，无控制台错误。
 - 原型至少验证 3 个关键交互。
 - 响应式页面检查多个 viewport。
-- Deck 逐页截图或逐页打开检查。
+- Deck 默认先做 Level 1 QA；按正式交付、客户 deck、正文 15 页以上、脚本失败或视觉风险升级抽样或全量逐页检查。
 - 最终回复只说结果、注意事项和下一步，不展开炫技。
 
 ## 资源地图
@@ -82,6 +88,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 - `references/device-mockups.md`：真实设备样机壳 overlay 资产和使用模板。
 - `references/icon-assets.md`：本地 SVG 图标库使用原则。
 - `references/react-setup.md`：单文件 HTML + React + Babel 原型规范。
+- `references/deck-quick-guide.md`：常规 HTML deck 的轻量默认路径。
 - `references/slide-decks.md`：HTML-first 幻灯片规范。
 - `references/logic-graphics.md`：逻辑图形组件库、布局原则、容量规则和质检门禁。
 - `references/deck-case-notes.md`：幻灯片完整案例、踩坑记录和导出细节，按需加载。
