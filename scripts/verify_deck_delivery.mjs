@@ -40,7 +40,8 @@ function printHelp() {
   - SimpleUX publisher 资产
   - 固定封底页
   - 普通内页 SimpleUX 保密署名
-  - PUBLISHER_EXCEPTIONS.md 署名例外记录`);
+  - PUBLISHER_EXCEPTIONS.md 署名例外记录
+  - HTML 键盘翻页与全屏隐藏控制层`);
 }
 
 function fail(issues) {
@@ -105,6 +106,28 @@ function hasPublisherSignature(html) {
   );
 }
 
+function hasStableKeyboardControls(indexHtml) {
+  return (
+    /addEventListener\(['"]keydown['"]/i.test(indexHtml) &&
+    /ArrowRight/.test(indexHtml) &&
+    /ArrowLeft/.test(indexHtml) &&
+    /PageDown/.test(indexHtml) &&
+    /PageUp/.test(indexHtml) &&
+    /Home/.test(indexHtml) &&
+    /End/.test(indexHtml) &&
+    /focusDeck/.test(indexHtml)
+  );
+}
+
+function hasFullscreenControlHiding(indexHtml) {
+  return (
+    /fullscreen-active/.test(indexHtml) &&
+    /fullscreenchange/.test(indexHtml) &&
+    /document\.fullscreenElement|webkitFullscreenElement|mozFullScreenElement|msFullscreenElement/.test(indexHtml) &&
+    /counter[\s\S]{0,120}nav-zone[\s\S]{0,120}nav-hint|counter[\s\S]{0,120}nav-hint[\s\S]{0,120}nav-zone/.test(indexHtml)
+  );
+}
+
 function main() {
   const args = parseArgs(process.argv.slice(2));
   const deckDir = path.resolve(args.deck);
@@ -116,8 +139,9 @@ function main() {
   }
 
   let manifest = null;
+  const indexHtml = read(indexPath);
   try {
-    manifest = parseManifest(read(indexPath));
+    manifest = parseManifest(indexHtml);
   } catch (error) {
     issues.push(`DECK_MANIFEST 解析失败: ${error.message}`);
   }
@@ -126,8 +150,29 @@ function main() {
     issues.push("index.html 缺少有效的 window.DECK_MANIFEST");
   }
 
+  if (!hasStableKeyboardControls(indexHtml)) {
+    issues.push("index.html 缺少稳定键盘翻页逻辑，必须支持方向键、空格、PageUp/PageDown、Home/End，并在焦点变化后保持可用");
+  }
+
+  if (!hasFullscreenControlHiding(indexHtml)) {
+    issues.push("index.html 缺少全屏隐藏控制层逻辑，必须在全屏时隐藏计数器、左右热区和箭头提示");
+  }
+
   if (manifest && manifest.length >= args.minSlides && !hasStyleConfirmation(deckDir)) {
     issues.push(`正文达到 ${args.minSlides} 页以上，但缺少 STYLE_CONFIRMATION.md 或 confirmed: true / bypass_confirmed: true`);
+  }
+
+  if (manifest) {
+    for (const item of manifest) {
+      const file = String(item.file || "");
+      if (!file) {
+        issues.push("DECK_MANIFEST 中存在缺少 file 字段的页面");
+        continue;
+      }
+      if (!exists(path.join(deckDir, file))) {
+        issues.push(`DECK_MANIFEST 中的页面不存在: ${file}`);
+      }
+    }
   }
 
   if (args.customer) {
@@ -159,10 +204,7 @@ function main() {
         if (isTemplateOrNonOrdinarySlide(item)) continue;
         const file = String(item.file || "");
         const slidePath = path.join(deckDir, file);
-        if (!exists(slidePath)) {
-          issues.push(`DECK_MANIFEST 中的页面不存在: ${file}`);
-          continue;
-        }
+        if (!exists(slidePath)) continue;
         const html = read(slidePath);
         if (!hasPublisherSignature(html) && !exceptions.includes(file)) {
           issues.push(`普通内页缺少 SimpleUX 保密署名，且未写入 PUBLISHER_EXCEPTIONS.md: ${file}`);

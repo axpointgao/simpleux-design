@@ -126,8 +126,17 @@
   }
 
   @media (display-mode: fullscreen) {
-    .counter, .nav-hint { display: none !important; }
+    .counter, .nav-zone, .nav-hint { display: none !important; }
     .nav-zone { cursor: none; }
+  }
+
+  body.fullscreen-active .counter,
+  body.fullscreen-active .nav-zone,
+  body.fullscreen-active .nav-hint,
+  body:fullscreen .counter,
+  body:fullscreen .nav-zone,
+  body:fullscreen .nav-hint {
+    display: none !important;
   }
 
   /* Print: one slide per page, no navigation UI */
@@ -249,6 +258,21 @@
     if (!document.hidden) focusDeck();
   });
   window.addEventListener('pointerdown', focusDeck, true);
+
+  function syncFullscreenState() {
+    const fullscreenElement =
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement;
+    document.body.classList.toggle('fullscreen-active', Boolean(fullscreenElement));
+  }
+
+  document.addEventListener('fullscreenchange', syncFullscreenState);
+  document.addEventListener('webkitfullscreenchange', syncFullscreenState);
+  document.addEventListener('mozfullscreenchange', syncFullscreenState);
+  document.addEventListener('MSFullscreenChange', syncFullscreenState);
+  syncFullscreenState();
 
   document.getElementById('navL').addEventListener('click', prev);
   document.getElementById('navR').addEventListener('click', next);

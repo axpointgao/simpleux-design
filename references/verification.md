@@ -71,7 +71,7 @@ cd simpleux-design
 npm run deck:verify -- --deck /path/to/deck --customer --min-slides 5
 ```
 
-这个脚本会检查 `DECK_MANIFEST`、`STYLE_CONFIRMATION.md`、`shared/publisher/` 必要资产、固定 SimpleUX 封底、普通内页 SimpleUX 保密署名，以及 `PUBLISHER_EXCEPTIONS.md` 里的署名例外记录。脚本失败时不要交付，先修页面、资产或确认记录。
+这个脚本会检查 `DECK_MANIFEST`、`STYLE_CONFIRMATION.md`、`shared/publisher/` 必要资产、固定 SimpleUX 封底、普通内页 SimpleUX 保密署名、`PUBLISHER_EXCEPTIONS.md` 里的署名例外记录，以及 HTML 默认键盘翻页和全屏隐藏控制层逻辑。脚本失败时不要交付，先修页面、资产、确认记录或 deck 外壳。
 
 ## Playwright Setup
 

@@ -3,7 +3,7 @@
  *
  * 提供功能：
  * - 固定尺寸canvas（默认1920×1080）+ auto-scale + letterbox
- * - 键盘导航（←/→/Space/Home/End/Esc）
+ * - 稳定键盘导航（←/→/Space/PgUp/PgDown/Home/End）
  * - 左右点击区域导航
  * - slide counter (当前/总数)
  * - localStorage持久化当前slide
@@ -188,12 +188,21 @@
           }
 
           @media (display-mode: fullscreen) {
-            .counter, .nav-hint {
+            .counter, .nav-zone, .nav-hint {
               display: none !important;
             }
             .nav-zone {
               cursor: none;
             }
+          }
+
+          :host([fullscreen-active]) .counter,
+          :host([fullscreen-active]) .nav-zone,
+          :host([fullscreen-active]) .nav-hint,
+          :host(:fullscreen) .counter,
+          :host(:fullscreen) .nav-zone,
+          :host(:fullscreen) .nav-hint {
+            display: none !important;
           }
 
           @media print {
@@ -253,8 +262,11 @@
     _setupEventListeners() {
       window.addEventListener('resize', () => this._updateScale());
 
-      document.addEventListener('keydown', (e) => {
-        if (e.target.matches('input, textarea, [contenteditable]')) return;
+      const handleKeydown = (e) => {
+        if (e.__simpleuxDeckHandled) return;
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        const target = e.target;
+        if (target && target.matches && target.matches('input, textarea, select, [contenteditable]')) return;
 
         switch (e.key) {
           case 'ArrowRight':
@@ -279,10 +291,40 @@
           case 'c':
           case 'C':
             e.preventDefault();
+            e.__simpleuxDeckHandled = true;
             this.toggleAttribute('show-controls');
             break;
         }
-      });
+        if ([
+          'ArrowRight',
+          ' ',
+          'PageDown',
+          'ArrowLeft',
+          'PageUp',
+          'Home',
+          'End'
+        ].includes(e.key)) {
+          e.__simpleuxDeckHandled = true;
+        }
+      };
+
+      window.addEventListener('keydown', handleKeydown, true);
+      document.addEventListener('keydown', handleKeydown, true);
+      this.addEventListener('keydown', handleKeydown, true);
+
+      const syncFullscreenState = () => {
+        const fullscreenElement =
+          document.fullscreenElement ||
+          document.webkitFullscreenElement ||
+          document.mozFullScreenElement ||
+          document.msFullscreenElement;
+        this.toggleAttribute('fullscreen-active', Boolean(fullscreenElement));
+      };
+      document.addEventListener('fullscreenchange', syncFullscreenState);
+      document.addEventListener('webkitfullscreenchange', syncFullscreenState);
+      document.addEventListener('mozfullscreenchange', syncFullscreenState);
+      document.addEventListener('MSFullscreenChange', syncFullscreenState);
+      syncFullscreenState();
 
       this.shadowRoot.getElementById('navLeft').addEventListener('click', () => this.prev());
       this.shadowRoot.getElementById('navRight').addEventListener('click', () => this.next());
