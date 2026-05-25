@@ -11,6 +11,43 @@
 
 ## 开工决策
 
+## 开工停止门禁
+
+下面这些条件任一命中时，必须先停在“计划 + 2 页确认稿”，不能直接批量制作完整高保真 deck：
+
+- 正文 `>= 5` 页。
+- 正式客户汇报、方案汇报、报告型 deck、课件或长讲座。
+- 面向明确客户、品牌、产品或机构。
+- 用户一次性给出大量文案，要求生成完整 PPT。
+
+确认前允许产出：
+
+- `brand-spec.md` 或等价品牌/业务语境摘要。
+- 交付格式、架构选择、页数范围、章节规划、目录/章节页/封底判断。
+- 2-3 个视觉方向建议，或 1 个推荐方向 + 1-2 个备选。
+- 2 页视觉确认稿或等价 showcase，通常选视觉差异最大的两页。
+
+确认前禁止产出：
+
+- 完整 5+ 页高保真 deck。
+- 32 页这类整套批量页面。
+- 未经确认的最终 PDF/PPTX。
+- 缺少 SimpleUX 署名策略、封底策略和 publisher 资产计划的客户交付 deck。
+
+继续制作剩余页面前，必须拿到用户明确确认，并在项目中留下记录，例如 `STYLE_CONFIRMATION.md`：
+
+```markdown
+# Style Confirmation
+
+- confirmed: true
+- confirmed_at: YYYY-MM-DD HH:mm
+- confirmed_by: user
+- approved_pages: 01-cover.html, 08-service-page.html
+- approved_scope: 字体、色彩、间距、masthead、图像规则、信息密度、署名策略、封底策略、情绪基调
+```
+
+如果用户明确要求跳过确认直接生成全套，先说明跳过视觉确认会增加整套返工风险；只有用户再次明确接受风险后，才可以继续，并在 `STYLE_CONFIRMATION.md` 记录 `bypass_confirmed: true` 和用户确认摘要。
+
 先问最终交付格式：
 
 ```text
@@ -33,7 +70,7 @@ HTML-first deck
 
 如果 deck 面向明确客户、品牌、产品或机构，先执行 `references/brand-asset-protocol.md`。至少查找或询问 logo、品牌色、官网、现有 App/产品截图、业务关键词、品牌主张和可用素材，并形成 `brand-spec.md` 或等价调研摘要。没有完成品牌调研前，不要直接进入风格方向、2 页确认稿或整套高保真制作。
 
-开工前还必须确认视觉方向。如果用户只给文案、结构或主题，没有给品牌资产、视觉风格或参考方向，先提出 2-3 个适合该主题的视觉方向，或给 1 个推荐方向 + 1-2 个备选；说明背景、字体、色彩、版式、图像、设备展示和署名策略。未确认视觉方向前，不要直接批量生成整套高保真页面。
+开工前还必须确认视觉方向。如果用户只给文案、结构或主题，没有给品牌资产、视觉风格或参考方向，先提出 2-3 个适合该主题的视觉方向，或给 1 个推荐方向 + 1-2 个备选；说明背景、字体、色彩、版式、图像、设备展示、SimpleUX 页脚署名和固定封底策略。未确认视觉方向前，不要直接批量生成整套高保真页面。
 
 ## 架构选择
 
@@ -61,15 +98,15 @@ deck/
 
 ## 批量制作规则
 
-Deck 正文 `>= 5` 页时，必须先做 2 页 showcase 或视觉确认稿定视觉 grammar：
+Deck 正文 `>= 5` 页时，必须先做 2 页 showcase 或视觉确认稿定视觉 grammar。这是停止门禁，不是建议：
 
 1. 选择视觉结构差异最大的两页，如封面 + 内容页、章节页 + 产品展示页、服务页 + 总结页、数据页 + 截图页。
 2. 截图给用户确认字体、色彩、间距、masthead、图像规则、信息密度和情绪基调。
-3. 用户确认后再批量制作剩余页面。
+3. 用户确认后再批量制作剩余页面，并保存 `STYLE_CONFIRMATION.md` 或等价确认记录。
 
 这样可以把“方向错”的返工面控制在 2 页，而不是整套 deck。
 
-如果用户明确要求跳过确认直接生成全套，先说明跳过视觉方向确认和 2 页 showcase 会增加整套返工风险；用户确认接受风险后，才可以继续。
+如果用户明确要求跳过确认直接生成全套，先说明跳过视觉方向确认和 2 页 showcase 会增加整套返工风险；用户确认接受风险后，才可以继续，并记录 bypass 确认。没有确认记录时，交付门禁检查应失败。
 
 ## 设计系统
 
@@ -215,6 +252,7 @@ Deck 中展示 App/Web/PC/移动端 UI 截图时，必须读取 `references/devi
 - 如果内页使用出品方署名，把 `simpleux-dark.png` 和 `simpleux-light.png` 复制到项目内的 `deck/shared/publisher/`。
 - 使用目录页或章节页固定模板时，必须保证对应 logo 资源可用；深底默认使用 `simpleux-light.png`，浅底必须覆盖为 `simpleux-dark.png`。
 - 客户交付 deck 的普通内页默认使用 SimpleUX 保密署名页脚，除非该页是封面、强视觉页、客户品牌冲突页，或左下角已有正文/图表/关键信息会与署名冲突。
+- 所有普通内页如果不放署名，必须在 `PUBLISHER_EXCEPTIONS.md` 记录页文件和原因；不能批量省略。
 - 页脚署名只做轻量归属和保密提示，不参与主视觉竞争。
 - 页脚署名文字必须很小，建议文字约 11px；但 logo 不应缩到不可识别，建议保持约 24px 高，只让说明文字轻量化。
 - 以上小字号只适用于出品方署名这种辅助角标，是特殊处理，不影响 deck 正文最小字号和内容页尺度规范。
@@ -234,6 +272,7 @@ Deck 中展示 App/Web/PC/移动端 UI 截图时，必须读取 `references/devi
 1. 复制 `assets/deck-templates/back-cover.html` 为项目内的 `slides/99-back-cover.html`。
 2. 把 `assets/publisher/SimpleUX.mp4` 与 `assets/publisher/FullSpeed&SimpleUX.png` 复制到项目内的 `shared/publisher/`，保持模板内的 `../shared/publisher/` 资源引用可用。
 3. 在 `DECK_MANIFEST` 末尾追加封底页。
+4. 运行 `npm run deck:verify -- --deck path/to/deck --customer` 或等价命令，确认封底、署名和 publisher 资源齐全。
 
 ```text
 deck/
@@ -252,6 +291,26 @@ deck/
 封底页必须作为 `index.html` 演示流的最后一页参与键盘翻页和全屏演讲，不要作为独立文件单独交付。`assets/deck_index.html` 支持接收 iframe 内页面发出的翻页命令；封底模板已内置方向键、Space、Home/End 和 P 打印的转发逻辑。
 
 不要临场重写封底布局。除非用户明确要求，否则不修改模板结构、文案、联系信息、底部品牌带、媒体引用、`#stage` 适配逻辑或键盘转发脚本。具体布局由 `assets/deck-templates/back-cover.html` 维护；历史说明和维护细节见 `references/deck-case-notes.md`。
+
+## 交付门禁脚本
+
+客户交付 deck、正式汇报或正文 5 页以上 deck 交付前，必须运行：
+
+```bash
+cd simpleux-design
+npm run deck:verify -- --deck /path/to/deck --customer --min-slides 5
+```
+
+脚本检查：
+
+- `index.html` 是否存在 `DECK_MANIFEST`。
+- `STYLE_CONFIRMATION.md` 是否记录用户确认或 bypass 确认。
+- `shared/publisher/` 是否包含 `simpleux-dark.png`、`simpleux-light.png`、`SimpleUX.mp4`、`FullSpeed&SimpleUX.png`。
+- `DECK_MANIFEST` 最后一页是否为封底，且对应文件来自 `back-cover` 模板。
+- 普通内页是否包含 `publisher-confidential` 或 `SimpleUX | CONFIDENTIAL&PROPRIETARY` 等署名结构。
+- 缺署名的普通内页是否在 `PUBLISHER_EXCEPTIONS.md` 记录原因。
+
+脚本失败时不得交付，先返工。
 
 ## 多文件模板
 
@@ -341,3 +400,5 @@ PPTX 约束详见 `references/editable-pptx.md`。
 11. 若页面展示 App/Web/PC/移动端 UI，确认使用了 `assets/device-mockups/` 真实样机壳和屏幕层结构；不得出现未说明的手画黑框设备。
 12. 若页面表达关系/流程/系统/矩阵/模型/闭环/架构/服务地图，确认已做逻辑图形选型；使用 `component-json` 或 `template-motif` 时必须带 `data-logic-graphic` 并通过质检。
 13. 确认演示控制层不进入 slide 内容：默认打开、全屏、16:9 投影、截图、打印和导出时不得看到上一页、下一页、计数器或箭头提示；只允许用 C 键临时显示控制层做调试。
+14. 正文 5 页以上或客户交付 deck，确认存在 `STYLE_CONFIRMATION.md`，并运行 deck 交付门禁脚本。
+15. 客户交付 deck，确认普通内页有 SimpleUX 保密署名页脚；省略署名的页面必须写入 `PUBLISHER_EXCEPTIONS.md` 并说明构图或品牌冲突原因。

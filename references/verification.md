@@ -62,6 +62,17 @@ python verify.py deck.html --slides 10  # 截前10张
 
 生成 `deck-slide-01.png`、`deck-slide-02.png`... 方便快速浏览。
 
+### 6. Deck 交付门禁检查
+
+正文 5 页以上、正式客户汇报或客户交付 deck，除了截图检查，还必须跑交付门禁：
+
+```bash
+cd simpleux-design
+npm run deck:verify -- --deck /path/to/deck --customer --min-slides 5
+```
+
+这个脚本会检查 `DECK_MANIFEST`、`STYLE_CONFIRMATION.md`、`shared/publisher/` 必要资产、固定 SimpleUX 封底、普通内页 SimpleUX 保密署名，以及 `PUBLISHER_EXCEPTIONS.md` 里的署名例外记录。脚本失败时不要交付，先修页面、资产或确认记录。
+
 ## Playwright Setup
 
 首次使用需要：
@@ -184,6 +195,9 @@ python verify.py design.html --viewports 1920x1080,375x667
 
 # 多slide
 python verify.py deck.html --slides 10
+
+# 客户 deck 交付门禁
+npm run deck:verify -- --deck /path/to/deck --customer --min-slides 5
 
 # 输出到指定目录
 python verify.py design.html --output ./screenshots/

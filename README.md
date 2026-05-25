@@ -49,7 +49,7 @@ simpleux-design/
 
 核心技能只需要安装到 Codex 技能目录即可。若只让 Codex 读取 `SKILL.md` 和 `references/`，不需要安装 Node 或 Python 依赖。
 
-如果要完整使用本技能的本地脚本能力，例如 PDF/PPTX 导出、逻辑图形渲染、逻辑图形质检、Playwright 截图验证，需要先准备：
+如果要完整使用本技能的本地脚本能力，例如 PDF/PPTX 导出、逻辑图形渲染、逻辑图形质检、deck 交付门禁、Playwright 截图验证，需要先准备：
 
 - Git：安装和更新技能。
 - curl 与 bash：执行一行安装命令。
@@ -80,6 +80,7 @@ python3 -m playwright install-deps chromium
 技能触发、读取工作流                 不需要额外依赖
 逻辑图形 JSON 渲染                  Node.js + npm install
 逻辑图形质检                         Node.js + Playwright Chromium
+客户 deck 交付门禁                   Node.js + npm install
 PDF 导出                             Node.js + Playwright Chromium + pdf-lib
 可编辑 PPTX 导出                     Node.js + Playwright Chromium + pptxgenjs + sharp
 HTML 截图与控制台验证                Python + Python Playwright Chromium
@@ -90,6 +91,7 @@ HTML 截图与控制台验证                Python + Python Playwright Chromium
 ```bash
 npm run logic:verify-examples
 npm run logic:verify-bad-fixtures
+npm run deck:verify -- --deck /path/to/deck --customer --min-slides 5
 python3 scripts/verify.py path/to/file.html
 ```
 

@@ -8,7 +8,8 @@
     "logic:render-examples": "node scripts/render_logic_graphic.mjs --examples --out-dir .tmp/logic-graphics/generated",
     "logic:render-motifs": "node scripts/render_template_motif.mjs --examples --out-dir .tmp/logic-graphics/motifs/generated",
     "logic:verify-examples": "npm run logic:render-examples >/dev/null && for f in .tmp/logic-graphics/generated/*.html; do node scripts/verify_logic_graphics.mjs \"$f\" || exit 1; done",
-    "logic:verify-bad-fixtures": "for f in assets/logic-graphics/fixtures/bad-*.html; do if node scripts/verify_logic_graphics.mjs \"$f\" >/tmp/simpleux-logic-bad.out 2>&1; then cat /tmp/simpleux-logic-bad.out; exit 1; fi; done"
+    "logic:verify-bad-fixtures": "for f in assets/logic-graphics/fixtures/bad-*.html; do if node scripts/verify_logic_graphics.mjs \"$f\" >/tmp/simpleux-logic-bad.out 2>&1; then cat /tmp/simpleux-logic-bad.out; exit 1; fi; done",
+    "deck:verify": "node scripts/verify_deck_delivery.mjs"
   },
   "dependencies": {
     "pdf-lib": "1.17.1",

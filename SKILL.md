@@ -33,7 +33,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 5. 新设计任务按 `references/workflow.md` 对齐 context、variations、fidelity、tweaks 和范围。
 6. 反 AI slop、内容准则、字体/色彩/尺度规范见 `references/content-guidelines.md`。
 7. 原型任务读 `references/app-prototype.md`，并使用 `assets/ios_frame.jsx`、`assets/android_frame.jsx`、`assets/browser_window.jsx` 或 `assets/macos_window.jsx`；需要展示 App/Web/PC 设备界面时必须读 `references/device-mockups.md`。
-8. 幻灯片任务先读 `references/slide-decks.md`；需要可编辑 PPTX 时再读 `references/editable-pptx.md`；遇到导出、单文件 deck 或历史坑点时读 `references/deck-case-notes.md`。
+8. 幻灯片任务先读 `references/slide-decks.md`，并执行其中“开工停止门禁”；需要可编辑 PPTX 时再读 `references/editable-pptx.md`；遇到导出、单文件 deck 或历史坑点时读 `references/deck-case-notes.md`。
 9. 遇到模型图、关系图、路径图、系统图、流程图、矩阵图、闭环、架构、服务地图、体验链路、经营逻辑、信息图或图解页，必须先读 `references/logic-graphics.md` 并做 `graphicIntent` 选型；正式长 deck 至少盘点哪些页面应使用 `component-json` 或 `template-motif`，不能默认全用普通文字块或手写自由图形。
 10. 设计变体和实时调参读 `references/tweaks-system.md`，风格方向先读 `references/design-styles.md`；需要完整 20 风格库时再读 `references/design-styles-full.md`；showcase 读 `assets/showcases/INDEX.md`。
 11. 交付前按 `references/verification.md` 做浏览器和 Playwright 验证；包含 `data-logic-graphic` 时加跑逻辑图形质检。
@@ -56,7 +56,7 @@ description: SimpleUX Design：用 HTML 做高保真 App/Web 交互原型、HTML
 ### 3. 按类型执行
 
 - 原型：选择 overview 平铺或 flow demo；App/Web/PC 设备界面展示必须优先用真实设备样机壳；禁止把手画黑色设备框当作正式交付；关键流程必须可点。
-- 幻灯片：HTML 是源产物；PDF/PPTX 是派生物；如主题包含明确客户、品牌、产品或机构，必须先完成品牌资产和基础业务语境调研并形成 `brand-spec.md` 或等价摘要；再完成交付格式、架构、视觉方向、deck 结构规划、设备样机资产盘点和逻辑图形页面盘点，之后才开始高保真批量制作；正文 10 页以上、正式客户汇报、报告型 deck、课件、长讲座或包含多个截图/章节/封底页时，必须使用多文件架构，不得默认使用单文件 `<deck-stage>`；正文 5 页以上时，必须先做 2 页视觉确认稿或等价 showcase，用户确认字体、色彩、间距、masthead、图像规则、信息密度和情绪基调后再批量制作；固定 SimpleUX 封底页不参与目录/章节判断，客户交付 deck 默认追加；需要可编辑 PPTX 时从第一行 HTML 遵守结构约束。
+- 幻灯片：HTML 是源产物；PDF/PPTX 是派生物；如主题包含明确客户、品牌、产品或机构，必须先完成品牌资产和基础业务语境调研并形成 `brand-spec.md` 或等价摘要；再完成交付格式、架构、视觉方向、deck 结构规划、设备样机资产盘点和逻辑图形页面盘点。正文 5 页以上、正式客户汇报、报告型 deck、课件、长讲座或客户交付 deck，风格确认前只能产出结构计划和 2 页视觉确认稿，不得批量制作完整高保真页面；只有用户明确确认字体、色彩、间距、masthead、图像规则、信息密度、署名策略和情绪基调后，才可以制作剩余页面。正文 10 页以上或包含多个截图/章节/封底页时，必须使用多文件架构，不得默认使用单文件 `<deck-stage>`；固定 SimpleUX 封底页不参与目录/章节判断，客户交付 deck 默认追加；普通内页默认加 SimpleUX 保密署名页脚，交付前必须运行 deck 交付门禁检查；需要可编辑 PPTX 时从第一行 HTML 遵守结构约束。
 - 逻辑图形与信息图：图形只服务于理解，不决定 deck 是否优秀；但结构化关系页必须做选型，简单图解可用自定义 HTML/CSS，结构化模型、服务地图、体验链路、经营逻辑、矩阵、闭环、系统关系应优先转成 JSON 组件、节点和关系，使用组件库或模板母题生成 HTML/SVG；带 `data-logic-graphic` 的产物必须跑硬门禁质检。
 - 变体：至少 3 个差异化方向，来自不同流派或不同设计维度；可用 Tweaks 面板让用户切换。
 - 品牌：真实资产优先，找不到 logo 或关键资产时停下问用户。
