@@ -76,7 +76,10 @@ function hasStyleConfirmation(deckDir) {
   if (!exists(file)) return false;
 
   const text = read(file);
-  return /confirmed\s*:\s*true/i.test(text) || /bypass_confirmed\s*:\s*true/i.test(text);
+  return (
+    /^\s*-?\s*confirmed\s*:\s*true\s*$/im.test(text) ||
+    /^\s*-?\s*bypass_confirmed\s*:\s*true\s*$/im.test(text)
+  );
 }
 
 function readExceptions(deckDir) {
