@@ -36,7 +36,17 @@ npx playwright screenshot https://example.com screenshot.png --viewport-size=192
 ### 5. 竞品参考
 用户说"像XX网站那样"——让他提供URL或截图。**不要**凭你训练数据里的模糊印象做。
 
-### 6. 已知的design system（fallback）
+如果用户明确要求真实产品参考、竞品调研、UI 模式分析、参考案例、对标产品或截图相似比较，可以把 Lazyweb 作为候选外部研究源，但必须先按 `lazyweb-research.md` 询问用户确认。用户确认前不要调用 Lazyweb；用户直接说“用 Lazyweb”时视为已确认。
+
+### 6. 已授权的 Lazyweb 真实产品参考
+Lazyweb 只在用户明确相关需求并确认后使用。它适合补充 onboarding、pricing、dashboard、settings、checkout、billing 等真实产品界面模式，帮助你把设计判断落到可观察案例上。
+
+Lazyweb 确认使用后，默认在用户项目目录生成 `.lazyweb/.../report.html` 视觉参考板和 `references/` 参考图目录。Lazyweb 结果只作为模式参考和研究证据：
+- 不替代用户自己的 design system、codebase、产品截图或品牌资产。
+- 不照抄截图里的 UI、文案、品牌资产或专有图形。
+- 相关性弱时直接说明，不要强行包装成证据。
+
+### 7. 已知的design system（fallback）
 如果以上都没有，用公认的设计系统作为base：
 - Apple HIG
 - Material Design 3
@@ -70,6 +80,14 @@ npx playwright screenshot https://example.com screenshot.png --viewport-size=192
 - 你产品的Logo什么风格？能给我一张吗？
 - 有什么你欣赏的产品作为参考？
 ```
+
+如果用户此时明确想要真实产品参考或竞品模式，可以问：
+
+```markdown
+我可以用 Lazyweb 搜真实产品界面参考来支撑这次设计判断。是否使用？
+```
+
+用户不确认时，继续使用用户素材、项目线索、品牌资产协议和 fallback design system，不调用 Lazyweb。
 
 ### Step 3：Read所有能找到的context
 
