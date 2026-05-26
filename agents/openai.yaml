@@ -1,7 +1,7 @@
 interface:
   display_name: "SimpleUX Design"
-  short_description: "高保真原型、HTML-first deck、信息图、逻辑图形与设计评审"
-  default_prompt: "使用 $simpleux-design 创建一个 HTML-first 设计产物，可包含高保真原型、deck、信息图或逻辑图形，并给出可调变体和交付前验证。"
+  short_description: "SimpleUX 项目方案、POC 提案、设计提案与 HTML-first 设计产物"
+  default_prompt: "使用 $simpleux-design 辅助完成项目方案、POC 提案或设计提案，并在确认逐页表达规格后制作 HTML-first deck。"
 
 policy:
   allow_implicit_invocation: true
