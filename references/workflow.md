@@ -4,17 +4,17 @@
 
 ## 问问题的艺术
 
-大多数情况下，开工前要问至少10个问题。不是走过场，是真的要把需求摸清。
+开工前的问题密度取决于任务不确定性。不是走过场，也不是机械问满；目标是把会影响方向、质量和返工成本的关键信息摸清。
 
-**什么时候必须问**：新任务、模糊任务、没有design context、用户只说了一句模糊的要求。
+**什么时候要集中问**：新任务、模糊任务、没有 design context、用户只说了一句模糊要求、正式客户交付、会影响叙事方向或视觉方向的任务。
 
 **什么时候可以不问**：小修小补、follow-up任务、用户已经给了明确PRD+截图+上下文。
 
-**怎么问**：大部分 agent 环境没有结构化问题 UI，在对话里用 markdown 清单问即可。**一次性把问题列完让用户批量答**，不要一来一回一个个问——那会浪费用户时间、打断用户思路。
+**怎么问**：大部分 agent 环境没有结构化问题 UI，在对话里用 markdown 清单问即可。需要集中问时，一次性把问题列完让用户批量答；信息已充分时，只问会阻塞开工的 1-3 个问题。
 
-## 必问清单
+## 问询清单
 
-每个设计任务都必须问清这5类问题：
+优先检查这 5 类信息。用户已经提供或上下文可判断时，不要重复追问；只补缺口。
 
 ### 1. Design Context（最重要）
 
@@ -31,7 +31,7 @@
 
 ### 2. Variations维度
 
-- 想要几种variations？（推荐3+）
+- 是否需要探索多个方向？方向不明或需要比较时，推荐 3 个有差异的 variations。
 - 在哪些维度上变？视觉/交互/色彩/布局/文案/信息密度？
 - 希望variations都"接近预期"还是"一张地图，从保守到疯狂"？
 
@@ -43,12 +43,12 @@
 
 ### 4. Tweaks
 
-- 希望能实时调整哪些参数？（颜色/字号/间距/layout/文案/feature flag）
-- 用户自己要不要在做完后继续调？
+- 是否需要实时调整参数或切换版本？适合颜色、字号、间距、layout、文案、feature flag。
+- 用户自己是否需要在做完后继续调？如果只是小修或定稿交付，可以不加。
 
-### 5. 问题专属（至少4个）
+### 5. 问题专属
 
-针对具体任务问4+个细节。例如：
+针对具体任务补充关键细节。复杂任务通常问 4 个以上；简单任务只问阻塞项。例如：
 
 **做landing page**：
 - 目标转化动作是什么？
@@ -95,7 +95,7 @@
 
 ## 问题模板示例
 
-遇到新任务时，可以抄这个结构在对话里问：
+遇到信息不足的新任务时，可以抄这个结构在对话里问。小修、明确 follow-up 或资料完整的任务不要照抄全量模板。
 
 ```markdown
 开始前想跟你对齐几个问题，一次列齐你批量回答就行：
@@ -106,7 +106,7 @@
 3. 项目里有codebase可以读吗？
 
 **Variations**
-4. 想要几种variations？在哪些维度上变（视觉/交互/色彩/...）？
+4. 是否需要 variations？方向不明时建议 3 个，在视觉/交互/色彩等维度拉开差异。
 5. 希望都是"接近答案"还是从保守到疯狂的一张地图？
 
 **Fidelity**
@@ -180,11 +180,12 @@ HTML文件头部先写你的**assumptions+reasoning comments**，像junior给man
 
 **保存 → show用户 → 等反馈再走下一步**。
 
-### Pass 2：真实组件+Variations（主力工作量）
+### Pass 2：真实组件 + 深化或 Variations（主力工作量）
 
 用户批准方向后，开始填充。这时：
 - 写React组件替换placeholder
-- 做variations（用design_canvas或Tweaks）
+- 如果方向未定或用户需要比较，做 variations（用 design_canvas 或 Tweaks）
+- 如果方向已定，深化当前方向，不硬造额外版本
 - 如果是幻灯片，用 deck starter components 起手
 
 **做到一半再show一次**——不要等全做完。设计方向错了，晚show等于白做。
@@ -195,7 +196,7 @@ HTML文件头部先写你的**assumptions+reasoning comments**，像junior给man
 - 字号/间距/对比度微调
 - 微交互 timing
 - 边界case
-- Tweaks面板完善
+- 如已使用 Tweaks，完善面板默认值和选项；未使用则不补加
 
 ### Pass 4：验证+交付
 
@@ -205,7 +206,7 @@ HTML文件头部先写你的**assumptions+reasoning comments**，像junior给man
 
 ## Variations的深度逻辑
 
-给variations不是给用户制造选择困难，是**探索可能性空间**。让用户mix and match出最终版本。
+Variations 的作用不是给用户制造选择困难，而是在方向不明、需要比较或用户要求探索时，帮助用户看见可能性空间，并 mix and match 出最终版本。方向已经明确、用户只要深化或修复时，不需要硬造 3 个版本。
 
 ### 好的variations长什么样
 
@@ -228,7 +229,7 @@ HTML文件头部先写你的**assumptions+reasoning comments**，像junior给man
 
 ### 探索矩阵思考
 
-每次设计，脑内过一遍这些维度，挑2-3个来给variations：
+需要探索时，脑内过一遍这些维度，挑 2-3 个来给 variations：
 
 - 视觉：minimal / editorial / brutalist / organic / futuristic / retro
 - 色彩：monochrome / dual-tone / vibrant / pastel / high-contrast

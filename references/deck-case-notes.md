@@ -1,5 +1,15 @@
 # Slide Decks：HTML幻灯片制作规范
 
+本文件是完整案例、踩坑记录和导出细节库，不是所有 deck 任务的默认入口。普通短 deck 先读 `references/deck-quick-guide.md`，正式客户交付和三类方案制作阶段先读 `references/slide-decks.md`；只有主流程不足以判断、遇到导出失败、架构取舍、PPTX 深水区或需要复盘历史案例时，再搜索本文件。
+
+## 读取导航
+
+- **何时读取**：导出 PDF/PPTX 失败、单文件/多文件架构取舍不清、需要完整踩坑记录、需要复用 moxt/期权私董会等历史案例、需要长期可编辑 PPTX 路径细节。
+- **何时不读**：普通短 deck、内部草稿、快速演示；正式客户 deck 的通用制作门禁、署名、封底和 QA 先读 `slide-decks.md`。
+- **搜索关键词**：交付格式、2 页 showcase、多文件架构、路径 A、路径 B、Speaker Notes、打印为 PDF、html2pptx、文本框原生可编辑、验证检查清单。
+- **目录**：交付格式确认 → 2 页 showcase → 出版物 grammar → 常见踩坑 → 单/多文件架构 → 路径 A 多文件 → 路径 B 单文件 → Slide Labels/Notes → 设计模式 → PDF/PPTX 导出 → 深度路径 → FAQ → 验证清单。
+- **边界**：本文件补充经验，不覆盖 `verification.md` 的分层 QA，也不替代 `editable-pptx.md` 的可编辑 PPTX 硬约束。
+
 做幻灯片是设计工作的高频场景。这份文档说明怎么做好HTML幻灯片——从架构选型、单页设计，到 PDF/PPTX 导出的完整路径。
 
 **本 skill 的能力覆盖**：
