@@ -68,6 +68,13 @@
 - 听众是谁？演讲场景是线上分享、会议室投屏还是文档分发？
 - 是否有必须沿用的模板、品牌规范或历史 deck？
 
+**做项目方案 / POC 提案 / 设计提案**：
+- 当前属于哪类场景：项目方案、POC 提案，还是设计提案？
+- 已有哪些项目输入：项目目标、客户关注点、调研洞察、竞品/截图、招标要求、评分标准、设计策略、方向描述或样稿？
+- 哪些内容已经由团队确认，哪些只是待验证假设？
+- 样稿状态是什么：已有正式样稿，还是未提供正式样稿、需要线框/结构占位？
+- 需要支持哪些业务目标、评审关注点或业务指标？
+
 **做品牌化设计**：
 - 有 logo、产品图、UI 截图、色值和字体规范吗？
 - 哪些资产必须使用官方版本？
@@ -130,6 +137,19 @@
 ```
 
 用户确认后当前任务只确认一次；优先用 Lazyweb 官方技能/命令生成 `.lazyweb/.../report.html` 和 `references/` 参考图，再把关键模式转入 simpleux-design 的原型、deck 或评审判断。用户拒绝、未确认或 Lazyweb 不可用时，回退到现有 context、用户素材、品牌资产协议和本地参考流程，并说明当前判断不基于 Lazyweb 真实产品参考。
+
+### 场景化方案入口
+
+当用户要求项目方案、POC 提案、设计提案、方案汇报、投标 POC 或多方向设计评审时，先读 `references/scenario-workflows.md`，再按场景读取：
+
+- 项目方案：`references/project-solution-workflow.md`
+- POC 提案：`references/poc-proposal-workflow.md`
+- 设计提案：`references/design-proposal-workflow.md`
+- 门槛与 QA：`references/scenario-gates-and-qa.md`
+
+这类任务先做场景确认、输入检查、资料缺口/研究指引、材料整合、内容方向确认、章节规划、逐页稿和逐页表达规格确认。只有用户确认后，才进入 `references/slide-decks.md` 制作 HTML-first deck。
+
+不要把三类方案任务当成普通短 deck 直接制作；也不要替用户完成 deep research、自动决定设计方向或把线框占位包装成正式设计样稿。
 
 ### Pass 1：Assumptions + Placeholders（5-15分钟）
 

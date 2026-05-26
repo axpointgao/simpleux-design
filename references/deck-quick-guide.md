@@ -1,6 +1,6 @@
 # Deck Quick Guide：HTML-first 轻量默认路径
 
-本文件是常规 HTML deck 的默认读取入口，覆盖 80% 日常任务。只有命中“深读触发条件”时，再读 `references/slide-decks.md`、`references/deck-case-notes.md` 或其他专项参考。
+本文件是常规 HTML deck 的默认读取入口，覆盖普通短 deck、内部草稿和快速演示。项目方案、POC 提案和设计提案属于正式方案场景：上游先读 `references/scenario-workflows.md`，进入制作阶段后直接读 `references/slide-decks.md`，不走本 quick guide。
 
 ## 默认路径
 
@@ -8,6 +8,17 @@
 2. 常规 deck 默认使用多文件架构：`index.html` + `slides/*.html` + `shared/`。
 3. 正文 5 页以上、正式汇报、报告型 deck、课件、长讲座或客户交付 deck，先停在“结构计划 + 2 页视觉确认稿”，不要直接批量生成完整高保真页面。
 4. 用户确认字体、色彩、间距、masthead、图像规则、信息密度、署名策略、封底策略和情绪基调后，再制作剩余页面，并保存 `STYLE_CONFIRMATION.md` 或等价记录。
+
+## 不适用场景
+
+遇到以下任务，不要停留在 quick guide：
+
+- 项目方案、项目建议、合作方案、体验升级建议。
+- POC 提案、招标设计方案、评分标准响应、指定样稿命题。
+- 设计提案、多方向方案、方向评审、交互或视觉方向对比。
+- 正式客户交付、报告型 deck、复杂目录/章节/封底判断或署名策略冲突。
+
+三类方案场景必须先完成场景确认、输入检查、材料整合、章节规划、逐页稿和逐页表达规格确认，再进入 `references/slide-decks.md` 制作。
 
 ## 轻量 Deck 系统
 
@@ -21,7 +32,7 @@
 
 只在需要时读取对应专项文档：
 
-- `references/slide-decks.md`：正式客户交付、复杂章节/目录/封底判断、署名策略冲突、常规 quick guide 不足以决策。
+- `references/slide-decks.md`：项目方案、POC 提案、设计提案的制作阶段，正式客户交付、复杂章节/目录/封底判断、署名策略冲突、常规 quick guide 不足以决策。
 - `references/deck-case-notes.md`：导出疑难、单文件 `<deck-stage>` 历史坑、PDF/PPTX 踩坑、复杂打印/截图问题。
 - `references/editable-pptx.md`：用户需要可编辑 PPTX。
 - `references/device-mockups.md`：页面展示 App/Web/PC/移动端 UI 截图或设备界面。
